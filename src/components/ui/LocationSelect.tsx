@@ -64,7 +64,7 @@ export default function LocationSelect({ value, onChange }: LocationSelectProps)
   } else if (step === "state" && selectedCountry) {
     currentList = Object.keys(locationData[selectedCountry as keyof typeof locationData]);
   } else if (step === "city" && selectedCountry && selectedState) {
-    currentList = locationData[selectedCountry as keyof typeof locationData][selectedState as keyof typeof locationData[string]] || [];
+    currentList = (locationData[selectedCountry as keyof typeof locationData] as Record<string, string[]>)[selectedState] || [];
   }
 
   const filteredList = currentList.filter(item => item.toLowerCase().includes(search.toLowerCase()));
