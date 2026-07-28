@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { auth, db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { 
   ChevronRight, 
   ChevronLeft, 
@@ -74,7 +76,7 @@ const RESULT_DATA: Record<"low" | "medium" | "high", ResultInfo> = {
       { icon: "👔", title: "Practice advanced HR questions", desc: "Prepare for behavioral questions involving complex workplace scenarios." },
       { icon: "👁️", title: "Maintain eye contact", desc: "Your speaking clarity is great, just ensure consistent eye contact." }
     ],
-    nextSession: "Advanced Technical Mock Interview"
+    nextSession: "Advanced Technical Session"
   },
   medium: {
     level: "Medium Anxiety",
@@ -87,11 +89,11 @@ const RESULT_DATA: Record<"low" | "medium" | "high", ResultInfo> = {
     readinessScore: 70,
     recommendations: [
       { icon: "🗣️", title: "Practice self-introduction", desc: "Rehearse your intro daily to build a strong opening foundation." },
-      { icon: "📹", title: "Attend more mock interviews", desc: "Familiarity reduces anxiety. Schedule another session soon." },
+      { icon: "📹", title: "Attend more practice sessions", desc: "Familiarity reduces anxiety. Schedule another session soon." },
       { icon: "💪", title: "Improve speaking confidence", desc: "Try to reduce hesitation by taking short pauses before answering." },
       { icon: "⏳", title: "Reduce hesitation", desc: "Structure your thoughts using the STAR method before speaking." }
     ],
-    nextSession: "Behavioral Mock Interview"
+    nextSession: "Behavioral Practice Session"
   },
   high: {
     level: "High Anxiety",
@@ -104,7 +106,7 @@ const RESULT_DATA: Record<"low" | "medium" | "high", ResultInfo> = {
     readinessScore: 45,
     recommendations: [
       { icon: "🧘", title: "Breathing exercises", desc: "Practice box breathing before interviews to calm your nervous system." },
-      { icon: "🌱", title: "Beginner mock interviews", desc: "Start with low-pressure, beginner-friendly mock sessions." },
+      { icon: "🌱", title: "Beginner practice sessions", desc: "Start with low-pressure, beginner-friendly practice sessions." },
       { icon: "💤", title: "Improve sleep routine", desc: "Ensure you get 8 hours of sleep to improve cognitive function and reduce stress." },
       { icon: "🐢", title: "Speak slowly and clearly", desc: "Don't rush your answers. Take your time to articulate your thoughts." }
     ],
@@ -123,7 +125,7 @@ export default function AssessmentPage() {
     setAnswers({ ...answers, [questions[step].id]: val });
   };
 
-  const nextStep = () => {
+  const nextStep = async () => {
     if (step < questions.length - 1) {
       setStep(step + 1);
     } else {
@@ -142,10 +144,40 @@ export default function AssessmentPage() {
       
       setResultType(type);
 
+      // Save to Firebase
+      try {
+        if (auth.currentUser) {
+          const assessmentsRef = collection(db, "users", auth.currentUser.uid, "assessments");
+          await addDoc(assessmentsRef, {
+            answers,
+            stressScore,
+            anxietyLevel: type,
+            createdAt: serverTimestamp()
+          });
+        }
+      } catch (error) {
+        console.error("Failed to save assessment:", error);
+      }
+
+      // Save to localStorage for Dashboard/Coach features
+      const history = JSON.parse(localStorage.getItem("calmhire_history") || "[]");
+      const newAssessment = {
+        id: Date.now(),
+        date: new Date().toISOString().split('T')[0],
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        type: "Initial Assessment",
+        anxiety: type === "low" ? "Low" : type === "medium" ? "Medium" : "High",
+        confidence: RESULT_DATA[type].confidenceScore,
+        stress: stressScore,
+        duration: "10m",
+        feedback: RESULT_DATA[type].motivational
+      };
+      localStorage.setItem("calmhire_history", JSON.stringify([newAssessment, ...history]));
+
       setTimeout(() => {
         setIsCalculating(false);
         setShowResults(true);
-      }, 2000);
+      }, 1500);
     }
   };
 
@@ -273,7 +305,7 @@ export default function AssessmentPage() {
               Back to Dashboard
             </Link>
             <Link 
-              href="/interview"
+              href="/coach"
               className="flex-1 rounded-2xl bg-primary py-5 text-center font-bold shadow-xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2"
             >
               Start Recommended Session <ChevronRight size={20} />

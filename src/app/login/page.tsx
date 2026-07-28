@@ -6,6 +6,8 @@ import { Mail, Lock, Eye, EyeOff, Loader2, ArrowRight, CheckCircle2, AlertCircle
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 export default function LoginPage() {
   // Form state
@@ -16,6 +18,7 @@ export default function LoginPage() {
 
   // UI feedback state
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,17 +36,41 @@ export default function LoginPage() {
       return;
     }
     setIsLoading(true);
-    // Simulated async login request
-    setTimeout(() => {
+    
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setIsSuccess(true);
+      setTimeout(() => router.push("/dashboard"), 1500);
+    } catch (err: any) {
+      console.error("Login error:", err);
+      setError("Invalid email or password. Please try again.");
+    } finally {
       setIsLoading(false);
-      // Simulate success for correct dummy credentials
-      if (email === "nancy.flora@example.com" && password === "password123") {
-        setIsSuccess(true);
-        setTimeout(() => router.push("/dashboard"), 1500);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    // Prevent opening a second popup while one is already in flight
+    if (isGoogleLoading) return;
+    setIsGoogleLoading(true);
+    setError(null);
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      setIsSuccess(true);
+      setTimeout(() => router.push("/dashboard"), 1500);
+    } catch (err: any) {
+      // Firebase fires this internally when a new popup cancels a previous one — not a real error
+      if (err?.code === "auth/cancelled-popup-request") return;
+      console.error("Google login error:", err);
+      if (err?.code === "auth/popup-closed-by-user") {
+        setError("Sign-in window was closed. Please try again.");
       } else {
-        setError("Invalid email or password.");
+        setError("Google sign-in failed. Please try again.");
       }
-    }, 2000);
+    } finally {
+      setIsGoogleLoading(false);
+    }
   };
 
   return (
@@ -215,20 +242,18 @@ export default function LoginPage() {
               <div className="h-[1px] flex-1 bg-white/10" />
             </div>
 
-            {/* Social Auth */}
             <div className="grid grid-cols-1 gap-4">
               <button 
                 type="button"
-                onClick={() => {
-                  setIsLoading(true);
-                  setTimeout(() => {
-                    setIsSuccess(true);
-                    setTimeout(() => router.push("/dashboard"), 1000);
-                  }, 1000);
-                }}
-                className="flex w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 py-4 text-sm font-bold text-white transition-all hover:bg-white/10 hover:border-white/20"
+                onClick={handleGoogleLogin}
+                disabled={isGoogleLoading}
+                className="flex w-full items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 py-4 text-sm font-bold text-white transition-all hover:bg-white/10 hover:border-white/20 disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <Globe size={20} className="text-blue-400" />
+                {isGoogleLoading ? (
+                  <Loader2 size={20} className="animate-spin text-blue-400" />
+                ) : (
+                  <Globe size={20} className="text-blue-400" />
+                )}
                 Continue with Google
               </button>
             </div>

@@ -16,6 +16,8 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 const mainNavItems = [
   { icon: Video, label: "AI Interview Session", href: "/interview" },
@@ -33,9 +35,13 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleLogout = () => {
-    // Simple redirect to login or home
-    router.push("/login");
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
   };
 
   return (

@@ -33,6 +33,9 @@ import {
 import Sidebar from "@/components/Sidebar";
 import LocationSelect from "@/components/ui/LocationSelect";
 import { cn } from "@/lib/utils";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { useRouter } from "next/navigation";
 
 const sections = [
   { id: "profile", label: "Profile", icon: User },
@@ -46,6 +49,7 @@ const sections = [
 ];
 
 export default function SettingsPage() {
+  const router = useRouter();
   const [activeSection, setActiveSection] = useState("profile");
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -79,6 +83,15 @@ export default function SettingsPage() {
       setSaveStatus("Saved Successfully");
       setTimeout(() => setSaveStatus(null), 2000);
     }, 1000);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
   };
 
   const Toggle = ({ active, onClick }: { active: boolean, onClick: () => void }) => (
@@ -331,7 +344,7 @@ export default function SettingsPage() {
                       <h3 className="text-xl font-bold">Manage Notifications</h3>
                       <div className="space-y-4">
                         {[
-                          { id: "int", label: "Interview Reminders", desc: "Alerts for upcoming mock assessments" },
+                          { id: "int", label: "Interview Reminders", desc: "Alerts for upcoming practice assessments" },
                           { id: "prac", label: "Practice Reminders", desc: "Daily nudges for AI coaching sessions" },
                           { id: "prog", label: "Progress Reports", desc: "Weekly summaries of your improvements" },
                           { id: "ai", label: "AI Tips", desc: "Real-time behavioral improvement advice" },
@@ -520,7 +533,7 @@ export default function SettingsPage() {
               </p>
               <div className="flex flex-col gap-3">
                 <button 
-                  onClick={() => setShowLogoutConfirm(false)}
+                  onClick={handleLogout}
                   className="w-full rounded-2xl bg-red-500 py-4 font-bold text-white shadow-xl shadow-red-500/20 hover:scale-[1.02] active:scale-95 transition-all"
                 >
                   Yes, Log Me Out

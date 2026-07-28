@@ -15,6 +15,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -63,11 +66,32 @@ export default function RegisterPage() {
       return;
     }
     setIsLoading(true);
-    setTimeout(() => {
+    
+    try {
+      // 1. Create the user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // 2. Save the extra user details (Name, Phone) in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        fullName,
+        email,
+        phone,
+        createdAt: new Date().toISOString(),
+      });
+
       setIsLoading(false);
       setIsSuccess(true);
       setTimeout(() => router.push("/assessment"), 1500);
-    }, 1500);
+    } catch (err: any) {
+      setIsLoading(false);
+      // Handle common Firebase errors
+      if (err.code === 'auth/email-already-in-use') {
+        setError("This email is already registered.");
+      } else {
+        setError(err.message || "Failed to create account.");
+      }
+    }
   };
 
   return (

@@ -15,15 +15,17 @@ import {
   Target
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Overview", href: "/dashboard" },
+  { icon: Video, label: "Mock Interview", href: "/interview" },
   { icon: History, label: "Interview History", href: "/history" },
   { icon: BarChart3, label: "Performance Insights", href: "/analytics" },
   { icon: Sparkles, label: "AI Coach", href: "/coach" },
-  { icon: Video, label: "Mock Interviews", href: "/interview" },
   { icon: Target, label: "Confidence Progress", href: "/analytics" },
   { icon: FileText, label: "Resume Analyzer", href: "/resume" },
   { icon: Settings, label: "Settings", href: "/settings" },
@@ -31,6 +33,16 @@ const sidebarItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
   return (
     <aside className="fixed left-0 top-0 hidden h-full w-72 border-r border-white/5 bg-[#020617]/80 backdrop-blur-2xl lg:block z-50">
@@ -80,7 +92,7 @@ export default function Sidebar() {
           <div>
             <p className="mb-4 px-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">AI Training</p>
             <nav className="space-y-1.5">
-              {sidebarItems.slice(3, 6).map((item) => (
+              {sidebarItems.slice(3, 5).map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -105,7 +117,7 @@ export default function Sidebar() {
           <div>
             <p className="mb-4 px-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Career Tools</p>
             <nav className="space-y-1.5">
-              {sidebarItems.slice(6, 7).map((item) => (
+              {sidebarItems.slice(5, 7).map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
@@ -163,7 +175,7 @@ export default function Sidebar() {
               <span className="text-[11px] text-slate-500 truncate">nancy.flora@example.com</span>
             </div>
           </div>
-          <button className="group flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-[14px] font-bold text-slate-400 transition-all duration-300 hover:bg-red-500/10 hover:text-red-500">
+          <button onClick={handleLogout} className="group flex w-full items-center gap-3 rounded-2xl px-4 py-3.5 text-[14px] font-bold text-slate-400 transition-all duration-300 hover:bg-red-500/10 hover:text-red-500">
             <LogOut size={20} className="transition-transform group-hover:-translate-x-1" />
             Logout
           </button>

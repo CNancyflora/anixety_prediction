@@ -32,7 +32,7 @@ export default function Home() {
           <span className="text-xl font-bold tracking-tight">CalmHire AI</span>
         </div>
         <div className="hidden items-center gap-8 md:flex">
-          <Link href="/interview" className="text-sm font-bold text-slate-400 hover:text-white transition-colors">AI Interview Session</Link>
+
           <Link href="/coach" className="text-sm font-bold text-slate-400 hover:text-white transition-colors">Real-Time Coaching</Link>
           <Link href="/analytics" className="text-sm font-bold text-slate-400 hover:text-white transition-colors">Confidence Tracking</Link>
           <Link href="/history" className="text-sm font-bold text-slate-400 hover:text-white transition-colors">Anxiety Insights</Link>
@@ -99,7 +99,7 @@ export default function Home() {
             { icon: Camera, title: "Posture Analysis", desc: "Maintain a professional stance with real-time body language feedback." },
             { icon: TrendingUp, title: "Growth Analytics", desc: "Detailed tracking of your confidence and communication improvements." },
             { icon: Shield, title: "Privacy First", desc: "Enterprise-grade security ensuring your session data remains confidential." },
-            { icon: Users, title: "HR Simulations", desc: "Practice with industry-specific mock interviews tailored to your resume." }
+            { icon: Users, title: "HR Simulations", desc: "Practice with industry-specific assessments tailored to your resume." }
           ].map((feature, i) => (
             <div 
               key={i}
