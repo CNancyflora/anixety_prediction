@@ -1,149 +1,84 @@
+import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
-import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class VoicePracticeScreen extends StatefulWidget {
   final VoidCallback onCompleted;
-
   const VoicePracticeScreen({super.key, required this.onCompleted});
 
   @override
   State<VoicePracticeScreen> createState() => _VoicePracticeScreenState();
 }
 
-class _VoicePracticeScreenState extends State<VoicePracticeScreen>
-    with SingleTickerProviderStateMixin {
-  CameraController? _cameraController;
-  bool _cameraReady = false;
-  bool _micActive = false;
-  bool _sessionStarted = false;
-  bool _permissionsGranted = false;
-  bool _isLoading = false;
-  String _statusMessage = '';
-  Timer? _micAnimTimer;
-  final List<double> _micBars = List.generate(12, (_) => 0.2);
-  late AnimationController _pulseController;
+class _VoicePracticeScreenState extends State<VoicePracticeScreen> {
+  final List<String> _items = [
+    "Professionalism",
+    "Synergize",
+    "Strategic Collaboration",
+    "Organizational Behavior",
+    "Cross-functional Teams",
+    "I thrive in dynamic environments.",
+    "My approach is driven by data.",
+    "Effective communication is key to success.",
+    "I continuously seek opportunities for growth.",
+    "I am confident in my leadership abilities."
+  ];
+  
+  int _currentIndex = 0;
+  bool _isRecording = false;
+  bool _isAnalyzing = false;
+  bool _hasMicPermission = false;
+  int? _lastScore;
+  
+  final Random _rnd = Random();
 
-  @override
-  void initState() {
-    super.initState();
-    _pulseController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 800),
-    )..repeat(reverse: true);
-    _requestPermissionsAndInit();
+  void _listen() {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Playing pronunciation audio...')));
   }
 
-  @override
-  void dispose() {
-    _micAnimTimer?.cancel();
-    _cameraController?.dispose();
-    _pulseController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _requestPermissionsAndInit() async {
+  Future<void> _startPractice() async {
+    final status = await Permission.microphone.request();
     setState(() {
-      _isLoading = true;
-      _statusMessage = 'Requesting permissions…';
+      _hasMicPermission = status.isGranted;
+      _lastScore = null;
     });
 
-    final cameraStatus = await Permission.camera.request();
-    final micStatus = await Permission.microphone.request();
-
-    if (!mounted) return;
-
-    if (cameraStatus.isGranted && micStatus.isGranted) {
+    if (_hasMicPermission) {
+      setState(() => _isRecording = true);
+      
+      // Simulate recording for 3 seconds
+      await Future.delayed(const Duration(seconds: 3));
+      
+      if (!mounted) return;
       setState(() {
-        _permissionsGranted = true;
-        _statusMessage = 'Starting camera…';
+        _isRecording = false;
+        _isAnalyzing = true;
       });
-      await _initCamera();
+
+      // Simulate analysis delay
+      await Future.delayed(const Duration(seconds: 2));
+      
+      if (!mounted) return;
+      setState(() {
+        _isAnalyzing = false;
+        // Generate a realistic score between 75 and 98
+        _lastScore = 75 + _rnd.nextInt(24);
+      });
+    }
+  }
+
+  void _next() {
+    setState(() {
+      _lastScore = null;
+    });
+    
+    if (_currentIndex < _items.length - 1) {
+      setState(() => _currentIndex++);
     } else {
-      setState(() {
-        _isLoading = false;
-        _statusMessage = cameraStatus.isDenied
-            ? 'Camera permission denied. Please allow it in Settings.'
-            : 'Microphone permission denied. Please allow it in Settings.';
-      });
+      widget.onCompleted();
+      Navigator.pop(context);
     }
-  }
-
-  Future<void> _initCamera() async {
-    try {
-      final cameras = await availableCameras();
-      if (cameras.isEmpty) {
-        if (mounted) setState(() { _isLoading = false; _statusMessage = 'No cameras found on device.'; });
-        return;
-      }
-
-      final front = cameras.firstWhere(
-        (c) => c.lensDirection == CameraLensDirection.front,
-        orElse: () => cameras.first,
-      );
-
-      _cameraController = CameraController(
-        front,
-        ResolutionPreset.medium,
-        enableAudio: true,
-        imageFormatGroup: ImageFormatGroup.jpeg,
-      );
-
-      await _cameraController!.initialize();
-
-      if (mounted) {
-        setState(() {
-          _cameraReady = true;
-          _isLoading = false;
-          _statusMessage = '';
-        });
-      }
-    } catch (e) {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-          _statusMessage = 'Could not start camera: $e';
-        });
-      }
-    }
-  }
-
-  void _startSession() {
-    setState(() {
-      _sessionStarted = true;
-      _micActive = true;
-    });
-    _startMicAnimation();
-  }
-
-  void _startMicAnimation() {
-    _micAnimTimer = Timer.periodic(const Duration(milliseconds: 100), (_) {
-      if (!mounted || !_micActive) return;
-      setState(() {
-        for (int i = 0; i < _micBars.length; i++) {
-          _micBars[i] = 0.2 + Random().nextDouble() * 0.8;
-        }
-      });
-    });
-  }
-
-  void _stopSession() {
-    _micAnimTimer?.cancel();
-    setState(() {
-      _sessionStarted = false;
-      _micActive = false;
-      for (int i = 0; i < _micBars.length; i++) {
-        _micBars[i] = 0.2;
-      }
-    });
-  }
-
-  void _completeSession() {
-    _stopSession();
-    widget.onCompleted();
-    Navigator.pop(context);
   }
 
   @override
@@ -151,219 +86,107 @@ class _VoicePracticeScreenState extends State<VoicePracticeScreen>
     return Scaffold(
       backgroundColor: const Color(0xFF020617),
       appBar: AppBar(
+        title: const Text('Voice & Pronunciation', style: TextStyle(color: Colors.white, fontSize: 18)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'Voice & Pronunciation Practice',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
-        ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: SafeArea(
+      body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(24.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Camera Preview
-              Expanded(
-                flex: 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(24),
-                    border: Border.all(
-                      color: _sessionStarted
-                          ? const Color(0xFF3B82F6)
-                          : Colors.white.withOpacity(0.1),
-                      width: _sessionStarted ? 2 : 1,
-                    ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(24),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        // Camera feed or placeholder
-                        if (_isLoading)
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const CircularProgressIndicator(color: Colors.blue),
-                              const SizedBox(height: 16),
-                              Text(_statusMessage, style: const TextStyle(color: Colors.grey), textAlign: TextAlign.center),
-                            ],
-                          )
-                        else if (_cameraReady && _cameraController != null)
-                          SizedBox.expand(
-                            child: FittedBox(
-                              fit: BoxFit.cover,
-                              child: SizedBox(
-                                width: _cameraController!.value.previewSize?.height ?? 1,
-                                height: _cameraController!.value.previewSize?.width ?? 1,
-                                child: CameraPreview(_cameraController!),
-                              ),
-                            ),
-                          )
-                        else
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.no_photography, color: Colors.white.withOpacity(0.2), size: 56),
-                              const SizedBox(height: 12),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 24),
-                                child: Text(
-                                  _statusMessage.isNotEmpty ? _statusMessage : 'Camera unavailable',
-                                  style: const TextStyle(color: Colors.grey, fontSize: 13),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              if (_statusMessage.contains('Settings')) ...[
-                                const SizedBox(height: 16),
-                                TextButton(
-                                  onPressed: () => openAppSettings(),
-                                  child: const Text('Open Settings', style: TextStyle(color: Colors.blue)),
-                                ),
-                              ]
-                            ],
-                          ),
-
-                        // Live badge when session active
-                        if (_sessionStarted)
-                          Positioned(
-                            top: 12,
-                            left: 12,
-                            child: AnimatedBuilder(
-                              animation: _pulseController,
-                              builder: (_, __) => Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: Colors.red.withOpacity(0.7 + 0.3 * _pulseController.value),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: const Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Icon(Icons.circle, color: Colors.white, size: 8),
-                                    SizedBox(width: 6),
-                                    Text('LIVE', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-
-                        // Mic active icon
-                        if (_micActive)
-                          Positioned(
-                            top: 12,
-                            right: 12,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Colors.blue.withOpacity(0.3),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(Icons.mic, color: Colors.blue, size: 18),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
+              Text('Word / Sentence ${_currentIndex + 1} of ${_items.length}', style: const TextStyle(color: Colors.grey, fontSize: 16)),
+              const SizedBox(height: 32),
+              Text(
+                _items[_currentIndex],
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold),
               ),
-
-              const SizedBox(height: 16),
-
-              // Mic visualizer bar
-              Container(
-                height: 60,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.03),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.white.withOpacity(0.06)),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: _micBars.map((h) => AnimatedContainer(
-                    duration: const Duration(milliseconds: 80),
-                    width: 6,
-                    height: 40 * h,
-                    decoration: BoxDecoration(
-                      color: _micActive
-                          ? Color.lerp(Colors.blue, Colors.purple, h)!
-                          : Colors.grey.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                  )).toList(),
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Prompt card
-              Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.06),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.blue.withOpacity(0.2)),
-                ),
-                child: const Text(
-                  '"Introduce yourself in 60 seconds. Focus on clear articulation and a confident tone."',
-                  style: TextStyle(color: Colors.white70, fontSize: 14, height: 1.5, fontStyle: FontStyle.italic),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Action buttons
-              if (!_sessionStarted) ...[
-                ElevatedButton.icon(
-                  onPressed: _permissionsGranted && _cameraReady ? _startSession : null,
-                  icon: const Icon(Icons.mic, color: Colors.white),
-                  label: const Text('Start Practice', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF3B82F6),
-                    disabledBackgroundColor: Colors.white.withOpacity(0.1),
-                    padding: const EdgeInsets.symmetric(vertical: 18),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                  ),
-                ),
-              ] else ...[
-                Row(
+              const SizedBox(height: 48),
+              
+              if (_isRecording)
+                const Column(
                   children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: _stopSession,
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: Colors.red),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                        ),
-                        child: const Text('Stop', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 16)),
+                    Icon(Icons.mic, color: Colors.red, size: 64),
+                    SizedBox(height: 16),
+                    Text('Recording...', style: TextStyle(color: Colors.red, fontSize: 16)),
+                  ],
+                )
+              else if (_isAnalyzing)
+                const Column(
+                  children: [
+                    CircularProgressIndicator(color: Colors.blue),
+                    SizedBox(height: 16),
+                    Text('Analyzing Speech...', style: TextStyle(color: Colors.blue, fontSize: 16)),
+                  ],
+                )
+              else if (_lastScore != null)
+                Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: _lastScore! >= 85 ? Colors.green.withOpacity(0.1) : Colors.orange.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: _lastScore! >= 85 ? Colors.green : Colors.orange),
+                      ),
+                      child: Column(
+                        children: [
+                          Text('Pronunciation Score: $_lastScore%', style: TextStyle(color: _lastScore! >= 85 ? Colors.green : Colors.orange, fontSize: 24, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 8),
+                          Text(
+                            _lastScore! >= 85 ? 'Excellent pronunciation!' : 'Needs a bit more clarity. Try again!',
+                            style: const TextStyle(color: Colors.white, fontSize: 14),
+                          )
+                        ],
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      flex: 2,
-                      child: ElevatedButton(
-                        onPressed: _completeSession,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                        ),
-                        child: const Text('Complete ✓', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
-                      ),
+                    const SizedBox(height: 24),
+                    ElevatedButton.icon(
+                      onPressed: _startPractice,
+                      icon: const Icon(Icons.refresh, color: Colors.white),
+                      label: const Text('Retry', style: TextStyle(color: Colors.white)),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.white.withOpacity(0.1)),
+                    ),
+                  ],
+                )
+              else
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: _listen,
+                      icon: const Icon(Icons.volume_up, color: Colors.white),
+                      label: const Text('Listen', style: TextStyle(color: Colors.white)),
+                      style: ElevatedButton.styleFrom(backgroundColor: Colors.blue.withOpacity(0.3)),
+                    ),
+                    const SizedBox(width: 16),
+                    ElevatedButton.icon(
+                      onPressed: _startPractice,
+                      icon: const Icon(Icons.mic, color: Colors.white),
+                      label: const Text('Speak', style: TextStyle(color: Colors.white)),
+                      style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF2563EB)),
                     ),
                   ],
                 ),
-              ],
+                
+              if (!_hasMicPermission && !_isRecording && !_isAnalyzing && _lastScore == null)
+                 const Padding(
+                  padding: EdgeInsets.only(top: 16.0),
+                  child: Text('Microphone permission is required for analysis.', style: TextStyle(color: Colors.red, fontSize: 12)),
+                ),
+                
+              const Spacer(),
+              ElevatedButton(
+                onPressed: _next,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _lastScore != null ? const Color(0xFF2563EB) : Colors.white.withOpacity(0.1),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: Text(_currentIndex < _items.length - 1 ? 'Next' : 'Finish', style: const TextStyle(color: Colors.white)),
+              ),
             ],
           ),
         ),

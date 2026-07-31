@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'voice_practice.dart';
+import 'self_intro_practice.dart';
+import 'communication_practice.dart';
+import 'hr_interview_practice.dart';
 
 class CoachScreen extends StatefulWidget {
   const CoachScreen({super.key});
@@ -9,12 +12,12 @@ class CoachScreen extends StatefulWidget {
 }
 
 class _CoachScreenState extends State<CoachScreen> {
-  List<Map<String, dynamic>> _modules = [
+  final List<Map<String, dynamic>> _modules = [
     {
       'id': 'self-intro',
       'title': 'Self Introduction Practice',
       'desc': 'Craft and rehearse a compelling personal introduction.',
-      'duration': '5–8 min',
+      'duration': '2 min',
       'icon': Icons.person_outline,
       'isCompleted': false,
       'isLocked': false,
@@ -23,7 +26,7 @@ class _CoachScreenState extends State<CoachScreen> {
       'id': 'communication',
       'title': 'Communication Skills',
       'desc': 'Strengthen verbal clarity and active listening.',
-      'duration': '8–12 min',
+      'duration': '5 min',
       'icon': Icons.menu_book_outlined,
       'isCompleted': false,
       'isLocked': false,
@@ -32,28 +35,19 @@ class _CoachScreenState extends State<CoachScreen> {
       'id': 'voice',
       'title': 'Voice & Pronunciation Practice',
       'desc': 'Improve articulation, pace, and vocal projection.',
-      'duration': '5–10 min',
+      'duration': '5 min',
       'icon': Icons.mic_none_outlined,
       'isCompleted': false,
       'isLocked': false,
     },
     {
-      'id': 'eye-contact',
-      'title': 'Eye Contact Practice',
-      'desc': 'Build the habit of natural eye contact with camera.',
-      'duration': '5–8 min',
-      'icon': Icons.remove_red_eye_outlined,
-      'isCompleted': false,
-      'isLocked': true,
-    },
-    {
       'id': 'hr-interview',
       'title': 'HR Interview Practice',
       'desc': 'Practise common behavioral HR questions.',
-      'duration': '10–15 min',
+      'duration': '10 min',
       'icon': Icons.chat_bubble_outline,
       'isCompleted': false,
-      'isLocked': true,
+      'isLocked': false,
     },
   ];
 
@@ -62,10 +56,6 @@ class _CoachScreenState extends State<CoachScreen> {
       final idx = _modules.indexWhere((m) => m['id'] == moduleId);
       if (idx != -1) {
         _modules[idx]['isCompleted'] = true;
-        // Unlock the next module if it exists
-        if (idx + 1 < _modules.length) {
-          _modules[idx + 1]['isLocked'] = false;
-        }
       }
     });
   }
@@ -73,7 +63,7 @@ class _CoachScreenState extends State<CoachScreen> {
   @override
   Widget build(BuildContext context) {
     int completedCount = _modules.where((m) => m['isCompleted'] == true).length;
-    double progress = completedCount / _modules.length;
+    double progress = _modules.isEmpty ? 0 : completedCount / _modules.length;
 
     return Scaffold(
       backgroundColor: const Color(0xFF020617),
@@ -189,28 +179,17 @@ class _CoachScreenState extends State<CoachScreen> {
                       ElevatedButton(
                         onPressed: () async {
                           final String id = mod['id'];
-                          if (id == 'voice') {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => VoicePracticeScreen(
-                                  onCompleted: () => _markCompleted(id),
-                                ),
-                              ),
-                            );
+                          Widget screen;
+                          if (id == 'self-intro') {
+                            screen = SelfIntroPracticeScreen(onCompleted: () => _markCompleted(id));
+                          } else if (id == 'communication') {
+                            screen = CommunicationPracticeScreen(onCompleted: () => _markCompleted(id));
+                          } else if (id == 'voice') {
+                            screen = VoicePracticeScreen(onCompleted: () => _markCompleted(id));
                           } else {
-                            // For other unlocked modules: navigate to a generic practice page
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => _GenericPracticeScreen(
-                                  title: mod['title'],
-                                  desc: mod['desc'],
-                                  onCompleted: () => _markCompleted(id),
-                                ),
-                              ),
-                            );
+                            screen = HrInterviewPracticeScreen(onCompleted: () => _markCompleted(id));
                           }
+                          await Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF2563EB),
@@ -228,78 +207,4 @@ class _CoachScreenState extends State<CoachScreen> {
       ),
     );
   }
-}
-
-// Generic practice screen for text-based modules
-class _GenericPracticeScreen extends StatelessWidget {
-  final String title;
-  final String desc;
-  final VoidCallback onCompleted;
-
-  const _GenericPracticeScreen({
-    required this.title,
-    required this.desc,
-    required this.onCompleted,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF020617),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.05),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.blue.withOpacity(0.2)),
-              ),
-              child: Text(desc, style: const TextStyle(color: Colors.white, fontSize: 16, height: 1.5)),
-            ),
-            const SizedBox(height: 32),
-            const Text('Practice Tips', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 16),
-            _tip('Speak clearly and at a measured pace.'),
-            _tip('Make eye contact with the camera.'),
-            _tip('Use pauses effectively to emphasize key points.'),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                onCompleted();
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                padding: const EdgeInsets.symmetric(vertical: 18),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-              ),
-              child: const Text('Mark as Complete', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _tip(String text) => Padding(
-    padding: const EdgeInsets.only(bottom: 12),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Icon(Icons.check_circle_outline, color: Colors.blue, size: 20),
-        const SizedBox(width: 12),
-        Expanded(child: Text(text, style: const TextStyle(color: Colors.grey, fontSize: 14, height: 1.4))),
-      ],
-    ),
-  );
 }
