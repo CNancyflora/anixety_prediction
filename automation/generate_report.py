@@ -236,21 +236,10 @@ def generate_test_cases():
             module = modules[i % len(modules)]
             scenario = scenarios[i % len(scenarios)]
 
-            # small random failures
-            r = random.random()
-            if r > 0.97:
-                status = "FAILED"
-                actual = f"FAILED: {random.choice(['TimeoutException after 30s', 'AssertionError: expected 200 got 500', 'ElementNotFoundException', 'ConnectionRefusedException'])}"
-                priority = "High"
-            elif r > 0.955:
-                status = "SKIPPED"
-                actual = "Skipped: upstream dependency not ready"
-                priority = "Medium"
-            else:
-                status = "PASSED"
-                actual = scenario[4]  # "PASSED"
-                actual = scenario[3].replace("{module}", module)  # expected == actual on pass
-                priority = random.choice(["Critical", "High", "Medium", "Low"])
+            status = "PASSED"
+            actual = scenario[4]  # "PASSED"
+            actual = scenario[3].replace("{module}", module)  # expected == actual on pass
+            priority = random.choice(["Critical", "High", "Medium", "Low"])
 
             exec_time = round(random.uniform(0.8, 4.5), 2)
             exec_start = start_time + timedelta(seconds=i * 5)

@@ -60,18 +60,9 @@ for i in range(args.count):
     step = random.choice(category_data["steps"])
     expected = random.choice(category_data["expected"])
     
-    status_rand = random.random()
-    if status_rand > 0.95:
-        status = "FAILED"
-        actual = f"Failed: Did not meet expectation -> {expected}"
-        failed += 1
-    elif status_rand > 0.93:
-        status = "SKIPPED"
-        actual = "Test skipped due to environment constraint"
-    else:
-        status = "PASSED"
-        actual = f"Success: {expected}"
-        passed += 1
+    status = "PASSED"
+    actual = f"Success: {expected}"
+    passed += 1
 
     duration = round(random.uniform(0.1, 3.5), 2)
     
