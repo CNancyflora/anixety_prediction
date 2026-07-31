@@ -1,0 +1,351 @@
+Test ID,Category,Module,Description,Test Steps,Expected Result,Actual Result,Execution Time (ms),Status
+LOA-1000,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.51,PASSED
+LOA-1001,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.44,PASSED
+LOA-1002,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.66,PASSED
+LOA-1003,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.75,PASSED
+LOA-1004,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.85,PASSED
+LOA-1005,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,1.69,PASSED
+LOA-1006,Load Testing,Endurance,Verify endurance handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.34,PASSED
+LOA-1007,Load Testing,Spike Test,Verify spike test handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.71,PASSED
+LOA-1008,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,3.29,PASSED
+LOA-1009,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.99,PASSED
+LOA-1010,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.27,PASSED
+LOA-1011,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.49,PASSED
+LOA-1012,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.69,PASSED
+LOA-1013,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,0.79,PASSED
+LOA-1014,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.34,PASSED
+LOA-1015,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.81,PASSED
+LOA-1016,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.5,PASSED
+LOA-1017,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.75,PASSED
+LOA-1018,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.64,PASSED
+LOA-1019,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,1.13,PASSED
+LOA-1020,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.97,PASSED
+LOA-1021,Load Testing,Spike Test,Verify spike test handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.6,PASSED
+LOA-1022,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Failed: Did not meet expectation -> P95 latency should be < 500ms,0.21,FAILED
+LOA-1023,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,0.22,PASSED
+LOA-1024,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Failed: Did not meet expectation -> Auto-scaling should trigger,2.24,FAILED
+LOA-1025,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.88,PASSED
+LOA-1026,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.44,PASSED
+LOA-1027,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.49,PASSED
+LOA-1028,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.95,PASSED
+LOA-1029,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.4,PASSED
+LOA-1030,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,1.64,PASSED
+LOA-1031,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,1.11,PASSED
+LOA-1032,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,3.38,PASSED
+LOA-1033,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.37,PASSED
+LOA-1034,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.64,PASSED
+LOA-1035,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.76,PASSED
+LOA-1036,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.58,PASSED
+LOA-1037,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Failed: Did not meet expectation -> Zero dropped connections,2.43,FAILED
+LOA-1038,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.22,PASSED
+LOA-1039,Load Testing,Spike Test,Verify spike test handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,1.52,PASSED
+LOA-1040,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.3,PASSED
+LOA-1041,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.63,PASSED
+LOA-1042,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.46,PASSED
+LOA-1043,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.97,PASSED
+LOA-1044,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.65,PASSED
+LOA-1045,Load Testing,Endurance,Verify endurance handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.17,PASSED
+LOA-1046,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.29,PASSED
+LOA-1047,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,2.54,PASSED
+LOA-1048,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.13,PASSED
+LOA-1049,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,2.61,PASSED
+LOA-1050,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,0.74,PASSED
+LOA-1051,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.93,PASSED
+LOA-1052,Load Testing,Spike Test,Verify spike test handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.84,PASSED
+LOA-1053,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.39,PASSED
+LOA-1054,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.33,PASSED
+LOA-1055,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.73,PASSED
+LOA-1056,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.13,PASSED
+LOA-1057,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.16,PASSED
+LOA-1058,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.25,PASSED
+LOA-1059,Load Testing,Static Assets,Verify static assets handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.97,PASSED
+LOA-1060,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.94,PASSED
+LOA-1061,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,1.25,PASSED
+LOA-1062,Load Testing,Endurance,Verify endurance handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,0.9,PASSED
+LOA-1063,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.32,PASSED
+LOA-1064,Load Testing,Endurance,Verify endurance handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.59,PASSED
+LOA-1065,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.39,PASSED
+LOA-1066,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.54,PASSED
+LOA-1067,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.9,PASSED
+LOA-1068,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.23,PASSED
+LOA-1069,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.75,PASSED
+LOA-1070,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,1.2,PASSED
+LOA-1071,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,3.0,PASSED
+LOA-1072,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,0.28,PASSED
+LOA-1073,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Failed: Did not meet expectation -> Auto-scaling should trigger,2.16,FAILED
+LOA-1074,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.36,PASSED
+LOA-1075,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.12,PASSED
+LOA-1076,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.52,PASSED
+LOA-1077,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.43,PASSED
+LOA-1078,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.6,PASSED
+LOA-1079,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,0.32,PASSED
+LOA-1080,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,2.69,PASSED
+LOA-1081,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Failed: Did not meet expectation -> Zero dropped connections,2.52,FAILED
+LOA-1082,Load Testing,Spike Test,Verify spike test handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.41,PASSED
+LOA-1083,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,2.11,PASSED
+LOA-1084,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,2.18,PASSED
+LOA-1085,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.36,PASSED
+LOA-1086,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.94,PASSED
+LOA-1087,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.6,PASSED
+LOA-1088,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.51,PASSED
+LOA-1089,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,0.85,PASSED
+LOA-1090,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.14,PASSED
+LOA-1091,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.44,PASSED
+LOA-1092,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,1.73,PASSED
+LOA-1093,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.51,PASSED
+LOA-1094,Load Testing,Spike Test,Verify spike test handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.29,PASSED
+LOA-1095,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.38,PASSED
+LOA-1096,Load Testing,Spike Test,Verify spike test handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.93,PASSED
+LOA-1097,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.56,PASSED
+LOA-1098,Load Testing,Static Assets,Verify static assets handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.41,PASSED
+LOA-1099,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,2.09,PASSED
+LOA-1100,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.42,PASSED
+LOA-1101,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.45,PASSED
+LOA-1102,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,1.16,PASSED
+LOA-1103,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,3.3,PASSED
+LOA-1104,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.63,PASSED
+LOA-1105,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.84,PASSED
+LOA-1106,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.13,PASSED
+LOA-1107,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.55,PASSED
+LOA-1108,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,2.58,PASSED
+LOA-1109,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.2,PASSED
+LOA-1110,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.95,PASSED
+LOA-1111,Load Testing,Static Assets,Verify static assets handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.33,PASSED
+LOA-1112,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.95,PASSED
+LOA-1113,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,0.61,PASSED
+LOA-1114,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.25,PASSED
+LOA-1115,Load Testing,Spike Test,Verify spike test handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Test skipped due to environment constraint,2.37,SKIPPED
+LOA-1116,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.89,PASSED
+LOA-1117,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.81,PASSED
+LOA-1118,Load Testing,Spike Test,Verify spike test handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.15,PASSED
+LOA-1119,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.18,PASSED
+LOA-1120,Load Testing,Spike Test,Verify spike test handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.63,PASSED
+LOA-1121,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.07,PASSED
+LOA-1122,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,1.47,PASSED
+LOA-1123,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Failed: Did not meet expectation -> Zero dropped connections,1.03,FAILED
+LOA-1124,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,1.58,PASSED
+LOA-1125,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,1.11,PASSED
+LOA-1126,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.58,PASSED
+LOA-1127,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.08,PASSED
+LOA-1128,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,0.67,PASSED
+LOA-1129,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.36,PASSED
+LOA-1130,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.53,PASSED
+LOA-1131,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.5,PASSED
+LOA-1132,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.36,PASSED
+LOA-1133,Load Testing,Spike Test,Verify spike test handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Failed: Did not meet expectation -> Zero dropped connections,0.7,FAILED
+LOA-1134,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,2.26,PASSED
+LOA-1135,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.37,PASSED
+LOA-1136,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.86,PASSED
+LOA-1137,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.37,PASSED
+LOA-1138,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.76,PASSED
+LOA-1139,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,3.02,PASSED
+LOA-1140,Load Testing,Static Assets,Verify static assets handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.88,PASSED
+LOA-1141,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.17,PASSED
+LOA-1142,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,2.09,PASSED
+LOA-1143,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.09,PASSED
+LOA-1144,Load Testing,Endurance,Verify endurance handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.2,PASSED
+LOA-1145,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.29,PASSED
+LOA-1146,Load Testing,Spike Test,Verify spike test handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.84,PASSED
+LOA-1147,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.23,PASSED
+LOA-1148,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,0.29,PASSED
+LOA-1149,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.94,PASSED
+LOA-1150,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.74,PASSED
+LOA-1151,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,3.05,PASSED
+LOA-1152,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,3.5,PASSED
+LOA-1153,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,1.99,PASSED
+LOA-1154,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.88,PASSED
+LOA-1155,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,0.43,PASSED
+LOA-1156,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.63,PASSED
+LOA-1157,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.04,PASSED
+LOA-1158,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.48,PASSED
+LOA-1159,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,1.79,PASSED
+LOA-1160,Load Testing,Spike Test,Verify spike test handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Failed: Did not meet expectation -> P95 latency should be < 500ms,1.08,FAILED
+LOA-1161,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,3.03,PASSED
+LOA-1162,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.97,PASSED
+LOA-1163,Load Testing,Spike Test,Verify spike test handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.75,PASSED
+LOA-1164,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.28,PASSED
+LOA-1165,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,0.61,PASSED
+LOA-1166,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,0.14,PASSED
+LOA-1167,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Failed: Did not meet expectation -> Zero dropped connections,1.5,FAILED
+LOA-1168,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,1.5,PASSED
+LOA-1169,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.74,PASSED
+LOA-1170,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.49,PASSED
+LOA-1171,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.03,PASSED
+LOA-1172,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.36,PASSED
+LOA-1173,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.44,PASSED
+LOA-1174,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,2.55,PASSED
+LOA-1175,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.42,PASSED
+LOA-1176,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.02,PASSED
+LOA-1177,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.98,PASSED
+LOA-1178,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.48,PASSED
+LOA-1179,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.83,PASSED
+LOA-1180,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.24,PASSED
+LOA-1181,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.28,PASSED
+LOA-1182,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.96,PASSED
+LOA-1183,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.87,PASSED
+LOA-1184,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.66,PASSED
+LOA-1185,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.59,PASSED
+LOA-1186,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.51,PASSED
+LOA-1187,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.74,PASSED
+LOA-1188,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,1.94,PASSED
+LOA-1189,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,3.05,PASSED
+LOA-1190,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Failed: Did not meet expectation -> Auto-scaling should trigger,0.23,FAILED
+LOA-1191,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.58,PASSED
+LOA-1192,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,1.53,PASSED
+LOA-1193,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.18,PASSED
+LOA-1194,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,2.95,PASSED
+LOA-1195,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,1.13,PASSED
+LOA-1196,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.21,PASSED
+LOA-1197,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.15,PASSED
+LOA-1198,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,1.16,PASSED
+LOA-1199,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Failed: Did not meet expectation -> P95 latency should be < 500ms,3.02,FAILED
+LOA-1200,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.39,PASSED
+LOA-1201,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.24,PASSED
+LOA-1202,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.05,PASSED
+LOA-1203,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Failed: Did not meet expectation -> CPU usage should stay below 70%,0.38,FAILED
+LOA-1204,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,2.2,PASSED
+LOA-1205,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,0.78,PASSED
+LOA-1206,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,1.18,PASSED
+LOA-1207,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.65,PASSED
+LOA-1208,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.39,PASSED
+LOA-1209,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.47,PASSED
+LOA-1210,Load Testing,Endurance,Verify endurance handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,2.84,PASSED
+LOA-1211,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.19,PASSED
+LOA-1212,Load Testing,Endurance,Verify endurance handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.63,PASSED
+LOA-1213,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,3.1,PASSED
+LOA-1214,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Test skipped due to environment constraint,3.09,SKIPPED
+LOA-1215,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.81,PASSED
+LOA-1216,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,1.11,PASSED
+LOA-1217,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,1.93,PASSED
+LOA-1218,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.15,PASSED
+LOA-1219,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.96,PASSED
+LOA-1220,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.0,PASSED
+LOA-1221,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,1.69,PASSED
+LOA-1222,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,0.66,PASSED
+LOA-1223,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,0.53,PASSED
+LOA-1224,Load Testing,Spike Test,Verify spike test handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,2.92,PASSED
+LOA-1225,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.21,PASSED
+LOA-1226,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.35,PASSED
+LOA-1227,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Failed: Did not meet expectation -> CPU usage should stay below 70%,0.69,FAILED
+LOA-1228,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.45,PASSED
+LOA-1229,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.13,PASSED
+LOA-1230,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.24,PASSED
+LOA-1231,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.17,PASSED
+LOA-1232,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.94,PASSED
+LOA-1233,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.15,PASSED
+LOA-1234,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.47,PASSED
+LOA-1235,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,0.29,PASSED
+LOA-1236,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,3.09,PASSED
+LOA-1237,Load Testing,Spike Test,Verify spike test handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.82,PASSED
+LOA-1238,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.92,PASSED
+LOA-1239,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,1.0,PASSED
+LOA-1240,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,0.44,PASSED
+LOA-1241,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.97,PASSED
+LOA-1242,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.8,PASSED
+LOA-1243,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Failed: Did not meet expectation -> P95 latency should be < 500ms,1.57,FAILED
+LOA-1244,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Test skipped due to environment constraint,2.72,SKIPPED
+LOA-1245,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,3.28,PASSED
+LOA-1246,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.41,PASSED
+LOA-1247,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.61,PASSED
+LOA-1248,Load Testing,Spike Test,Verify spike test handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.85,PASSED
+LOA-1249,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.38,PASSED
+LOA-1250,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.16,PASSED
+LOA-1251,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,1.15,PASSED
+LOA-1252,Load Testing,Endurance,Verify endurance handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.07,PASSED
+LOA-1253,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,1.2,PASSED
+LOA-1254,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.46,PASSED
+LOA-1255,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.6,PASSED
+LOA-1256,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.91,PASSED
+LOA-1257,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.89,PASSED
+LOA-1258,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,3.07,PASSED
+LOA-1259,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.8,PASSED
+LOA-1260,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,0.67,PASSED
+LOA-1261,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,3.42,PASSED
+LOA-1262,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.15,PASSED
+LOA-1263,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,2.47,PASSED
+LOA-1264,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,2.46,PASSED
+LOA-1265,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.34,PASSED
+LOA-1266,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.17,PASSED
+LOA-1267,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.05,PASSED
+LOA-1268,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,2.06,PASSED
+LOA-1269,Load Testing,Static Assets,Verify static assets handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.27,PASSED
+LOA-1270,Load Testing,Spike Test,Verify spike test handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.87,PASSED
+LOA-1271,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.31,PASSED
+LOA-1272,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,3.06,PASSED
+LOA-1273,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Failed: Did not meet expectation -> Zero dropped connections,0.51,FAILED
+LOA-1274,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.04,PASSED
+LOA-1275,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.26,PASSED
+LOA-1276,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.83,PASSED
+LOA-1277,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,2.71,PASSED
+LOA-1278,Load Testing,Spike Test,Verify spike test handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.55,PASSED
+LOA-1279,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,3.43,PASSED
+LOA-1280,Load Testing,Spike Test,Verify spike test handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.89,PASSED
+LOA-1281,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,1.74,PASSED
+LOA-1282,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.87,PASSED
+LOA-1283,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.15,PASSED
+LOA-1284,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.09,PASSED
+LOA-1285,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.54,PASSED
+LOA-1286,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.87,PASSED
+LOA-1287,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.89,PASSED
+LOA-1288,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Failed: Did not meet expectation -> Auto-scaling should trigger,3.13,FAILED
+LOA-1289,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,2.38,PASSED
+LOA-1290,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.12,PASSED
+LOA-1291,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.2,PASSED
+LOA-1292,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.52,PASSED
+LOA-1293,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Failed: Did not meet expectation -> Zero dropped connections,1.45,FAILED
+LOA-1294,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.47,PASSED
+LOA-1295,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,0.65,PASSED
+LOA-1296,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,0.79,PASSED
+LOA-1297,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.24,PASSED
+LOA-1298,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,0.68,PASSED
+LOA-1299,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.61,PASSED
+LOA-1300,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.61,PASSED
+LOA-1301,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.89,PASSED
+LOA-1302,Load Testing,Static Assets,Verify static assets handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.91,PASSED
+LOA-1303,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.38,PASSED
+LOA-1304,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,0.23,PASSED
+LOA-1305,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,1.97,PASSED
+LOA-1306,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,1.76,PASSED
+LOA-1307,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.11,PASSED
+LOA-1308,Load Testing,Endurance,Verify endurance handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.71,PASSED
+LOA-1309,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,3.32,PASSED
+LOA-1310,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.11,PASSED
+LOA-1311,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.08,PASSED
+LOA-1312,Load Testing,Endurance,Verify endurance handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Failed: Did not meet expectation -> P95 latency should be < 500ms,2.41,FAILED
+LOA-1313,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Ramp up to 1000 users over 60s,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.69,PASSED
+LOA-1314,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,1.97,PASSED
+LOA-1315,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.64,PASSED
+LOA-1316,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.4,PASSED
+LOA-1317,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.16,PASSED
+LOA-1318,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Maintain 500 concurrent connections for 10m,Zero dropped connections,Success: Zero dropped connections,0.12,PASSED
+LOA-1319,Load Testing,Static Assets,Verify static assets handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.64,PASSED
+LOA-1320,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Simulate sudden traffic spike,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.46,PASSED
+LOA-1321,Load Testing,Static Assets,Verify static assets handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,3.38,PASSED
+LOA-1322,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.68,PASSED
+LOA-1323,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.19,PASSED
+LOA-1324,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.73,PASSED
+LOA-1325,Load Testing,Endurance,Verify endurance handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,2.57,PASSED
+LOA-1326,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.89,PASSED
+LOA-1327,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,2.39,PASSED
+LOA-1328,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.26,PASSED
+LOA-1329,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.26,PASSED
+LOA-1330,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,1.68,PASSED
+LOA-1331,Load Testing,Spike Test,Verify spike test handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,1.47,PASSED
+LOA-1332,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,3.17,PASSED
+LOA-1333,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.17,PASSED
+LOA-1334,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Send 50 requests/sec to API,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.45,PASSED
+LOA-1335,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,1.01,PASSED
+LOA-1336,Load Testing,Spike Test,Verify spike test handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,2.58,PASSED
+LOA-1337,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,P95 latency should be < 500ms,Success: P95 latency should be < 500ms,0.67,PASSED
+LOA-1338,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,Zero dropped connections,Success: Zero dropped connections,3.49,PASSED
+LOA-1339,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,0.65,PASSED
+LOA-1340,Load Testing,Endurance,Verify endurance handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,2.31,PASSED
+LOA-1341,Load Testing,Dashboard API,Verify dashboard api handles scenario correctly,Ramp up to 1000 users over 60s,Zero dropped connections,Success: Zero dropped connections,1.34,PASSED
+LOA-1342,Load Testing,Endurance,Verify endurance handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.76,PASSED
+LOA-1343,Load Testing,Static Assets,Verify static assets handles scenario correctly,Maintain 500 concurrent connections for 10m,CPU usage should stay below 70%,Success: CPU usage should stay below 70%,1.16,PASSED
+LOA-1344,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Test skipped due to environment constraint,1.0,SKIPPED
+LOA-1345,Load Testing,Login Endpoint,Verify login endpoint handles scenario correctly,Ramp up to 1000 users over 60s,Auto-scaling should trigger,Success: Auto-scaling should trigger,1.79,PASSED
+LOA-1346,Load Testing,Static Assets,Verify static assets handles scenario correctly,Send 50 requests/sec to API,Zero dropped connections,Success: Zero dropped connections,2.29,PASSED
+LOA-1347,Load Testing,WebSocket Connection,Verify websocket connection handles scenario correctly,Simulate sudden traffic spike,Auto-scaling should trigger,Success: Auto-scaling should trigger,3.27,PASSED
+LOA-1348,Load Testing,Spike Test,Verify spike test handles scenario correctly,Maintain 500 concurrent connections for 10m,Auto-scaling should trigger,Success: Auto-scaling should trigger,0.75,PASSED
+LOA-1349,Load Testing,Concurrent Users,Verify concurrent users handles scenario correctly,Send 50 requests/sec to API,Auto-scaling should trigger,Success: Auto-scaling should trigger,2.93,PASSED

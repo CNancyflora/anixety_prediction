@@ -1,0 +1,351 @@
+Test ID,Category,Module,Description,Test Steps,Expected Result,Actual Result,Execution Time (ms),Status
+UNI-1000,Unit Tests,User Controller,Verify user controller handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,0.25,PASSED
+UNI-1001,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,1.48,PASSED
+UNI-1002,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,1.28,PASSED
+UNI-1003,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,0.91,PASSED
+UNI-1004,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,0.25,PASSED
+UNI-1005,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,2.24,PASSED
+UNI-1006,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,0.12,PASSED
+UNI-1007,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,0.93,PASSED
+UNI-1008,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,1.04,PASSED
+UNI-1009,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,2.9,PASSED
+UNI-1010,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,3.42,PASSED
+UNI-1011,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,3.02,PASSED
+UNI-1012,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,3.13,PASSED
+UNI-1013,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,0.25,PASSED
+UNI-1014,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,3.3,PASSED
+UNI-1015,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,2.91,PASSED
+UNI-1016,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.93,PASSED
+UNI-1017,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,0.49,PASSED
+UNI-1018,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,0.13,PASSED
+UNI-1019,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,1.67,PASSED
+UNI-1020,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,2.5,PASSED
+UNI-1021,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,2.15,PASSED
+UNI-1022,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,1.81,PASSED
+UNI-1023,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,2.89,PASSED
+UNI-1024,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,1.67,PASSED
+UNI-1025,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,1.43,PASSED
+UNI-1026,Unit Tests,User Controller,Verify user controller handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,1.0,PASSED
+UNI-1027,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.8,PASSED
+UNI-1028,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,3.5,PASSED
+UNI-1029,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,3.29,PASSED
+UNI-1030,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,2.01,PASSED
+UNI-1031,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,1.17,PASSED
+UNI-1032,Unit Tests,User Controller,Verify user controller handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,3.01,PASSED
+UNI-1033,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,2.21,PASSED
+UNI-1034,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,3.14,PASSED
+UNI-1035,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,0.66,PASSED
+UNI-1036,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,2.76,PASSED
+UNI-1037,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,3.0,PASSED
+UNI-1038,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,1.77,PASSED
+UNI-1039,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,2.88,PASSED
+UNI-1040,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,0.21,PASSED
+UNI-1041,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Object should map correctly,Failed: Did not meet expectation -> Object should map correctly,0.49,FAILED
+UNI-1042,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,3.18,PASSED
+UNI-1043,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,2.9,PASSED
+UNI-1044,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,1.07,PASSED
+UNI-1045,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,1.37,PASSED
+UNI-1046,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,3.04,PASSED
+UNI-1047,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,2.54,PASSED
+UNI-1048,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,1.2,PASSED
+UNI-1049,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,0.83,PASSED
+UNI-1050,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,1.38,PASSED
+UNI-1051,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,0.68,PASSED
+UNI-1052,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,0.49,PASSED
+UNI-1053,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,1.49,PASSED
+UNI-1054,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,1.11,PASSED
+UNI-1055,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,0.95,PASSED
+UNI-1056,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,0.45,PASSED
+UNI-1057,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,3.43,PASSED
+UNI-1058,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,1.05,PASSED
+UNI-1059,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,2.92,PASSED
+UNI-1060,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,2.02,PASSED
+UNI-1061,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,0.76,PASSED
+UNI-1062,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,2.3,PASSED
+UNI-1063,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,3.1,PASSED
+UNI-1064,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,0.8,PASSED
+UNI-1065,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,0.58,PASSED
+UNI-1066,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,2.24,PASSED
+UNI-1067,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,2.3,PASSED
+UNI-1068,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,1.63,PASSED
+UNI-1069,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,1.15,PASSED
+UNI-1070,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,1.39,PASSED
+UNI-1071,Unit Tests,User Controller,Verify user controller handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,0.18,PASSED
+UNI-1072,Unit Tests,User Controller,Verify user controller handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,2.4,PASSED
+UNI-1073,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,1.72,PASSED
+UNI-1074,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.16,PASSED
+UNI-1075,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,1.42,PASSED
+UNI-1076,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.39,PASSED
+UNI-1077,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Object should map correctly,Failed: Did not meet expectation -> Object should map correctly,0.68,FAILED
+UNI-1078,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,0.92,PASSED
+UNI-1079,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,1.8,PASSED
+UNI-1080,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,0.36,PASSED
+UNI-1081,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,2.43,PASSED
+UNI-1082,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,2.08,PASSED
+UNI-1083,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,1.2,PASSED
+UNI-1084,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,1.28,PASSED
+UNI-1085,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Object should map correctly,Failed: Did not meet expectation -> Object should map correctly,0.28,FAILED
+UNI-1086,Unit Tests,User Controller,Verify user controller handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,3.02,PASSED
+UNI-1087,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,0.25,PASSED
+UNI-1088,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,3.41,PASSED
+UNI-1089,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,0.92,PASSED
+UNI-1090,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,2.28,PASSED
+UNI-1091,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Should return 200 OK,Failed: Did not meet expectation -> Should return 200 OK,2.68,FAILED
+UNI-1092,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,0.77,PASSED
+UNI-1093,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Score should default to 0,Failed: Did not meet expectation -> Score should default to 0,2.59,FAILED
+UNI-1094,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,1.64,PASSED
+UNI-1095,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Failed: Did not meet expectation -> Should throw ValidationException,2.56,FAILED
+UNI-1096,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,2.8,PASSED
+UNI-1097,Unit Tests,User Controller,Verify user controller handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,0.16,PASSED
+UNI-1098,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,0.97,PASSED
+UNI-1099,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,1.46,PASSED
+UNI-1100,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,0.73,PASSED
+UNI-1101,Unit Tests,User Controller,Verify user controller handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,3.11,PASSED
+UNI-1102,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,1.94,PASSED
+UNI-1103,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.4,PASSED
+UNI-1104,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,2.51,PASSED
+UNI-1105,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,2.3,PASSED
+UNI-1106,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,0.1,PASSED
+UNI-1107,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,3.26,PASSED
+UNI-1108,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,2.87,PASSED
+UNI-1109,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,1.08,PASSED
+UNI-1110,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,1.63,PASSED
+UNI-1111,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,2.86,PASSED
+UNI-1112,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,0.3,PASSED
+UNI-1113,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,0.25,PASSED
+UNI-1114,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,1.03,PASSED
+UNI-1115,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,0.84,PASSED
+UNI-1116,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,1.36,PASSED
+UNI-1117,Unit Tests,User Controller,Verify user controller handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,0.96,PASSED
+UNI-1118,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,1.56,PASSED
+UNI-1119,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,2.68,PASSED
+UNI-1120,Unit Tests,Email Service,Verify email service handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,0.58,PASSED
+UNI-1121,Unit Tests,Email Service,Verify email service handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,2.66,PASSED
+UNI-1122,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,1.2,PASSED
+UNI-1123,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,1.1,PASSED
+UNI-1124,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.32,PASSED
+UNI-1125,Unit Tests,Email Service,Verify email service handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,1.73,PASSED
+UNI-1126,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,0.21,PASSED
+UNI-1127,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,0.85,PASSED
+UNI-1128,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,1.1,PASSED
+UNI-1129,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Failed: Did not meet expectation -> Score should default to 0,2.47,FAILED
+UNI-1130,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.85,PASSED
+UNI-1131,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,0.75,PASSED
+UNI-1132,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,0.65,PASSED
+UNI-1133,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,1.2,PASSED
+UNI-1134,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,0.7,PASSED
+UNI-1135,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,0.48,PASSED
+UNI-1136,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.36,PASSED
+UNI-1137,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,3.23,PASSED
+UNI-1138,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,0.51,PASSED
+UNI-1139,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,0.68,PASSED
+UNI-1140,Unit Tests,User Controller,Verify user controller handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,2.31,PASSED
+UNI-1141,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,1.96,PASSED
+UNI-1142,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Should throw ValidationException,Failed: Did not meet expectation -> Should throw ValidationException,2.43,FAILED
+UNI-1143,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,0.81,PASSED
+UNI-1144,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,1.84,PASSED
+UNI-1145,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,2.73,PASSED
+UNI-1146,Unit Tests,User Controller,Verify user controller handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,1.76,PASSED
+UNI-1147,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,0.23,PASSED
+UNI-1148,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,0.95,PASSED
+UNI-1149,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,2.02,PASSED
+UNI-1150,Unit Tests,Email Service,Verify email service handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,0.41,PASSED
+UNI-1151,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,2.72,PASSED
+UNI-1152,Unit Tests,Email Service,Verify email service handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,1.05,PASSED
+UNI-1153,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,0.54,PASSED
+UNI-1154,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Object should map correctly,Failed: Did not meet expectation -> Object should map correctly,2.93,FAILED
+UNI-1155,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,0.67,PASSED
+UNI-1156,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,2.29,PASSED
+UNI-1157,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,3.15,PASSED
+UNI-1158,Unit Tests,User Controller,Verify user controller handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,1.79,PASSED
+UNI-1159,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,0.92,PASSED
+UNI-1160,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.66,PASSED
+UNI-1161,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,0.89,PASSED
+UNI-1162,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,1.62,PASSED
+UNI-1163,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,0.18,PASSED
+UNI-1164,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,3.27,PASSED
+UNI-1165,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,2.23,PASSED
+UNI-1166,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,3.15,PASSED
+UNI-1167,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,2.59,PASSED
+UNI-1168,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,2.54,PASSED
+UNI-1169,Unit Tests,User Controller,Verify user controller handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,1.06,PASSED
+UNI-1170,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,2.53,PASSED
+UNI-1171,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,2.96,PASSED
+UNI-1172,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,1.41,PASSED
+UNI-1173,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,2.65,PASSED
+UNI-1174,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,3.32,PASSED
+UNI-1175,Unit Tests,User Controller,Verify user controller handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,3.3,PASSED
+UNI-1176,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,2.46,PASSED
+UNI-1177,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,0.16,PASSED
+UNI-1178,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,2.69,PASSED
+UNI-1179,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,2.67,PASSED
+UNI-1180,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,3.2,PASSED
+UNI-1181,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.9,PASSED
+UNI-1182,Unit Tests,User Controller,Verify user controller handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,2.77,PASSED
+UNI-1183,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,3.24,PASSED
+UNI-1184,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,1.87,PASSED
+UNI-1185,Unit Tests,User Controller,Verify user controller handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Failed: Did not meet expectation -> Should throw ValidationException,3.05,FAILED
+UNI-1186,Unit Tests,User Controller,Verify user controller handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,2.03,PASSED
+UNI-1187,Unit Tests,User Controller,Verify user controller handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,1.84,PASSED
+UNI-1188,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,0.15,PASSED
+UNI-1189,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,2.16,PASSED
+UNI-1190,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,2.86,PASSED
+UNI-1191,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.59,PASSED
+UNI-1192,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,2.39,PASSED
+UNI-1193,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,0.69,PASSED
+UNI-1194,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,2.2,PASSED
+UNI-1195,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,0.65,PASSED
+UNI-1196,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,2.63,PASSED
+UNI-1197,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,3.48,PASSED
+UNI-1198,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,2.01,PASSED
+UNI-1199,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,1.49,PASSED
+UNI-1200,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,3.34,PASSED
+UNI-1201,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,2.48,PASSED
+UNI-1202,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,1.14,PASSED
+UNI-1203,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,1.35,PASSED
+UNI-1204,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,2.4,PASSED
+UNI-1205,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,0.83,PASSED
+UNI-1206,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,1.0,PASSED
+UNI-1207,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,2.89,PASSED
+UNI-1208,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,1.8,PASSED
+UNI-1209,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,2.78,PASSED
+UNI-1210,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,1.43,PASSED
+UNI-1211,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Failed: Did not meet expectation -> Should throw ValidationException,0.11,FAILED
+UNI-1212,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,2.71,PASSED
+UNI-1213,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,3.26,PASSED
+UNI-1214,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,3.4,PASSED
+UNI-1215,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,1.7,PASSED
+UNI-1216,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,1.2,PASSED
+UNI-1217,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.85,PASSED
+UNI-1218,Unit Tests,User Controller,Verify user controller handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,3.22,PASSED
+UNI-1219,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,0.28,PASSED
+UNI-1220,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,3.23,PASSED
+UNI-1221,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,2.65,PASSED
+UNI-1222,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,1.84,PASSED
+UNI-1223,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,1.64,PASSED
+UNI-1224,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,2.22,PASSED
+UNI-1225,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,1.26,PASSED
+UNI-1226,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,1.46,PASSED
+UNI-1227,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Failed: Did not meet expectation -> Should return 200 OK,0.95,FAILED
+UNI-1228,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,0.56,PASSED
+UNI-1229,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,2.45,PASSED
+UNI-1230,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,3.33,PASSED
+UNI-1231,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,0.66,PASSED
+UNI-1232,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,2.03,PASSED
+UNI-1233,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,2.02,PASSED
+UNI-1234,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,2.78,PASSED
+UNI-1235,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,3.41,PASSED
+UNI-1236,Unit Tests,Email Service,Verify email service handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,1.94,PASSED
+UNI-1237,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,3.37,PASSED
+UNI-1238,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Object should map correctly,Test skipped due to environment constraint,3.4,SKIPPED
+UNI-1239,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,2.59,PASSED
+UNI-1240,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,0.31,PASSED
+UNI-1241,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,2.51,PASSED
+UNI-1242,Unit Tests,Email Service,Verify email service handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,1.34,PASSED
+UNI-1243,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Should throw ValidationException,Failed: Did not meet expectation -> Should throw ValidationException,0.12,FAILED
+UNI-1244,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,0.24,PASSED
+UNI-1245,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,2.12,PASSED
+UNI-1246,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,0.46,PASSED
+UNI-1247,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,0.67,PASSED
+UNI-1248,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,2.96,PASSED
+UNI-1249,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,3.02,PASSED
+UNI-1250,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,1.1,PASSED
+UNI-1251,Unit Tests,User Controller,Verify user controller handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,0.27,PASSED
+UNI-1252,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,3.44,PASSED
+UNI-1253,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,2.62,PASSED
+UNI-1254,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,2.59,PASSED
+UNI-1255,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,1.12,PASSED
+UNI-1256,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,0.7,PASSED
+UNI-1257,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,3.25,PASSED
+UNI-1258,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,2.61,PASSED
+UNI-1259,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Score should default to 0,Failed: Did not meet expectation -> Score should default to 0,2.29,FAILED
+UNI-1260,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.9,PASSED
+UNI-1261,Unit Tests,User Controller,Verify user controller handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,3.46,PASSED
+UNI-1262,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,2.03,PASSED
+UNI-1263,Unit Tests,User Controller,Verify user controller handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,3.34,PASSED
+UNI-1264,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,0.66,PASSED
+UNI-1265,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,3.08,PASSED
+UNI-1266,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,0.56,PASSED
+UNI-1267,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,2.49,PASSED
+UNI-1268,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,3.43,PASSED
+UNI-1269,Unit Tests,User Controller,Verify user controller handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,1.18,PASSED
+UNI-1270,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,2.68,PASSED
+UNI-1271,Unit Tests,User Controller,Verify user controller handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,1.05,PASSED
+UNI-1272,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,3.09,PASSED
+UNI-1273,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,2.87,PASSED
+UNI-1274,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,0.8,PASSED
+UNI-1275,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,2.52,PASSED
+UNI-1276,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,0.21,PASSED
+UNI-1277,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,3.48,PASSED
+UNI-1278,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,0.95,PASSED
+UNI-1279,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,2.18,PASSED
+UNI-1280,Unit Tests,User Controller,Verify user controller handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,3.47,PASSED
+UNI-1281,Unit Tests,User Controller,Verify user controller handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,1.1,PASSED
+UNI-1282,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,1.87,PASSED
+UNI-1283,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,1.55,PASSED
+UNI-1284,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,0.49,PASSED
+UNI-1285,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Test skipped due to environment constraint,1.28,SKIPPED
+UNI-1286,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,3.25,PASSED
+UNI-1287,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,3.36,PASSED
+UNI-1288,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,2.74,PASSED
+UNI-1289,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,1.78,PASSED
+UNI-1290,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,2.2,PASSED
+UNI-1291,Unit Tests,User Controller,Verify user controller handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,2.8,PASSED
+UNI-1292,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,2.72,PASSED
+UNI-1293,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,1.96,PASSED
+UNI-1294,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,2.4,PASSED
+UNI-1295,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,2.79,PASSED
+UNI-1296,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Score should default to 0,Failed: Did not meet expectation -> Score should default to 0,1.72,FAILED
+UNI-1297,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,1.59,PASSED
+UNI-1298,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,0.22,PASSED
+UNI-1299,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,0.74,PASSED
+UNI-1300,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,2.12,PASSED
+UNI-1301,Unit Tests,Email Service,Verify email service handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,1.79,PASSED
+UNI-1302,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,2.3,PASSED
+UNI-1303,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,1.85,PASSED
+UNI-1304,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,1.76,PASSED
+UNI-1305,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,0.86,PASSED
+UNI-1306,Unit Tests,Email Service,Verify email service handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,2.69,PASSED
+UNI-1307,Unit Tests,Email Service,Verify email service handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,0.24,PASSED
+UNI-1308,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,0.68,PASSED
+UNI-1309,Unit Tests,User Controller,Verify user controller handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,2.41,PASSED
+UNI-1310,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Call function with null input,Should return 200 OK,Success: Should return 200 OK,2.34,PASSED
+UNI-1311,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,0.92,PASSED
+UNI-1312,Unit Tests,User Controller,Verify user controller handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,2.97,PASSED
+UNI-1313,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Should return 200 OK,Success: Should return 200 OK,3.25,PASSED
+UNI-1314,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,1.36,PASSED
+UNI-1315,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,1.05,PASSED
+UNI-1316,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,2.21,PASSED
+UNI-1317,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,1.13,PASSED
+UNI-1318,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,0.2,PASSED
+UNI-1319,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,1.19,PASSED
+UNI-1320,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,3.27,PASSED
+UNI-1321,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,0.36,PASSED
+UNI-1322,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Calculate score with missing fields,Should return 200 OK,Success: Should return 200 OK,1.48,PASSED
+UNI-1323,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,0.84,PASSED
+UNI-1324,Unit Tests,Email Service,Verify email service handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,3.3,PASSED
+UNI-1325,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,2.68,PASSED
+UNI-1326,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Should throw ValidationException,Success: Should throw ValidationException,2.45,PASSED
+UNI-1327,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,0.93,PASSED
+UNI-1328,Unit Tests,User Controller,Verify user controller handles scenario correctly,Calculate score with missing fields,Object should map correctly,Success: Object should map correctly,2.63,PASSED
+UNI-1329,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Object should map correctly,Success: Object should map correctly,3.24,PASSED
+UNI-1330,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Test skipped due to environment constraint,0.86,SKIPPED
+UNI-1331,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Object should map correctly,Test skipped due to environment constraint,1.42,SKIPPED
+UNI-1332,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,0.77,PASSED
+UNI-1333,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,0.13,PASSED
+UNI-1334,Unit Tests,Auth Middleware,Verify auth middleware handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,0.67,PASSED
+UNI-1335,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Mock DB response and assert mapping,Should throw ValidationException,Success: Should throw ValidationException,1.92,PASSED
+UNI-1336,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Score should default to 0,Success: Score should default to 0,3.0,PASSED
+UNI-1337,Unit Tests,DB Repository,Verify db repository handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,2.43,PASSED
+UNI-1338,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,1.23,PASSED
+UNI-1339,Unit Tests,Email Service,Verify email service handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,2.1,PASSED
+UNI-1340,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Pass valid JWT token,Score should default to 0,Success: Score should default to 0,2.01,PASSED
+UNI-1341,Unit Tests,Email Service,Verify email service handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,2.12,PASSED
+UNI-1342,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Call function with null input,Score should default to 0,Success: Score should default to 0,0.36,PASSED
+UNI-1343,Unit Tests,Resume Analyzer,Verify resume analyzer handles scenario correctly,Calculate score with missing fields,Score should default to 0,Success: Score should default to 0,1.87,PASSED
+UNI-1344,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Should return 200 OK,Success: Should return 200 OK,3.0,PASSED
+UNI-1345,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Calculate score with missing fields,Should throw ValidationException,Success: Should throw ValidationException,1.36,PASSED
+UNI-1346,Unit Tests,User Controller,Verify user controller handles scenario correctly,Call function with null input,Should throw ValidationException,Success: Should throw ValidationException,1.07,PASSED
+UNI-1347,Unit Tests,Email Service,Verify email service handles scenario correctly,Mock DB response and assert mapping,Object should map correctly,Success: Object should map correctly,0.64,PASSED
+UNI-1348,Unit Tests,Data Parsers,Verify data parsers handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,1.72,PASSED
+UNI-1349,Unit Tests,Score Calculator,Verify score calculator handles scenario correctly,Pass valid JWT token,Object should map correctly,Success: Object should map correctly,2.63,PASSED
