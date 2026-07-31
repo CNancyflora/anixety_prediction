@@ -98,6 +98,30 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: Master_Report
+          
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.10' }
+      - run: pip install openpyxl
+        
+      - name: Generate All Reports
+        run: |
+          python automation/generate_report.py
+          python automation/generate_fyp_report.py
+          python automation/generate_exact_report.py
+          python automation/generate_selenium_report.py
+          
+      - name: Upload Final Excel Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: Final_Excel_Reports
+          path: Test_Results/
+          
+      - name: Upload FYP Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: FYP_Project_Report
+          path: Test_Results/FYP_Report/
 
       - name: Publish Live E2E Execution Summary
         run: |
