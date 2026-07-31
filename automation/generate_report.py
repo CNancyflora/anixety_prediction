@@ -274,22 +274,22 @@ def generate_test_cases():
 # COLOUR HELPERS
 # ──────────────────────────────────────────────────────────────────────────────
 
-DARK_GREEN  = PatternFill("solid", fgColor="1E3A2F")
-HEADER_FILL = PatternFill("solid", fgColor="1A5276")
-PASS_FILL   = PatternFill("solid", fgColor="1E8449")
-FAIL_FILL   = PatternFill("solid", fgColor="922B21")
-SKIP_FILL   = PatternFill("solid", fgColor="7D6608")
-TITLE_FILL  = PatternFill("solid", fgColor="0D1117")
-ALT_FILL    = PatternFill("solid", fgColor="0F1923")
+HEADER_FILL = PatternFill("solid", fgColor="227447") # Excel Green
+PASS_FILL   = PatternFill("solid", fgColor="C6EFCE") # Light Green
+FAIL_FILL   = PatternFill("solid", fgColor="FFC7CE") # Light Red
+SKIP_FILL   = PatternFill("solid", fgColor="FFEB9C") # Light Yellow
+TITLE_FILL  = PatternFill("solid", fgColor="F2F2F2") # Light Gray
+ALT_FILL    = PatternFill("solid", fgColor="F9F9F9") # Very Light Gray
+WHITE_FILL  = PatternFill("solid", fgColor="FFFFFF") # White
 
 WHITE  = Font(color="FFFFFF", bold=True, name="Calibri", size=11)
-WHITE_N = Font(color="FFFFFF", bold=False, name="Calibri", size=10)
-YELLOW = Font(color="F9E79F", bold=True, name="Calibri", size=11)
-GREEN  = Font(color="2ECC71", bold=True, name="Calibri", size=10)
-RED    = Font(color="E74C3C", bold=True, name="Calibri", size=10)
-GREY   = Font(color="AAB7B8", bold=False, name="Calibri", size=10)
+BLACK_N = Font(color="000000", bold=False, name="Calibri", size=10)
+BLACK_B = Font(color="000000", bold=True, name="Calibri", size=11)
+GREEN  = Font(color="006100", bold=True, name="Calibri", size=10)
+RED    = Font(color="9C0006", bold=True, name="Calibri", size=10)
+YELLOW = Font(color="9C6500", bold=True, name="Calibri", size=10)
 
-thin = Side(style="thin", color="2C3E50")
+thin = Side(style="thin", color="BFBFBF")
 BORDER = Border(left=thin, right=thin, top=thin, bottom=thin)
 CENTER = Alignment(horizontal="center", vertical="center", wrap_text=True)
 LEFT   = Alignment(horizontal="left",   vertical="center", wrap_text=True)
@@ -301,7 +301,7 @@ def header_cell(ws, row, col, value, fill=HEADER_FILL, font=WHITE, align=CENTER)
     return c
 
 
-def data_cell(ws, row, col, value, fill=None, font=WHITE_N, align=LEFT):
+def data_cell(ws, row, col, value, fill=None, font=BLACK_N, align=LEFT):
     c = ws.cell(row=row, column=col, value=value)
     if fill: c.fill = fill
     c.font = font; c.alignment = align; c.border = BORDER
@@ -319,13 +319,13 @@ def build_summary_sheet(ws, cases):
     # ── Big Title ──────────────────────────────────────────────────────────────
     ws.merge_cells("A1:G1")
     t = ws.cell(row=1, column=1, value=f"  {APP}  |  Master Test Execution Summary")
-    t.fill = TITLE_FILL; t.font = Font(color="58D68D", bold=True, name="Calibri", size=16)
+    t.fill = TITLE_FILL; t.font = Font(color="000000", bold=True, name="Calibri", size=16)
     t.alignment = CENTER
     ws.row_dimensions[1].height = 40
 
     ws.merge_cells("A2:G2")
     sub = ws.cell(row=2, column=1, value=f"Build: {BUILD}  |  Device: {DEVICE}  |  Run Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    sub.fill = TITLE_FILL; sub.font = Font(color="AAB7B8", bold=False, name="Calibri", size=10)
+    sub.fill = TITLE_FILL; sub.font = Font(color="595959", bold=False, name="Calibri", size=10)
     sub.alignment = CENTER
     ws.row_dimensions[2].height = 22
 
@@ -380,14 +380,14 @@ def build_summary_sheet(ws, cases):
         cp_pct = f"{round(cp/ct*100,1)}%" if ct else "N/A"
         avg_t = round(sum(c["Execution Time (s)"] for c in cat_cases) / ct, 2) if ct else 0
 
-        row_fill = ALT_FILL if row % 2 == 0 else PatternFill("solid", fgColor="0B1520")
-        data_cell(ws, row, 1, cat,    fill=row_fill, font=WHITE_N, align=LEFT)
-        data_cell(ws, row, 2, ct,     fill=row_fill, font=WHITE_N, align=CENTER)
-        data_cell(ws, row, 3, cp,     fill=PASS_FILL if cp else row_fill, font=GREEN if cp else WHITE_N, align=CENTER)
-        data_cell(ws, row, 4, cf,     fill=FAIL_FILL if cf else row_fill, font=RED  if cf else WHITE_N, align=CENTER)
-        data_cell(ws, row, 5, cs,     fill=SKIP_FILL if cs else row_fill, font=GREY if cs else WHITE_N, align=CENTER)
+        row_fill = ALT_FILL if row % 2 == 0 else WHITE_FILL
+        data_cell(ws, row, 1, cat,    fill=row_fill, font=BLACK_N, align=LEFT)
+        data_cell(ws, row, 2, ct,     fill=row_fill, font=BLACK_N, align=CENTER)
+        data_cell(ws, row, 3, cp,     fill=PASS_FILL if cp else row_fill, font=GREEN if cp else BLACK_N, align=CENTER)
+        data_cell(ws, row, 4, cf,     fill=FAIL_FILL if cf else row_fill, font=RED  if cf else BLACK_N, align=CENTER)
+        data_cell(ws, row, 5, cs,     fill=SKIP_FILL if cs else row_fill, font=YELLOW if cs else BLACK_N, align=CENTER)
         data_cell(ws, row, 6, cp_pct, fill=row_fill, font=GREEN, align=CENTER)
-        data_cell(ws, row, 7, avg_t,  fill=row_fill, font=WHITE_N, align=CENTER)
+        data_cell(ws, row, 7, avg_t,  fill=row_fill, font=BLACK_N, align=CENTER)
         ws.row_dimensions[row].height = 20
         row += 1
 
@@ -436,19 +436,19 @@ def build_detail_sheet(ws, cases):
         else:
             status_fill = SKIP_FILL;  status_font = YELLOW
 
-        row_fill = ALT_FILL if ri % 2 == 0 else PatternFill("solid", fgColor="0B1520")
+        row_fill = ALT_FILL if ri % 2 == 0 else WHITE_FILL
 
         for ci, (col_name, _) in enumerate(columns, 1):
             val = case.get(col_name, "")
             if col_name == "Status":
                 data_cell(ws, ri, ci, val, fill=status_fill, font=status_font, align=CENTER)
             elif col_name in ("Test Case ID",):
-                data_cell(ws, ri, ci, val, fill=row_fill, font=Font(color="58D68D", bold=True, name="Calibri", size=10), align=CENTER)
+                data_cell(ws, ri, ci, val, fill=row_fill, font=BLACK_B, align=CENTER)
             elif col_name == "Priority":
                 pcolor = {"Critical":"E74C3C","High":"E67E22","Medium":"F1C40F","Low":"2ECC71"}.get(val, "FFFFFF")
                 data_cell(ws, ri, ci, val, fill=PatternFill("solid", fgColor=pcolor), font=Font(color="000000", bold=True, name="Calibri", size=9), align=CENTER)
             else:
-                data_cell(ws, ri, ci, val, fill=row_fill, font=WHITE_N, align=LEFT)
+                data_cell(ws, ri, ci, val, fill=row_fill, font=BLACK_N, align=LEFT)
 
         ws.row_dimensions[ri].height = 35
 
