@@ -121,7 +121,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: FYP_Project_Report
-          path: Test_Results/FYP_Report/
+          path: Test_Results/FYP_Report/FYP_CalmHire_QA_Test_Report.xlsx
+
+      - name: Upload Selenium Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Selenium_Test_Report
+          path: Test_Results/Excel/Selenium_Test_Report.xlsx
 
       - name: Publish Live E2E Execution Summary
         run: |
@@ -149,11 +155,11 @@ jobs:
           echo "Execution Duration: ${DURATION}s" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Artifacts Generated:" >> $GITHUB_STEP_SUMMARY
-          echo "/ Excel Reports (6 Specialized Workbooks - 350 Test Cases Each)" >> $GITHUB_STEP_SUMMARY
-          echo "/ HTML Reports" >> $GITHUB_STEP_SUMMARY
-          echo "/ Screenshots" >> $GITHUB_STEP_SUMMARY
-          echo "/ Logs" >> $GITHUB_STEP_SUMMARY
-          echo "/ JSON Results" >> $GITHUB_STEP_SUMMARY
+          echo "/ Master Excel Report (2100 Cases)" >> $GITHUB_STEP_SUMMARY
+          echo "/ FYP Project Test Report" >> $GITHUB_STEP_SUMMARY
+          echo "/ Selenium Web E2E Test Report" >> $GITHUB_STEP_SUMMARY
+          echo "/ Appium Exact Replica Report" >> $GITHUB_STEP_SUMMARY
+          echo "/ Screenshots & Logs" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "_Job summary generated at run-time_" >> $GITHUB_STEP_SUMMARY
 
