@@ -1,0 +1,5 @@
+Test ID,Module,Test Name,Status,Execution Time (s),Priority,Target URL,Reason/Log
+TC-0004,Authentication,Verify authentication functionality - Case 4,SKIPPED,2.45,High,https://cnancyflora.github.io/anixety_prediction/,Skipped due to upstream failure
+TC-0083,Navigation,Verify navigation functionality - Case 3,SKIPPED,4.07,Low,https://cnancyflora.github.io/anixety_prediction/,Skipped due to upstream failure
+TC-0353,File Upload,Verify file upload functionality - Case 13,SKIPPED,2.7,High,https://cnancyflora.github.io/anixety_prediction/,Skipped due to upstream failure
+TC-0382,Responsive Design,Verify responsive design functionality - Case 2,SKIPPED,2.28,High,https://cnancyflora.github.io/anixety_prediction/,Skipped due to upstream failure

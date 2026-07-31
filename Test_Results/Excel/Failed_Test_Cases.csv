@@ -1,0 +1,9 @@
+Test ID,Module,Test Name,Status,Execution Time (s),Priority,Target URL,Reason/Log
+TC-0038,Authentication,Verify authentication functionality - Case 38,FAILED,2.23,Critical,https://cnancyflora.github.io/anixety_prediction/,ElementNotInteractableException
+TC-0145,UI Validation,Verify ui validation functionality - Case 35,FAILED,1.09,Medium,https://cnancyflora.github.io/anixety_prediction/,AssertionError: Expected 'True' but got 'False'
+TC-0157,UI Validation,Verify ui validation functionality - Case 47,FAILED,2.51,Low,https://cnancyflora.github.io/anixety_prediction/,StaleElementReferenceException
+TC-0164,Forms,Verify forms functionality - Case 4,FAILED,1.35,Medium,https://cnancyflora.github.io/anixety_prediction/,AssertionError: Expected 'True' but got 'False'
+TC-0322,Session Management,Verify session management functionality - Case 2,FAILED,3.38,High,https://cnancyflora.github.io/anixety_prediction/,ElementNotInteractableException
+TC-0428,Regression,Verify regression functionality - Case 8,FAILED,2.66,Medium,https://cnancyflora.github.io/anixety_prediction/,StaleElementReferenceException
+TC-0431,Regression,Verify regression functionality - Case 11,FAILED,1.27,Low,https://cnancyflora.github.io/anixety_prediction/,ElementNotInteractableException
+TC-0439,Regression,Verify regression functionality - Case 19,FAILED,4.36,High,https://cnancyflora.github.io/anixety_prediction/,TimeoutException
