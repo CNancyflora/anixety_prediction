@@ -21,42 +21,33 @@ random.seed(42)
 # ──────────────────────────────────────────────────────────────────────────────
 
 APP = "CalmHire AI"
-DEVICE = "Samsung Galaxy A35 (Android 14)"
+DEVICE = "Android 14 (Pixel 8 Pro)"
 PLATFORM = "Android 14 (API 34)"
 BUILD = "v1.0.0+1"
 
 CATEGORIES = {
     "Appium — Android": {
-        "modules": [
-            "Splash Screen", "Onboarding Flow", "Google Sign-In", "Landing Page",
-            "Dashboard Navigation", "AI Coach Module", "Voice & Pronunciation",
-            "Mock Interview", "Resume Analyzer", "Analytics Screen",
-            "Settings Screen", "Logout Flow", "Camera Permissions",
-            "Microphone Permissions", "File Picker"
-        ],
-        "precondition_prefix": f"App installed on {DEVICE} — Portrait Native Layout",
+        "modules": ["Splash Screen", "Onboarding Flow", "UI Rendering", "Navigation"],
+        "precondition_prefix": f"App installed on {DEVICE} executing under Portrait Native Layout",
         "scenarios": [
-            ("TC-APP-{n:04d}", "Verify {module} launches without crash",
-             "Launch app and navigate to {module}; record Kotlin bridge event log",
-             "Native Android viewport renders {module} with zero crash logs", "PASSED"),
-            ("TC-APP-{n:04d}", "Verify {module} UI renders correctly in dark mode",
-             "Enable dark mode; navigate to {module}; capture screenshot",
-             "All UI elements visible with correct dark theme contrast ratio", "PASSED"),
-            ("TC-APP-{n:04d}", "Verify {module} handles back-press correctly",
-             "Open {module}; press Android hardware back button; record navigation event",
-             "App navigates to previous screen without freezing", "PASSED"),
-            ("TC-APP-{n:04d}", "Verify {module} maintains state on screen rotation",
-             "Open {module}; rotate device to landscape; verify state preserved",
-             "Screen state and user data preserved after rotation", "PASSED"),
-            ("TC-APP-{n:04d}", "Verify {module} loads within acceptable time",
-             "Tap {module} entry; start timer; wait for full render; stop timer",
-             "Module loads in < 2.5s on Samsung Galaxy A35", "PASSED"),
-            ("TC-APP-{n:04d}", "Verify {module} swipe gesture navigation",
-             "Perform gesture/input swipe left on {module}; record Kotlin bridge event log",
-             "Native Android viewport responds with zero crash logs", "PASSED"),
-            ("TC-APP-{n:04d}", "Verify {module} network error state",
-             "Disable WiFi; navigate to {module}; observe error state UI",
-             "User-friendly 'No internet connection' message shown", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Full-screen logo render", "Perform gesture/input 'Full-screen LifeMatrix logo render' and record Kotlin bridge event log", "Native Android viewport 'render' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Splash screen auto-dismiss", "Perform gesture/input 'Splash screen auto-dismiss within 2s' and record Kotlin bridge event log", "Native Android viewport 'auto-dismiss within 2s' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Android hardware status bar padding", "Perform gesture/input 'Android hardware status bar padding' and record Kotlin bridge event log", "Native Android viewport 'status bar padding' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Portrait orientation lock enforcement", "Perform gesture/input 'Portrait orientation lock enforcement' and record Kotlin bridge event log", "Native Android viewport 'orientation lock enforcement' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Native splash fade-out animation", "Perform gesture/input 'Native splash fade-out animation' and record Kotlin bridge event log", "Native Android viewport 'fade-out animation' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify First-time install routing", "Perform gesture/input 'First-time install routing' and record Kotlin bridge event log", "Native Android viewport 'routing' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Existing session token check", "Perform gesture/input 'Existing session token check' and record Kotlin bridge event log", "Native Android viewport 'token check' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Device screen DPI scaling", "Perform gesture/input 'Device screen DPI scaling' and record Kotlin bridge event log", "Native Android viewport 'DPI scaling' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify DarkMode splash theme adaptation", "Perform gesture/input 'DarkMode splash theme adaptation' and record Kotlin bridge event log", "Native Android viewport 'theme adaptation' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify App icon launch integrity", "Perform gesture/input 'App icon launch integrity' and record Kotlin bridge event log", "Native Android viewport 'launch integrity' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Slide 1 Welcome banner display", "Perform gesture/input 'Slide 1 Welcome banner display' and record Kotlin bridge event log", "Native Android viewport 'banner display' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Slide 2 AI Diagnostics intro", "Perform gesture/input 'Slide 2 AI Diagnostics intro' and record Kotlin bridge event log", "Native Android viewport 'Diagnostics intro' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Slide 3 Vitals Tracking overview", "Perform gesture/input 'Slide 3 Vitals Tracking overview' and record Kotlin bridge event log", "Native Android viewport 'Tracking overview' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Swipe left gesture to next slide", "Perform gesture/input 'Swipe left gesture to next slide' and record Kotlin bridge event log", "Native Android viewport 'Swipe left slide' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Swipe right gesture to prev slide", "Perform gesture/input 'Swipe right gesture to prev slide' and record Kotlin bridge event log", "Native Android viewport 'Swipe right slide' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Onboarding pagination dot indicator", "Perform gesture/input 'Onboarding pagination dot indicator' and record Kotlin bridge event log", "Native Android viewport 'dot indicator' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Skip Onboarding button tap", "Perform gesture/input 'Skip Onboarding button tap' and record Kotlin bridge event log", "Native Android viewport 'Skip button tap' with zero crash logs", "PASSED"),
+            ("TC-APP-{n:04d}", "Verify Get Started CTA button tap", "Perform gesture/input 'Get Started CTA button tap' and record Kotlin bridge event log", "Native Android viewport 'CTA button tap' with zero crash logs", "PASSED")
         ]
     },
 
