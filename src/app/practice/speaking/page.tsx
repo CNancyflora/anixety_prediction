@@ -26,7 +26,7 @@ export default function SpeakingPracticePage() {
   const analyzerRef = useRef<AudioAnalyzer | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const timerRef = useRef<any>(null);
-  const recognizerRef = useRef<SpeechRecognition | null>(null);
+  const recognizerRef = useRef<any>(null);
   const transcriptRef = useRef("");
 
   useEffect(() => {

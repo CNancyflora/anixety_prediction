@@ -369,11 +369,11 @@ export function isSpeechRecognitionAvailable(): boolean {
   );
 }
 
-export function createSpeechRecognizer(): SpeechRecognition | null {
+export function createSpeechRecognizer(): any | null {
   if (typeof window === 'undefined') return null;
   const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
   if (!SR) return null;
-  const rec: SpeechRecognition = new SR();
+  const rec: any = new SR();
   rec.continuous = true;
   rec.interimResults = false;
   rec.lang = 'en-US';

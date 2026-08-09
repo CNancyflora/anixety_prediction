@@ -26,7 +26,7 @@ export default function SelfIntroPracticePage() {
   const recorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const timerRef = useRef<any>(null);
-  const recognizerRef = useRef<SpeechRecognition | null>(null);
+  const recognizerRef = useRef<any>(null);
   const transcriptRef = useRef("");
 
   useEffect(() => {
