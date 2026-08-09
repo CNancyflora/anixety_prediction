@@ -142,6 +142,7 @@ export interface UserProfile {
 // ── Progress ─────────────────────────────────────────────
 export interface ProgressDataPoint {
   date: string;
+  type?: "assessment" | "interview";
   anxiety?: number;
   confidence?: number;
   readiness?: number;
