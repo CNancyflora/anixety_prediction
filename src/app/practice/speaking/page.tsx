@@ -49,7 +49,7 @@ export default function SpeakingPracticePage() {
       if (isSpeechRecognitionAvailable()) {
         const rec = createSpeechRecognizer();
         if (rec) {
-          rec.onresult = (e) => { let t = ""; for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript + " "; transcriptRef.current = t.trim(); setTranscript(t.trim()); };
+          rec.onresult = (e: any) => { let t = ""; for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript + " "; transcriptRef.current = t.trim(); setTranscript(t.trim()); };
           rec.start(); recognizerRef.current = rec;
         }
       }

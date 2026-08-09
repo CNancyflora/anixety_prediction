@@ -62,7 +62,7 @@ export default function SelfIntroPracticePage() {
       if (isSpeechRecognitionAvailable()) {
         const rec = createSpeechRecognizer();
         if (rec) {
-          rec.onresult = (e) => {
+          rec.onresult = (e: any) => {
             let t = "";
             for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript + " ";
             transcriptRef.current = t.trim();
