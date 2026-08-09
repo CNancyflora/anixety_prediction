@@ -313,7 +313,7 @@ export function computeComponentScores(responses: InterviewResponse[]): Componen
   const speakingConfidence = Math.round(confScores.reduce((a, b) => a + b, 0) / confScores.length);
 
   // Voice Clarity: based on average WPM alignment and filler ratio
-  const wpmScores = metrics.map(m => {
+  const wpmScores = metrics.map((m): number | null => {
     if (!m.wordsPerMinute) return null;
     const wpm = m.wordsPerMinute;
     if (wpm >= 100 && wpm <= 150) return 100;
