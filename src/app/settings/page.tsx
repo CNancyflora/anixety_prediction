@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   User, 
@@ -33,8 +33,10 @@ import {
 import Sidebar from "@/components/Sidebar";
 import LocationSelect from "@/components/ui/LocationSelect";
 import { cn } from "@/lib/utils";
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db, storage } from "@/lib/firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/navigation";
 
 const sections = [
@@ -58,36 +60,98 @@ export default function SettingsPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
-  const [location, setLocation] = useState("San Francisco, CA, United States");
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+  const [userId, setUserId] = useState<string | null>(null);
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUserId(user.uid);
+        setUserEmail(user.email || "");
+        
+        try {
+          const userDoc = await getDoc(doc(db, "users", user.uid));
+          if (userDoc.exists()) {
+            const data = userDoc.data();
+            setUserName(data.fullName || user.displayName || "");
+            setUserPhone(data.phone || "");
+            setLocation(data.location || "San Francisco, CA, United States");
+            if (data.photoURL) {
+              setProfilePhoto(data.photoURL);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      } else {
+        router.push("/login");
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
+    if (file && userId) {
       setIsUploadingPhoto(true);
       const reader = new FileReader();
-      reader.onload = (event) => {
-        setTimeout(() => {
-          setProfilePhoto(event.target?.result as string);
-          setIsUploadingPhoto(false);
+      
+      reader.onload = async (event) => {
+        try {
+          const base64String = event.target?.result as string;
+          
+          // Upload to Firebase Storage
+          const storageRef = ref(storage, `profiles/${userId}`);
+          await uploadString(storageRef, base64String, 'data_url');
+          
+          // Get the download URL
+          const downloadURL = await getDownloadURL(storageRef);
+          
+          // Update Firestore
+          await updateDoc(doc(db, "users", userId), {
+            photoURL: downloadURL
+          });
+          
+          setProfilePhoto(downloadURL);
           setSaveStatus("Photo Updated!");
           setTimeout(() => setSaveStatus(null), 2000);
-        }, 1500);
+        } catch (error) {
+          console.error("Error uploading photo:", error);
+          setSaveStatus("Failed to upload photo");
+          setTimeout(() => setSaveStatus(null), 2000);
+        } finally {
+          setIsUploadingPhoto(false);
+        }
       };
+      
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    if (!userId) return;
+    
     setSaveStatus("Saving...");
-    setTimeout(() => {
+    try {
+      await updateDoc(doc(db, "users", userId), {
+        fullName: userName,
+        phone: userPhone,
+        location: location,
+      });
       setSaveStatus("Saved Successfully");
       setTimeout(() => setSaveStatus(null), 2000);
-    }, 1000);
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      setSaveStatus("Failed to save");
+      setTimeout(() => setSaveStatus(null), 2000);
+    }
   };
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await auth.signOut();
       router.push("/login");
     } catch (error) {
       console.error("Logout failed", error);
@@ -213,7 +277,7 @@ export default function SettingsPage() {
                           </button>
                         </div>
                         <div className="text-center sm:text-left">
-                          <h2 className="text-2xl font-black">Nancy Flora</h2>
+                          <h2 className="text-2xl font-black">{userName || "User"}</h2>
                           <p className="text-slate-500 text-sm">Professional AI Analysis Profile</p>
                           <div className="mt-4 flex flex-wrap justify-center sm:justify-start gap-2">
                             <span className="rounded-lg bg-blue-500/10 px-3 py-1 text-[10px] font-bold text-blue-500 uppercase tracking-widest">Premium Plan</span>
@@ -227,21 +291,34 @@ export default function SettingsPage() {
                           <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Full Name</label>
                           <div className="flex items-center gap-3 rounded-2xl bg-white/5 border border-white/10 px-4 py-3.5">
                             <User size={18} className="text-slate-500" />
-                            <input className="bg-transparent text-sm font-medium focus:outline-none w-full" defaultValue="Nancy Flora" />
+                            <input 
+                              className="bg-transparent text-sm font-medium focus:outline-none w-full" 
+                              value={userName} 
+                              onChange={(e) => setUserName(e.target.value)}
+                            />
                           </div>
                         </div>
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Email Address</label>
-                          <div className="flex items-center gap-3 rounded-2xl bg-white/5 border border-white/10 px-4 py-3.5">
+                          <div className="flex items-center gap-3 rounded-2xl bg-white/5 border border-white/10 px-4 py-3.5 opacity-50 cursor-not-allowed">
                             <Mail size={18} className="text-slate-500" />
-                            <input className="bg-transparent text-sm font-medium focus:outline-none w-full" defaultValue="nancy.flora@example.com" />
+                            <input 
+                              className="bg-transparent text-sm font-medium focus:outline-none w-full" 
+                              value={userEmail} 
+                              disabled 
+                            />
                           </div>
                         </div>
                         <div className="space-y-2">
                           <label className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Phone Number</label>
                           <div className="flex items-center gap-3 rounded-2xl bg-white/5 border border-white/10 px-4 py-3.5">
                             <Phone size={18} className="text-slate-500" />
-                            <input className="bg-transparent text-sm font-medium focus:outline-none w-full" defaultValue="+1 (555) 0123-456" />
+                            <input 
+                              className="bg-transparent text-sm font-medium focus:outline-none w-full" 
+                              value={userPhone} 
+                              onChange={(e) => setUserPhone(e.target.value)}
+                              placeholder="+1 (555) 000-0000"
+                            />
                           </div>
                         </div>
                         <div className="space-y-2">

@@ -1,294 +1,112 @@
 "use client";
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  User,
-  Mail,
-  Phone,
-  Lock,
-  Eye,
-  EyeOff,
-  Loader2,
-  AlertCircle,
-  CheckCircle2,
-  Globe,
-} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "@/lib/firebase";
+import { useState, useEffect } from "react";
+import { createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { saveProfile } from "@/lib/storage";
+import type { UserProfile } from "@/types";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [form, setForm] = useState({
+    fullName: "", email: "", password: "", confirmPassword: "",
+  });
 
-  // Form fields
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user && !loading) {
+        router.replace("/dashboard");
+      }
+    });
+    return unsub;
+  }, [router, loading]);
 
-  // UI state
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  // Simple password strength (0‑4)
-  const passwordStrength = () => {
-    let score = 0;
-    if (password.length >= 8) score++;
-    if (/[A-Z]/.test(password)) score++;
-    if (/[0-9]/.test(password)) score++;
-    if (/[^A-Za-z0-9]/.test(password)) score++;
-    return score;
-  };
+  const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-    if (!fullName || !email || !phone || !password || !confirmPassword) {
-      setError("All fields are required.");
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-    if (passwordStrength() < 3) {
-      setError("Choose a stronger password.");
-      return;
-    }
-    if (!termsAccepted) {
-      setError("You must accept the Terms & Conditions.");
-      return;
-    }
-    setIsLoading(true);
-    
+    setError("");
+    if (form.password !== form.confirmPassword) { setError("Passwords do not match."); return; }
+    if (form.password.length < 6) { setError("Password must be at least 6 characters."); return; }
+    setLoading(true);
     try {
-      // 1. Create the user in Firebase Auth
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // 2. Save the extra user details (Name, Phone) in Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        fullName,
-        email,
-        phone,
+      const cred = await createUserWithEmailAndPassword(auth, form.email, form.password);
+      await updateProfile(cred.user, { displayName: form.fullName });
+      
+      // Initialize profile with default values, they can edit later
+      const profile: UserProfile = {
+        uid: cred.user.uid,
+        fullName: form.fullName,
+        email: form.email,
+        education: "",
+        college: "",
+        targetRole: "General",
+        experienceLevel: "fresher",
+        interviewGoal: "",
         createdAt: new Date().toISOString(),
-      });
-
-      setIsLoading(false);
-      setIsSuccess(true);
-      setTimeout(() => router.push("/assessment"), 1500);
+      };
+      await saveProfile(cred.user.uid, profile);
+      
+      router.replace("/dashboard");
     } catch (err: any) {
-      setIsLoading(false);
-      // Handle common Firebase errors
-      if (err.code === 'auth/email-already-in-use') {
-        setError("This email is already registered.");
-      } else {
-        setError(err.message || "Failed to create account.");
-      }
+      const code = err.code || "";
+      if (code.includes("email-already-in-use")) setError("An account with this email already exists.");
+      else if (code.includes("invalid-email")) setError("Please enter a valid email address.");
+      else setError("Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center bg-[#020617] px-4 py-12">
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-black opacity-30" />
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        className="relative z-10 w-full max-w-md glass overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-1 backdrop-blur-2xl"
-      >
-        <div className="rounded-2xl bg-gradient-to-b from-white/5 to-transparent p-8">
-          {/* Success overlay */}
-          <AnimatePresence>
-            {isSuccess && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 flex flex-col items-center justify-center bg-[#020617]/80 backdrop-blur-md rounded-2xl"
-              >
-                <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
-                  <CheckCircle2 size={80} className="text-emerald-400" />
-                </motion.div>
-                <motion.h3 className="mt-4 text-2xl font-bold text-white">Account Created</motion.h3>
-                <motion.p className="mt-2 text-slate-400">Redirecting…</motion.p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-logo">
+          <div className="auth-logo-name">CalmHire</div>
+          <div className="auth-logo-tag">Create your account to get started</div>
+        </div>
 
-          {/* Header */}
-          <div className="text-center mb-8">
-            <motion.div
-              initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.1 }}
-              className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 shadow-xl"
-            >
-              <User size={36} className="text-white" />
-            </motion.div>
-            <h2 className="mt-4 text-sm font-bold uppercase text-blue-400/80">CalmHire AI</h2>
-            <h1 className="mt-2 text-2xl font-extrabold text-white">Create Your Account</h1>
-            <p className="mt-2 text-slate-400">Start your interview confidence journey.</p>
+        {error && (
+          <div className="alert alert-danger" style={{ marginBottom: 16 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="form-label">Full Name</label>
+            <input className="form-input" required value={form.fullName} onChange={e => set("fullName", e.target.value)} placeholder="Your full name" />
+          </div>
+          
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <input type="email" className="form-input" required value={form.email} onChange={e => set("email", e.target.value)} placeholder="you@example.com" />
           </div>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Full Name */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-slate-300">Full Name</label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
-                <input
-                  type="text"
-                  required
-                  value={fullName}
-                  onChange={e => setFullName(e.target.value)}
-                  placeholder="Nancy Flora"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 pl-10 pr-4 py-2 text-white placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-blue-500/5 focus:ring-2 focus:ring-blue-500/10"
-                />
-              </div>
-            </div>
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input type="password" className="form-input" required value={form.password} onChange={e => set("password", e.target.value)} placeholder="Min 6 characters" />
+          </div>
+          
+          <div className="form-group">
+            <label className="form-label">Confirm Password</label>
+            <input type="password" className="form-input" required value={form.confirmPassword} onChange={e => set("confirmPassword", e.target.value)} placeholder="Repeat password" />
+          </div>
 
-            {/* Email */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-slate-300">Email Address</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  placeholder="nancy.flora@example.com"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 pl-10 pr-4 py-2 text-white placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-blue-500/5 focus:ring-2 focus:ring-blue-500/10"
-                />
-              </div>
-            </div>
+          <button type="submit" className="btn btn-primary btn-full btn-lg" disabled={loading} style={{ marginTop: 24 }}>
+            {loading ? <><span className="spinner" /> Creating account…</> : "Create Account"}
+          </button>
+        </form>
 
-            {/* Phone */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-slate-300">Phone Number</label>
-              <div className="relative">
-                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
-                <input
-                  type="tel"
-                  required
-                  value={phone}
-                  onChange={e => setPhone(e.target.value)}
-                  placeholder="+1 555 123 4567"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 pl-10 pr-4 py-2 text-white placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-blue-500/5 focus:ring-2 focus:ring-blue-500/10"
-                />
-              </div>
-            </div>
-
-            {/* Password */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-slate-300">Password</label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  required
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 pl-10 pr-12 py-2 text-white placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-blue-500/5 focus:ring-2 focus:ring-blue-500/10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white"
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-              {/* Strength bar */}
-              <div className="mt-1 flex space-x-1">
-                {[0, 1, 2, 3].map(i => (
-                  <div
-                    key={i}
-                    className={`h-1 flex-1 rounded ${i < passwordStrength() ? "bg-green-500" : "bg-gray-600"}`}
-                  />
-                ))}
-              </div>
-            </div>
-
-            {/* Confirm Password */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-slate-300">Confirm Password</label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  required
-                  value={confirmPassword}
-                  onChange={e => setConfirmPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 pl-10 pr-12 py-2 text-white placeholder:text-slate-600 focus:border-blue-500/50 focus:bg-blue-500/5 focus:ring-2 focus:ring-blue-500/10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white"
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
-            </div>
-
-            {/* Terms */}
-            <div className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                id="terms"
-                checked={termsAccepted}
-                onChange={e => setTermsAccepted(e.target.checked)}
-                className="h-4 w-4 rounded border-white/10 bg-white/5 checked:bg-blue-500"
-              />
-              <label htmlFor="terms" className="text-sm text-slate-300">
-                I agree to the <a href="#" className="underline text-blue-400">Terms & Conditions</a> and <a href="#" className="underline text-blue-400">Privacy Policy</a>
-              </label>
-            </div>
-
-            {/* Error alert */}
-            <AnimatePresence>{error && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="flex items-center gap-2 rounded-xl bg-red-500/10 p-3 text-sm text-red-400"
-              >
-                <AlertCircle size={16} /> {error}
-              </motion.div>
-            )}</AnimatePresence>
-
-            {/* Submit button */}
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              disabled={isLoading}
-              className="relative flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-3 text-white font-bold shadow-lg hover:shadow-xl disabled:opacity-70"
-            >
-              {isLoading ? <Loader2 className="animate-spin" size={20} /> : <>
-                Create Account <Globe size={18} />
-              </>}
-            </motion.button>
-
-            {/* Alternate sign‑up */}
-            <div className="text-center text-sm text-slate-400 mt-4">
-              Already have an account?{' '}
-              <Link href="/login" className="text-blue-400 underline">Login</Link>
-            </div>
-          </form>
-        </div>
-      </motion.div>
-    </main>
+        <p style={{ textAlign: "center", fontSize: 13, color: "var(--text-2)", marginTop: 20 }}>
+          Already have an account?{" "}
+          <Link href="/login" style={{ color: "var(--blue)", fontWeight: 600 }}>Sign in</Link>
+        </p>
+      </div>
+    </div>
   );
 }

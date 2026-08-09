@@ -4,10 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Brain, 
-  Video, 
-  Sparkles, 
   BarChart3, 
-  History, 
   FileText, 
   Settings, 
   LogOut,
@@ -20,10 +17,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 const mainNavItems = [
-  { icon: Video, label: "AI Interview Session", href: "/interview" },
-  { icon: Sparkles, label: "Real-Time Coaching", href: "/coach" },
   { icon: BarChart3, label: "Confidence Tracking", href: "/analytics" },
-  { icon: History, label: "Anxiety Insights", href: "/history" },
 ];
 
 const secondaryNavItems = [

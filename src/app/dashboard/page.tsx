@@ -1,181 +1,262 @@
 "use client";
-
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import Sidebar from "@/components/Sidebar";
-import { usePathname } from "next/navigation";
+import AppLayout from "@/components/AppLayout";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { 
-  Zap, 
-  ShieldAlert, 
-  Video, 
-  Clock, 
-  History, 
-  TrendingUp,
-  ChevronRight
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { getDashboardData, loadProfile } from "@/lib/storage";
+import type { Assessment, InterviewSession, UserProfile } from "@/types";
 
 export default function DashboardPage() {
-  const pathname = usePathname();
-  const [hasHistory, setHasHistory] = useState<boolean | null>(null);
-  const [historyData, setHistoryData] = useState<any[]>([]);
+  const [greeting, setGreeting] = useState("Hello");
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [latest, setLatest] = useState<Assessment | null>(null);
+  const [lastInterview, setLastInterview] = useState<InterviewSession | null>(null);
+  const [totalInterviews, setTotalInterviews] = useState(0);
+  const [totalPractices, setTotalPractices] = useState(0);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const savedHistory = localStorage.getItem("calmhire_history");
-    if (savedHistory) {
-      const parsed = JSON.parse(savedHistory);
-      if (parsed.length > 0) {
-        setHasHistory(true);
-        setHistoryData(parsed);
-      } else {
-        setHasHistory(false);
-      }
-    } else {
-      setHasHistory(false);
-    }
+    const h = new Date().getHours();
+    setGreeting(h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening");
+
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      if (!user) return;
+      const data = getDashboardData();
+      setLatest(data.latestAssessment);
+      setLastInterview(data.latestInterview);
+      setTotalInterviews(data.totalInterviews);
+      setTotalPractices(data.totalPractices);
+      const p = await loadProfile(user.uid);
+      setProfile(p);
+      setLoaded(true);
+    });
+    return unsub;
   }, []);
 
+  const name = profile?.fullName?.split(" ")[0] || "there";
+  const scores = latest?.scores;
+
   return (
-    <div className="min-h-screen bg-[#020617] text-white flex flex-col">
-      <Sidebar />
+    <AppLayout>
+      <div className="page-wrap">
+        {/* Header */}
+        <div style={{ marginBottom: 28 }}>
+          <h1 className="page-title">{greeting}, {name} 👋</h1>
+          <p className="page-subtitle">Let's prepare you for your next interview.</p>
+        </div>
 
-      {/* Main Content */}
-      <main className="flex-1 w-full lg:pl-72">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-          <header className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <h1 className="text-4xl font-extrabold tracking-tight">Welcome back, Nancy</h1>
-              <p className="text-slate-400 mt-1">Ready to ace your next technical interview?</p>
-            </div>
-            <Link 
-              href="/assessment"
-              className="flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-8 py-4 font-bold text-white shadow-lg shadow-blue-600/20 transition-all hover:scale-[1.02] active:scale-95 sm:self-center"
-            >
-              <Video size={20} />
-              Start Assessment
-            </Link>
-          </header>
-
-          {/* Stats Grid */}
-          <div className="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { label: "Overall Score", value: hasHistory && historyData[0] ? `${historyData[0].confidence}/100` : "0", trend: hasHistory ? "Latest" : "-", icon: Zap, color: "text-blue-400", bg: "bg-blue-400/10" },
-              { label: "Anxiety Level", value: hasHistory && historyData[0] ? historyData[0].anxiety : "-", trend: hasHistory ? "Latest" : "-", icon: ShieldAlert, color: "text-emerald-400", bg: "bg-emerald-400/10" },
-              { label: "Total Sessions", value: hasHistory ? historyData.length.toString() : "0", trend: hasHistory ? "Active" : "-", icon: Video, color: "text-indigo-400", bg: "bg-indigo-400/10" },
-              { label: "Stress Score", value: hasHistory && historyData[0] ? `${historyData[0].stress}` : "0", trend: hasHistory ? "Latest" : "-", icon: Clock, color: "text-amber-400", bg: "bg-amber-400/10" },
-            ].map((stat, i) => (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                key={i}
-                className="glass rounded-[32px] p-8 border border-white/5 relative overflow-hidden group hover:border-white/10 transition-colors"
-              >
-                <div className="mb-6 flex items-center justify-between">
-                  <div className={cn("rounded-2xl p-3 shadow-lg transition-transform group-hover:scale-110", stat.bg, stat.color)}>
-                    <stat.icon size={24} />
-                  </div>
-                  <span className="text-xs font-black uppercase tracking-widest text-emerald-500 bg-emerald-500/10 px-3 py-1.5 rounded-full">
-                    {stat.trend}
-                  </span>
-                </div>
-                <p className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-1">{stat.label}</p>
-                <p className="text-3xl font-black">{stat.value}</p>
-              </motion.div>
-            ))}
+        {!loaded ? (
+          <div style={{ display: "flex", justifyContent: "center", paddingTop: 60 }}>
+            <div className="spinner spinner-lg" />
           </div>
+        ) : (
+          <>
+            {/* Key Metrics */}
+            <div className="grid-4" style={{ marginBottom: 28 }}>
+              <MetricCard
+                label="Interview Readiness"
+                value={scores ? `${scores.overallReadiness}%` : null}
+                subValue={scores ? `Based on your assessment` : null}
+                color={scores ? scoreColor(scores.overallReadiness) : undefined}
+                empty="No assessment yet"
+              />
+              <MetricCard
+                label="Confidence"
+                value={scores ? `${scores.confidence}%` : null}
+                subValue={scores ? confidenceLabel(scores.confidence) : null}
+                color={scores ? scoreColor(scores.confidence) : undefined}
+                empty="No assessment yet"
+              />
+              <MetricCard
+                label="Anxiety Level"
+                value={scores ? scores.anxietyLevel : null}
+                subValue={scores ? `${scores.anxiety}% score` : null}
+                color={scores ? anxietyColor(scores.anxiety) : undefined}
+                empty="No assessment yet"
+              />
+              <MetricCard
+                label="Practice Sessions"
+                value={totalPractices + totalInterviews > 0 ? String(totalPractices + totalInterviews) : null}
+                subValue={totalInterviews > 0 ? `${totalInterviews} mock interview${totalInterviews !== 1 ? "s" : ""}` : null}
+                color="var(--blue-light)"
+                empty="No sessions yet"
+              />
+            </div>
 
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            {/* Recent Sessions */}
-            <div className="lg:col-span-2">
-              <div className="glass overflow-hidden rounded-2xl">
-                <div className="flex items-center justify-between border-b border-white/5 p-6">
-                  <h3 className="text-xl font-bold">Recent Assessments</h3>
-                  <button className="text-sm font-medium text-primary hover:underline">View All</button>
+            {/* Assessment CTA or Summary */}
+            {!latest ? (
+              <div className="card" style={{ marginBottom: 24 }}>
+                <div className="empty-state">
+                  <div className="empty-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 4 0M9 12h6M9 16h4" /></svg>
+                  </div>
+                  <h3>No assessment completed yet</h3>
+                  <p>Take your first assessment to understand your anxiety level, confidence, and readiness — and get a personalized practice plan.</p>
+                  <Link href="/assessment" className="btn btn-primary">Take Your First Assessment</Link>
                 </div>
-                <div className="divide-y divide-white/5">
-                  {historyData.slice(0, 4).map((session, i) => (
-                    <div key={i} className="flex items-center justify-between p-6 transition-colors hover:bg-white/5">
-                      <div className="flex items-center gap-4">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-blue-400">
-                          <History size={20} />
+              </div>
+            ) : (
+              <div className="card" style={{ marginBottom: 24 }}>
+                <div className="card-header">
+                  <span className="section-title">Latest Assessment Results</span>
+                  <span style={{ fontSize: 12, color: "var(--text-3)" }}>{formatDate(latest.completedAt)}</span>
+                </div>
+                <div className="card-body">
+                  <div className="grid-3" style={{ gap: 16 }}>
+                    <ScoreBar label="Confidence" score={scores!.confidence} color="var(--blue-light)" />
+                    <ScoreBar label="Readiness" score={scores!.readiness} color="var(--green)" />
+                    <ScoreBar label="Communication" score={scores!.communication} color="var(--amber)" />
+                  </div>
+                  <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid var(--border)" }}>
+                    <span style={{ fontSize: 13, color: "var(--text-2)" }}>
+                      Based on your results, we recommend starting with:{" "}
+                    </span>
+                    {latest.recommendations.slice(0, 2).map(r => (
+                      <Link key={r.id} href={r.href} className="tag" style={{ margin: "0 4px" }}>{r.title}</Link>
+                    ))}
+                  </div>
+                </div>
+                <div className="card-footer">
+                  <Link href="/assessment" className="btn btn-outline btn-sm">Retake Assessment</Link>
+                </div>
+              </div>
+            )}
+
+            <div className="grid-2">
+              {/* Recommended Actions */}
+              <div className="card">
+                <div className="card-header"><span className="section-title">Recommended for You</span></div>
+                <div className="card-body">
+                  {latest?.recommendations?.length ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                      {latest.recommendations.map(r => (
+                        <div key={r.id} style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
+                          <div>
+                            <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 3 }}>{r.title}</div>
+                            <div style={{ fontSize: 12, color: "var(--text-2)", lineHeight: 1.5 }}>{r.duration} · {r.reason.slice(0, 80)}…</div>
+                          </div>
+                          <Link href={r.href} className="btn btn-sm btn-primary" style={{ flexShrink: 0 }}>Start</Link>
                         </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="empty-state" style={{ padding: 24 }}>
+                      <p style={{ marginBottom: 12 }}>Complete an assessment to get personalised recommendations.</p>
+                      <Link href="/assessment" className="btn btn-sm btn-outline">Take Assessment</Link>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Last Interview */}
+              <div className="card">
+                <div className="card-header"><span className="section-title">Last Mock Interview</span></div>
+                <div className="card-body">
+                  {lastInterview ? (
+                    <div>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 16 }}>
                         <div>
-                          <p className="font-bold">{session.type}</p>
-                          <p className="text-xs text-slate-400 mt-1">{session.date} at {session.time}</p>
+                          <div style={{ fontWeight: 600, textTransform: "capitalize" }}>{lastInterview.type} Interview</div>
+                          <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 2 }}>{formatDate(lastInterview.completedAt)} · {lastInterview.difficulty}</div>
+                        </div>
+                        <div style={{ textAlign: "right" }}>
+                          {lastInterview.overallScore !== null ? (
+                            <div style={{ fontSize: 26, fontWeight: 800, color: scoreColor(lastInterview.overallScore) }}>
+                              {lastInterview.overallScore}%
+                            </div>
+                          ) : (
+                            <div style={{ fontSize: 13, color: "var(--text-3)" }}>Score N/A</div>
+                          )}
                         </div>
                       </div>
-                      <div className="text-right">
-                        <p className={cn("text-sm font-bold", 
-                          session.anxiety === "Low" ? "text-emerald-400" :
-                          session.anxiety === "Medium" ? "text-amber-400" : "text-rose-400"
-                        )}>{session.anxiety} Anxiety</p>
-                        <p className="text-xs text-slate-400 mt-1">{session.confidence}% Confidence</p>
+                      <div style={{ display: "flex", gap: 8 }}>
+                        <Link href={`/interview/report/${lastInterview.id}`} className="btn btn-sm btn-outline">View Report</Link>
+                        <Link href="/interview/setup" className="btn btn-sm btn-primary">New Interview</Link>
                       </div>
                     </div>
-                  ))}
-                  
-                  {!hasHistory && (
-                    <div className="flex flex-col items-center justify-center p-12 text-center">
-                      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/5 text-secondary">
-                        <History size={32} />
-                      </div>
-                      <p className="font-semibold text-white">No Recent Assessments</p>
-                      <p className="mt-1 text-sm text-secondary">Complete your first analysis to see your history here.</p>
-                      <Link 
-                        href="/assessment" 
-                        className="mt-6 rounded-xl bg-primary/10 px-6 py-2.5 text-sm font-bold text-primary transition-all hover:bg-primary hover:text-white"
-                      >
-                        Start First Analysis
-                      </Link>
+                  ) : (
+                    <div className="empty-state" style={{ padding: 24 }}>
+                      <p style={{ marginBottom: 12 }}>You haven't completed a mock interview yet.</p>
+                      <Link href="/interview/setup" className="btn btn-sm btn-primary">Start Mock Interview</Link>
                     </div>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* AI Insights */}
-            <div>
-              <div className="glass rounded-2xl p-6 h-full">
-                <h3 className="mb-6 text-xl font-bold">AI Insights</h3>
-                
-                {hasHistory && historyData[0] ? (
-                  <div className="space-y-6">
-                  <div className="rounded-xl bg-primary/5 p-4 border border-primary/10">
-                    <p className="mb-2 text-sm font-bold text-primary flex items-center gap-2">
-                      <Zap size={16} /> Latest Session Feedback
-                    </p>
-                    <p className="text-sm text-secondary">{historyData[0].feedback || "You are making steady progress. Keep practicing!"}</p>
-                  </div>
-                  <div className="rounded-xl bg-orange-500/5 p-4 border border-orange-500/10">
-                    <p className="mb-2 text-sm font-bold text-orange-500 flex items-center gap-2">
-                      <TrendingUp size={16} /> Recommendation
-                    </p>
-                    <p className="text-sm text-secondary">Complete more AI coaching sessions to lower your anxiety further.</p>
-                  </div>
-                  <div className="pt-4">
-                    <p className="mb-4 text-sm font-semibold">Anxiety Trend</p>
-                    <div className="h-2 w-full rounded-full bg-white/5">
-                      <div className="h-full w-[70%] rounded-full bg-gradient-to-r from-green-500 to-primary" />
-                    </div>
-                    <p className="mt-2 text-xs text-secondary text-center">Consistent practice builds confidence over time</p>
-                  </div>
-                </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center h-[250px] text-center">
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/5 text-slate-500">
-                      <TrendingUp size={24} />
-                    </div>
-                    <p className="text-sm font-semibold text-white">No Insights Yet</p>
-                    <p className="mt-1 text-xs text-slate-500 px-4">Complete your first assessment to unlock personalized AI behavioral analysis.</p>
-                  </div>
-                )}
+            {/* Quick Actions */}
+            <div style={{ marginTop: 24 }}>
+              <div className="section-title" style={{ marginBottom: 14 }}>Quick Start</div>
+              <div className="grid-4">
+                {[
+                  { label: "Take Assessment", href: "/assessment", desc: "Measure readiness & anxiety" },
+                  { label: "Self Introduction", href: "/practice/self-intro", desc: "Practice your intro" },
+                  { label: "HR Questions", href: "/practice/hr", desc: "5 common HR questions" },
+                  { label: "Mock Interview", href: "/interview/setup", desc: "Full interview session" },
+                ].map(a => (
+                  <Link key={a.href} href={a.href} className="card" style={{ padding: 16, display: "block", textDecoration: "none", transition: "box-shadow 0.15s" }}
+                    onMouseEnter={e => (e.currentTarget.style.boxShadow = "var(--shadow-md)")}
+                    onMouseLeave={e => (e.currentTarget.style.boxShadow = "var(--shadow)")}>
+                    <div style={{ fontWeight: 600, fontSize: 14, color: "var(--text)", marginBottom: 4 }}>{a.label}</div>
+                    <div style={{ fontSize: 12, color: "var(--text-2)" }}>{a.desc}</div>
+                  </Link>
+                ))}
               </div>
             </div>
-          </div>
-        </div>
-      </main>
+          </>
+        )}
+      </div>
+    </AppLayout>
+  );
+}
+
+function MetricCard({ label, value, subValue, color, empty }: { label: string; value: string | null; subValue: string | null; color?: string; empty: string }) {
+  return (
+    <div className="card metric-card">
+      <div className="metric-label">{label}</div>
+      {value !== null ? (
+        <>
+          <div className="metric-value" style={{ color: color || "var(--text)", fontSize: 26 }}>{value}</div>
+          {subValue && <div className="metric-sub">{subValue}</div>}
+        </>
+      ) : (
+        <div style={{ fontSize: 13, color: "var(--text-3)", marginTop: 6 }}>{empty}</div>
+      )}
     </div>
   );
+}
+
+function ScoreBar({ label, score, color }: { label: string; score: number; color: string }) {
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6, fontSize: 13 }}>
+        <span style={{ fontWeight: 500 }}>{label}</span>
+        <span style={{ fontWeight: 700, color }}>{score}%</span>
+      </div>
+      <div className="progress-bar">
+        <div className="progress-fill" style={{ width: `${score}%`, background: color }} />
+      </div>
+    </div>
+  );
+}
+
+function scoreColor(s: number): string {
+  if (s >= 67) return "var(--green)";
+  if (s >= 34) return "var(--amber)";
+  return "var(--red)";
+}
+function anxietyColor(s: number): string {
+  if (s <= 33) return "var(--green)";
+  if (s <= 66) return "var(--amber)";
+  return "var(--red)";
+}
+function confidenceLabel(s: number): string {
+  if (s >= 70) return "Strong";
+  if (s >= 40) return "Developing";
+  return "Needs work";
+}
+function formatDate(iso: string): string {
+  try { return new Date(iso).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }); }
+  catch { return "—"; }
 }

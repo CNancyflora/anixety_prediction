@@ -2,6 +2,7 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDt3vmuzs1ldHqOhUGOOXeYX8IeiDTj0FA",
@@ -16,9 +17,10 @@ const firebaseConfig = {
 // Initialize Firebase only once
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-// Initialize Auth and Firestore
+// Initialize Auth, Firestore, and Storage
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 // Initialize Analytics conditionally (only on the client side where supported)
 let analytics: any = null;
@@ -30,4 +32,4 @@ if (typeof window !== "undefined") {
   });
 }
 
-export { app, analytics, auth, db };
+export { app, analytics, auth, db, storage };

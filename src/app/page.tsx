@@ -1,121 +1,97 @@
 "use client";
-
-import { motion, AnimatePresence } from "framer-motion";
-import { Brain, Camera, Mic, Shield, TrendingUp, Users } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import SplashScreen from "@/components/SplashScreen";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
-  const [showSplash, setShowSplash] = useState(true);
-
+export default function LandingPage() {
   return (
-    <>
-      <AnimatePresence>
-        {showSplash && (
-          <SplashScreen onComplete={() => setShowSplash(false)} />
-        )}
-      </AnimatePresence>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: showSplash ? 0 : 1 }}
-        transition={{ duration: 1 }}
-      >
-        <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4">
-      {/* Navigation */}
-      <nav className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 max-w-7xl mx-auto">
-        <div className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-lg shadow-primary/20">
-            <Brain size={24} />
-          </div>
-          <span className="text-xl font-bold tracking-tight">CalmHire AI</span>
-        </div>
-        <div className="hidden items-center gap-8 md:flex">
-
-          <Link href="/coach" className="text-sm font-bold text-slate-400 hover:text-white transition-colors">Real-Time Coaching</Link>
-          <Link href="/analytics" className="text-sm font-bold text-slate-400 hover:text-white transition-colors">Confidence Tracking</Link>
-          <Link href="/history" className="text-sm font-bold text-slate-400 hover:text-white transition-colors">Anxiety Insights</Link>
-        </div>
-        <div className="flex items-center gap-4">
-          <Link href="/login" className="rounded-xl border border-white/10 bg-white/5 px-6 py-2.5 text-sm font-bold backdrop-blur-md transition-all hover:bg-white/10">
-            Sign In
-          </Link>
+    <div style={{ minHeight: "100vh", background: "#fff", fontFamily: "Inter, sans-serif" }}>
+      {/* Nav */}
+      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "18px 40px", borderBottom: "1px solid #E2E8F0", position: "sticky", top: 0, background: "#fff", zIndex: 10 }}>
+        <div style={{ fontSize: 22, fontWeight: 800, color: "#0F2545", letterSpacing: "-0.5px" }}>CalmHire</div>
+        <div style={{ display: "flex", gap: 12 }}>
+          <Link href="/login" style={{ padding: "9px 20px", borderRadius: 7, border: "1px solid #E2E8F0", fontSize: 14, fontWeight: 600, color: "#0F172A", textDecoration: "none" }}>Sign In</Link>
+          <Link href="/register" style={{ padding: "9px 20px", borderRadius: 7, background: "#1D4ED8", fontSize: 14, fontWeight: 600, color: "#fff", textDecoration: "none" }}>Get Started</Link>
         </div>
       </nav>
 
-      {/* Background Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent/20 rounded-full blur-[120px]" />
-      </div>
+      {/* Hero */}
+      <section style={{ textAlign: "center", padding: "80px 24px 60px", maxWidth: 720, margin: "0 auto" }}>
+        <div style={{ display: "inline-block", background: "#EFF6FF", color: "#1D4ED8", fontSize: 12, fontWeight: 700, letterSpacing: "0.07em", textTransform: "uppercase", padding: "5px 14px", borderRadius: 99, marginBottom: 20, border: "1px solid #DBEAFE" }}>
+          Interview Preparation Platform
+        </div>
+        <h1 style={{ fontSize: 52, fontWeight: 800, lineHeight: 1.15, letterSpacing: "-1px", color: "#0F2545", marginBottom: 20 }}>
+          Prepare Better.<br />Speak Confidently.<br />Interview Ready.
+        </h1>
+        <p style={{ fontSize: 18, color: "#475569", lineHeight: 1.7, maxWidth: 540, margin: "0 auto 36px" }}>
+          CalmHire helps you measure your interview readiness, practice with real recordings, and track your improvement through measurable performance data.
+        </p>
+        <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          <Link href="/register" style={{ padding: "14px 32px", borderRadius: 9, background: "#1D4ED8", fontSize: 16, fontWeight: 700, color: "#fff", textDecoration: "none" }}>Start Preparing — It's Free</Link>
+          <Link href="/login" style={{ padding: "14px 32px", borderRadius: 9, background: "#fff", border: "1px solid #E2E8F0", fontSize: 16, fontWeight: 600, color: "#0F172A", textDecoration: "none" }}>Sign In</Link>
+        </div>
+      </section>
 
-      <div className="z-10 max-w-5xl text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium backdrop-blur-md">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
-            </span>
-            Next-Gen AI Behavioral Analysis
+      {/* Feature Grid */}
+      <section style={{ background: "#F8FAFC", padding: "60px 24px" }}>
+        <div style={{ maxWidth: 960, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 40 }}>
+            <h2 style={{ fontSize: 32, fontWeight: 800, color: "#0F2545" }}>Everything you need to succeed</h2>
+            <p style={{ fontSize: 15, color: "#475569", marginTop: 8 }}>Real practice. Real metrics. Real improvement.</p>
           </div>
-          
-          <h1 className="mb-6 text-5xl font-bold tracking-tight md:text-7xl">
-            Master Your Interviews with <br />
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              CalmHire AI
-            </span>
-          </h1>
-          
-          <p className="mx-auto mb-10 max-w-2xl text-lg text-secondary md:text-xl">
-            Real-time anxiety prediction and behavioral analytics. Build confidence, 
-            perfect your delivery, and land your dream job with AI-driven coaching.
-          </p>
-
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link 
-              href="/dashboard"
-              className="rounded-xl bg-primary px-12 py-4 text-lg font-bold text-white shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95"
-            >
-              Get Started Free
-            </Link>
-          </div>
-        </motion.div>
-
-        {/* Feature Grid */}
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-20 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {[
-            { icon: Brain, title: "Emotion Recognition", desc: "Advanced facial analysis tracks real-time stress and micro-expressions." },
-            { icon: Mic, title: "Voice Confidence", desc: "AI-powered voice tone and speech pattern analysis for perfect delivery." },
-            { icon: Camera, title: "Posture Analysis", desc: "Maintain a professional stance with real-time body language feedback." },
-            { icon: TrendingUp, title: "Growth Analytics", desc: "Detailed tracking of your confidence and communication improvements." },
-            { icon: Shield, title: "Privacy First", desc: "Enterprise-grade security ensuring your session data remains confidential." },
-            { icon: Users, title: "HR Simulations", desc: "Practice with industry-specific assessments tailored to your resume." }
-          ].map((feature, i) => (
-            <div 
-              key={i}
-              className="glass group relative overflow-hidden rounded-2xl p-6 text-left transition-all hover:border-primary/50"
-            >
-              <div className="mb-4 inline-flex rounded-xl bg-primary/10 p-3 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
-                <feature.icon size={24} />
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+            {[
+              { icon: "📋", title: "Anxiety & Readiness Assessment", desc: "A structured questionnaire that calculates your real anxiety, confidence, and readiness scores — and generates a personalized practice plan." },
+              { icon: "🎙️", title: "Practice with Real Recording", desc: "Record your answers to self-introduction, HR questions, and speaking exercises. Get actual audio metrics, not simulated scores." },
+              { icon: "🎥", title: "Mock Interview Session", desc: "Full camera + microphone interview with real questions. Response time, speech rate, and filler words are actually measured." },
+              { icon: "📊", title: "Measurable Performance Report", desc: "After every session, see your real speaking confidence indicator, pause count, WPM, and answer structure — with rule-based feedback." },
+              { icon: "📈", title: "Progress Tracking", desc: "Track anxiety, confidence, and readiness trends across sessions. Every data point comes from your actual practice history." },
+              { icon: "📄", title: "Resume Analyzer", desc: "Upload your resume and get a structured checklist review of sections, keywords, and completeness — no invented ATS scores." },
+            ].map(f => (
+              <div key={f.title} style={{ background: "#fff", border: "1px solid #E2E8F0", borderRadius: 12, padding: 24 }}>
+                <div style={{ fontSize: 28, marginBottom: 12 }}>{f.icon}</div>
+                <div style={{ fontWeight: 700, fontSize: 15, color: "#0F2545", marginBottom: 8 }}>{f.title}</div>
+                <div style={{ fontSize: 13.5, color: "#475569", lineHeight: 1.65 }}>{f.desc}</div>
               </div>
-              <h3 className="mb-2 text-xl font-semibold">{feature.title}</h3>
-              <p className="text-secondary">{feature.desc}</p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section style={{ padding: "60px 24px", maxWidth: 760, margin: "0 auto" }}>
+        <h2 style={{ fontSize: 28, fontWeight: 800, color: "#0F2545", textAlign: "center", marginBottom: 40 }}>How CalmHire works</h2>
+        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
+          {[
+            { n: "1", title: "Take the Assessment", desc: "Answer 25 questions across anxiety, confidence, readiness, experience, and communication." },
+            { n: "2", title: "Get Your Scores", desc: "Receive calculated scores for each area and a personalized practice recommendation." },
+            { n: "3", title: "Practice Targeted Skills", desc: "Complete the recommended practice sessions — self-introduction, speaking, or HR questions." },
+            { n: "4", title: "Attend a Mock Interview", desc: "Join a full mock interview session with camera and mic. Real questions, real recording." },
+            { n: "5", title: "Review Your Report", desc: "See your speaking metrics, response time, filler word count, and structured feedback." },
+            { n: "6", title: "Track & Improve", desc: "Monitor your anxiety and confidence trends across sessions as you improve over time." },
+          ].map((s, i, arr) => (
+            <div key={s.n} style={{ display: "flex", gap: 20, position: "relative", paddingBottom: i < arr.length - 1 ? 32 : 0 }}>
+              {i < arr.length - 1 && <div style={{ position: "absolute", left: 19, top: 40, bottom: 0, width: 2, background: "#E2E8F0" }} />}
+              <div style={{ width: 40, height: 40, borderRadius: "50%", background: "#1D4ED8", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 15, flexShrink: 0 }}>{s.n}</div>
+              <div style={{ paddingTop: 8 }}>
+                <div style={{ fontWeight: 700, fontSize: 15, color: "#0F2545", marginBottom: 4 }}>{s.title}</div>
+                <div style={{ fontSize: 14, color: "#475569", lineHeight: 1.6 }}>{s.desc}</div>
+              </div>
             </div>
           ))}
-        </motion.div>
-      </div>
-    </main>
-    </motion.div>
-    </>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section style={{ background: "#0F2545", padding: "60px 24px", textAlign: "center" }}>
+        <h2 style={{ fontSize: 30, fontWeight: 800, color: "#fff", marginBottom: 14 }}>Ready to improve your interviews?</h2>
+        <p style={{ fontSize: 15, color: "rgba(255,255,255,0.65)", marginBottom: 28 }}>Create a free account and take your first assessment in minutes.</p>
+        <Link href="/register" style={{ padding: "14px 36px", borderRadius: 9, background: "#3B82F6", fontSize: 16, fontWeight: 700, color: "#fff", textDecoration: "none", display: "inline-block" }}>Get Started Free</Link>
+      </section>
+
+      {/* Footer */}
+      <footer style={{ padding: "24px", textAlign: "center", color: "#94A3B8", fontSize: 13, borderTop: "1px solid #E2E8F0" }}>
+        © {new Date().getFullYear()} CalmHire · Interview Preparation Platform
+      </footer>
+    </div>
   );
 }
