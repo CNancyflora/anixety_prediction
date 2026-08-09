@@ -64,6 +64,7 @@ export default function SettingsPage() {
   const [userEmail, setUserEmail] = useState("");
   const [userPhone, setUserPhone] = useState("");
   const [userId, setUserId] = useState<string | null>(null);
+  const [location, setLocation] = useState("San Francisco, CA, United States");
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
