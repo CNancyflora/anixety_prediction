@@ -1,41 +1,37 @@
 import type { AssessmentQuestion, AssessmentResponse, AssessmentScores, Recommendation } from '@/types';
 
-// ── 25 Assessment Questions (5 per category) ────────────
+// ── Assessment Questions ────────────
 export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
   // ANXIETY (higher answer = more anxious)
-  { id: 'a1', category: 'anxiety', text: 'How nervous do you feel before an interview?' },
-  { id: 'a2', category: 'anxiety', text: 'How worried are you about giving a wrong answer?' },
-  { id: 'a3', category: 'anxiety', text: 'How uncomfortable do you feel when speaking to an interviewer?' },
-  { id: 'a4', category: 'anxiety', text: 'How often do you hesitate while answering interview questions?' },
-  { id: 'a5', category: 'anxiety', text: 'How stressed do you feel when asked an unexpected question?' },
+  { id: 'a1', category: 'anxiety', text: 'How nervous do you usually feel before an interview?', minLabel: 'Very Calm', maxLabel: 'Extremely Nervous' },
+  { id: 'a2', category: 'anxiety', text: 'How worried are you about making mistakes while answering?', minLabel: 'Not Worried', maxLabel: 'Extremely Worried' },
+  { id: 'a3', category: 'anxiety', text: 'How difficult is it for you to stay calm when you don\'t know an answer?', minLabel: 'Very Easy', maxLabel: 'Very Difficult' },
 
   // CONFIDENCE (higher answer = more confident)
-  { id: 'c1', category: 'confidence', text: 'I can introduce myself clearly and confidently.' },
-  { id: 'c2', category: 'confidence', text: 'I can explain my projects and skills without difficulty.' },
-  { id: 'c3', category: 'confidence', text: 'I feel comfortable answering HR questions.' },
-  { id: 'c4', category: 'confidence', text: 'I can hold a professional conversation with new people.' },
-  { id: 'c5', category: 'confidence', text: 'I can handle unexpected interview questions without panicking.' },
+  { id: 'c1', category: 'confidence', text: 'How confident are you when introducing yourself?', minLabel: 'Not Confident', maxLabel: 'Very Confident' },
+  { id: 'c2', category: 'confidence', text: 'How confident are you when explaining your projects?', minLabel: 'Not Confident', maxLabel: 'Very Confident' },
+  { id: 'c3', category: 'confidence', text: 'How confident are you when answering unexpected questions?', minLabel: 'Not Confident', maxLabel: 'Very Confident' },
 
   // READINESS (higher answer = more prepared)
-  { id: 'r1', category: 'readiness', text: 'How much time do you spend preparing for interviews?' },
-  { id: 'r2', category: 'readiness', text: 'How familiar are you with common HR and behavioral questions?' },
-  { id: 'r3', category: 'readiness', text: 'How prepared are you to explain your projects or work experience?' },
-  { id: 'r4', category: 'readiness', text: 'How comfortable are you with the format of a structured interview?' },
-  { id: 'r5', category: 'readiness', text: 'How often do you practice speaking or mock interviews?' },
+  { id: 'r1', category: 'readiness', text: 'How much time do you spend preparing for interviews?', minLabel: 'Very Little', maxLabel: 'Very High' },
+  { id: 'r2', category: 'readiness', text: 'How familiar are you with common HR and behavioral questions?', minLabel: 'Not Familiar', maxLabel: 'Extremely Familiar' },
+  { id: 'r3', category: 'readiness', text: 'How prepared are you to explain your projects or work experience?', minLabel: 'Not Prepared', maxLabel: 'Very Well Prepared' },
+  { id: 'r4', category: 'readiness', text: 'How comfortable are you with the format of a structured interview?', minLabel: 'Very Uncomfortable', maxLabel: 'Very Comfortable' },
+  { id: 'r5', category: 'readiness', text: 'How often do you practice speaking or mock interviews?', minLabel: 'Never', maxLabel: 'Very Often' },
 
   // EXPERIENCE (higher answer = more experience)
-  { id: 'e1', category: 'experience', text: 'How many real interviews have you attended so far?' },
-  { id: 'e2', category: 'experience', text: 'How familiar are you with behavioural questions (STAR method)?' },
-  { id: 'e3', category: 'experience', text: 'How comfortable are you with group discussions or panel interviews?' },
-  { id: 'e4', category: 'experience', text: 'How often have you received feedback after an interview?' },
-  { id: 'e5', category: 'experience', text: 'How well do you know what interviewers typically evaluate?' },
+  { id: 'e1', category: 'experience', text: 'How many real interviews have you attended so far?', minLabel: 'None', maxLabel: 'Many' },
+  { id: 'e2', category: 'experience', text: 'How familiar are you with behavioural questions (STAR method)?', minLabel: 'Not Familiar', maxLabel: 'Extremely Familiar' },
+  { id: 'e3', category: 'experience', text: 'How comfortable are you with group discussions or panel interviews?', minLabel: 'Very Uncomfortable', maxLabel: 'Very Comfortable' },
+  { id: 'e4', category: 'experience', text: 'How often have you received feedback after an interview?', minLabel: 'Never', maxLabel: 'Very Often' },
+  { id: 'e5', category: 'experience', text: 'How well do you know what interviewers typically evaluate?', minLabel: 'Not at all', maxLabel: 'Very Well' },
 
   // COMMUNICATION (higher answer = more comfortable communicating)
-  { id: 'co1', category: 'communication', text: 'I can speak clearly and at a comfortable pace.' },
-  { id: 'co2', category: 'communication', text: 'I can organize my thoughts before speaking.' },
-  { id: 'co3', category: 'communication', text: 'I avoid using filler words like "um" and "uh" frequently.' },
-  { id: 'co4', category: 'communication', text: 'I can maintain a professional tone throughout a conversation.' },
-  { id: 'co5', category: 'communication', text: 'I can give structured answers with a clear beginning and end.' },
+  { id: 'co1', category: 'communication', text: 'I can speak clearly and at a comfortable pace.', minLabel: 'Strongly Disagree', maxLabel: 'Strongly Agree' },
+  { id: 'co2', category: 'communication', text: 'I can organize my thoughts before speaking.', minLabel: 'Strongly Disagree', maxLabel: 'Strongly Agree' },
+  { id: 'co3', category: 'communication', text: 'I avoid using filler words like "um" and "uh" frequently.', minLabel: 'Strongly Disagree', maxLabel: 'Strongly Agree' },
+  { id: 'co4', category: 'communication', text: 'I can maintain a professional tone throughout a conversation.', minLabel: 'Strongly Disagree', maxLabel: 'Strongly Agree' },
+  { id: 'co5', category: 'communication', text: 'I can give structured answers with a clear beginning and end.', minLabel: 'Strongly Disagree', maxLabel: 'Strongly Agree' },
 ];
 
 const SCALE_LABELS: Record<number, string> = {
@@ -102,11 +98,11 @@ export function generateRecommendations(scores: AssessmentScores): Recommendatio
     });
   }
 
-  // Speaking Confidence — high anxiety or low communication
+  // Speaking Performance — high anxiety or low communication
   if (scores.anxiety > 50 || scores.communication < 60) {
     recs.push({
       id: 'speaking',
-      title: 'Speaking Confidence Practice',
+      title: 'Speaking Performance Practice',
       reason: scores.anxiety > 60
         ? `Your anxiety score (${scores.anxiety}%) is elevated. Speaking exercises help reduce anxiety through repeated exposure.`
         : `Your communication score (${scores.communication}%) indicates room to improve vocal clarity and reduce filler words.`,

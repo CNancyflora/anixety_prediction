@@ -2,7 +2,9 @@
 import AppLayout from "@/components/AppLayout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getAssessments, getInterviews } from "@/lib/storage";
+import { auth, db } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, query, getDocs } from "firebase/firestore";
 import type { Assessment, InterviewSession, ProgressDataPoint } from "@/types";
 
 export default function ProgressPage() {
@@ -10,38 +12,52 @@ export default function ProgressPage() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const assessments = getAssessments();
-    const interviews = getInterviews();
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const assessmentsQ = query(collection(db, "users", user.uid, "assessments"));
+          const interviewsQ = query(collection(db, "users", user.uid, "interviews"));
+          
+          const [aSnap, iSnap] = await Promise.all([getDocs(assessmentsQ), getDocs(interviewsQ)]);
+          
+          const data: ProgressDataPoint[] = [];
+          
+          aSnap.docs.forEach(doc => {
+            const a = doc.data() as Assessment;
+            data.push({
+              date: a.completedAt,
+              type: "assessment",
+              anxiety: a.scores.anxiety,
+              confidence: a.scores.confidence,
+              readiness: a.scores.readiness,
+            });
+          });
 
-    const data: ProgressDataPoint[] = [];
-    
-    // Add assessments
-    assessments.forEach(a => {
-      data.push({
-        date: a.completedAt,
-        type: "assessment",
-        anxiety: a.scores.anxiety,
-        confidence: a.scores.confidence,
-        readiness: a.scores.readiness,
-      });
-    });
+          iSnap.docs.forEach(doc => {
+            const i = doc.data() as InterviewSession;
+            if (i.overallScore !== null) {
+              data.push({
+                date: i.completedAt,
+                type: "interview",
+                overallScore: i.overallScore,
+              });
+            }
+          });
 
-    // Add interviews
-    interviews.forEach(i => {
-      if (i.overallScore !== null) {
-        data.push({
-          date: i.completedAt,
-          type: "interview",
-          overallScore: i.overallScore,
-        });
+          data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+          setPoints(data);
+        } catch (e) {
+          console.error("Failed to load progress data", e);
+        } finally {
+          setLoaded(true);
+        }
+      } else {
+        setPoints([]);
+        setLoaded(true);
       }
     });
 
-    // Sort ascending by date
-    data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    
-    setPoints(data);
-    setLoaded(true);
+    return () => unsub();
   }, []);
 
   if (!loaded) return <AppLayout><div className="page-wrap"><div style={{ display: "flex", justifyContent: "center", paddingTop: 60 }}><div className="spinner spinner-lg" /></div></div></AppLayout>;

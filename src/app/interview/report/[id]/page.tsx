@@ -2,7 +2,9 @@
 import AppLayout from "@/components/AppLayout";
 import Link from "next/link";
 import { use, useEffect, useState } from "react";
-import { getInterview } from "@/lib/storage";
+import { auth, db } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import type { InterviewSession } from "@/types";
 
 export default function InterviewReportPage({ params }: { params: Promise<{ id: string }> }) {
@@ -10,7 +12,31 @@ export default function InterviewReportPage({ params }: { params: Promise<{ id: 
   const [session, setSession] = useState<InterviewSession | null>(null);
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => { setSession(getInterview(id)); setLoaded(true); }, [id]);
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const docRef = doc(db, "users", user.uid, "interviews", id);
+          const snap = await getDoc(docRef);
+          if (snap.exists()) {
+            setSession(snap.data() as InterviewSession);
+          } else {
+            setSession(null);
+          }
+        } catch (e) {
+          console.error("Failed to load report", e);
+          setSession(null);
+        } finally {
+          setLoaded(true);
+        }
+      } else {
+        setSession(null);
+        setLoaded(true);
+      }
+    });
+
+    return () => unsub();
+  }, [id]);
 
   if (!loaded) return <AppLayout><div className="page-wrap"><div style={{ display: "flex", justifyContent: "center", paddingTop: 60 }}><div className="spinner spinner-lg" /></div></div></AppLayout>;
 
@@ -24,6 +50,8 @@ export default function InterviewReportPage({ params }: { params: Promise<{ id: 
   const s = session.componentScores;
   const comp = session.completedAt;
   const dur = Math.round((new Date(session.completedAt).getTime() - new Date(session.startedAt).getTime()) / 1000);
+  const validResponses = session.responses.filter(r => r.metrics && r.metrics.speechDuration >= 1.5);
+  const totalSpeechDuration = session.responses.reduce((sum, r) => sum + (r.metrics?.speechDuration || 0), 0);
 
   return (
     <AppLayout>
@@ -37,21 +65,39 @@ export default function InterviewReportPage({ params }: { params: Promise<{ id: 
 
         {/* Overall Score */}
         <div className="card" style={{ marginBottom: 20 }}>
-          <div className="card-body" style={{ display: "flex", alignItems: "center", gap: 24 }}>
-            <div style={{ textAlign: "center", padding: "8px 24px", borderRight: "1px solid var(--border)" }}>
+          {session.overallScore === null && validResponses.length === 0 && (
+            <div style={{ background: "var(--amber-bg)", padding: 20, borderBottom: "1px solid var(--amber-border)" }}>
+              <div style={{ fontSize: 16, fontWeight: 700, color: "var(--amber)", marginBottom: 4 }}>NO SPEECH DETECTED</div>
+              <p style={{ fontSize: 14, color: "var(--text-2)", margin: 0 }}>
+                We couldn't detect spoken responses during this interview, so a reliable performance score could not be calculated. CalmHire could not calculate an overall performance score because no spoken responses were detected.
+              </p>
+            </div>
+          )}
+          {session.overallScore === null && validResponses.length > 0 && (
+            <div style={{ background: "var(--amber-bg)", padding: 20, borderBottom: "1px solid var(--amber-border)" }}>
+              <div style={{ fontSize: 16, fontWeight: 700, color: "var(--amber)", marginBottom: 4 }}>Analysis unavailable</div>
+              <p style={{ fontSize: 14, color: "var(--text-2)", margin: 0 }}>
+                Not enough valid responses to calculate a reliable overall performance score.
+              </p>
+            </div>
+          )}
+          <div className="card-body" style={{ display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
+            <div style={{ textAlign: "center", padding: "8px 24px", borderRight: "1px solid var(--border)", minWidth: 160 }}>
               <div className="label-cap" style={{ marginBottom: 6 }}>Overall Score</div>
               {session.overallScore !== null ? (
-                <div style={{ fontSize: 52, fontWeight: 800, color: scoreColor(session.overallScore), lineHeight: 1 }}>{session.overallScore}<span style={{ fontSize: 22, color: "var(--text-3)" }}>%</span></div>
+                <>
+                  <div style={{ fontSize: 52, fontWeight: 800, color: scoreColor(session.overallScore), lineHeight: 1 }}>{session.overallScore}<span style={{ fontSize: 22, color: "var(--text-3)" }}>%</span></div>
+                  <div style={{ fontSize: 12, color: "var(--text-2)", marginTop: 4 }}>{session.overallScore >= 75 ? "Good performance" : session.overallScore >= 50 ? "Developing" : "Needs practice"}</div>
+                </>
               ) : (
-                <div style={{ fontSize: 14, color: "var(--text-3)" }}>Not available</div>
+                <div style={{ fontSize: 18, fontWeight: 800, color: "var(--text-3)", margin: "16px 0" }}>Not available</div>
               )}
-              {session.overallScore !== null && <div style={{ fontSize: 12, color: "var(--text-2)", marginTop: 4 }}>{session.overallScore >= 75 ? "Good performance" : session.overallScore >= 50 ? "Developing" : "Needs practice"}</div>}
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, flex: 1 }}>
-              <Stat label="Duration" value={`${Math.floor(dur / 60)}m ${dur % 60}s`} />
-              <Stat label="Questions" value={`${session.responses.length}/${session.questions.length}`} />
-              <Stat label="Type" value={session.type} cap />
-              <Stat label="Difficulty" value={session.difficulty} cap />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, flex: 1 }}>
+              <Stat label="Recording Duration" value={`${Math.floor(dur / 60)}m ${dur % 60}s`} />
+              <Stat label="Detected Speech" value={`${totalSpeechDuration.toFixed(1)}s`} />
+              <Stat label="Questions Presented" value={String(session.questions.length)} />
+              <Stat label="Responses Detected" value={`${validResponses.length}/${session.questions.length}`} />
             </div>
           </div>
         </div>
@@ -60,14 +106,16 @@ export default function InterviewReportPage({ params }: { params: Promise<{ id: 
         <div className="card" style={{ marginBottom: 20 }}>
           <div className="card-header"><span className="section-title">Performance Breakdown</span></div>
           <div className="card-body">
-            <p style={{ fontSize: 13, color: "var(--text-2)", marginBottom: 16, lineHeight: 1.6 }}>
-              Scores are calculated from your actual recorded responses. "Not available" appears when a metric could not be measured.
-            </p>
-            <ComponentRow label="Communication" score={s.communication} desc="Speech-to-silence ratio and volume consistency." />
-            <ComponentRow label="Speaking Confidence Indicator" score={s.speakingConfidence} desc="Composite of pause count, filler words, and WPM." />
-            <ComponentRow label="Answer Structure" score={s.answerStructure} desc="Based on word count and response completeness (where available)." />
-            <ComponentRow label="Voice Clarity" score={s.voiceClarity} desc="Speaking rate alignment with recommended 80–150 WPM." />
-            <ComponentRow label="Response Time" score={s.responseTime} desc="Time from question display to speech start (optimal: 2–8 seconds)." />
+            {session.overallScore === null && (
+               <p style={{ fontSize: 13, color: "var(--amber)", marginBottom: 16, lineHeight: 1.6, fontWeight: 600 }}>
+                 No sufficient speech data was detected to calculate accurate performance metrics.
+               </p>
+            )}
+            <ComponentRow label="Communication" score={s.communication} desc={s.communication === null ? "No spoken response was detected." : "Speech-to-silence ratio and volume consistency."} />
+            <ComponentRow label="Speaking Performance" score={s.speakingConfidence} desc={s.speakingConfidence === null ? "No sufficient speech data was detected." : "Composite of pause count, filler words, and WPM."} />
+            <ComponentRow label="Answer Structure" score={s.answerStructure} desc={s.answerStructure === null ? "No spoken answer was detected." : "Based on word count and response completeness (where available)."} />
+            <ComponentRow label="Voice Clarity" score={s.voiceClarity} desc={s.voiceClarity === null ? "No answer transcript was available." : "Speaking rate alignment with recommended 80–150 WPM."} />
+            <ComponentRow label="Response Time" score={s.responseTime} desc={s.responseTime === null ? "No valid spoken response was detected." : "Time from question display to speech start (optimal: 2–8 seconds)."} />
           </div>
         </div>
 
@@ -76,19 +124,21 @@ export default function InterviewReportPage({ params }: { params: Promise<{ id: 
           <div className="card-header"><span className="section-title">Question-by-Question</span></div>
           <div style={{ overflowX: "auto" }}>
             <table className="table">
-              <thead><tr><th>#</th><th>Question</th><th>Response Time</th><th>Duration</th><th>Pauses</th><th>WPM</th><th>Fillers</th></tr></thead>
+              <thead><tr><th>#</th><th>Question</th><th>Status</th><th>Response Time</th><th>Duration</th><th>WPM</th></tr></thead>
               <tbody>
-                {session.responses.map((r, i) => (
+                {session.responses.map((r, i) => {
+                  const hasSpeech = r.metrics && r.metrics.speechDuration >= 1.5;
+                  return (
                   <tr key={i}>
                     <td style={{ fontWeight: 700, color: "var(--text-3)" }}>{i + 1}</td>
                     <td style={{ maxWidth: 200, fontSize: 12 }}>{r.questionText}</td>
-                    <td>{r.responseTime !== null ? `${r.responseTime.toFixed(1)}s` : <span style={{ color: "var(--text-3)" }}>N/A</span>}</td>
-                    <td>{r.metrics ? `${r.metrics.totalDuration.toFixed(0)}s` : <span style={{ color: "var(--text-3)" }}>N/A</span>}</td>
-                    <td>{r.metrics ? r.metrics.pauseCount : <span style={{ color: "var(--text-3)" }}>N/A</span>}</td>
-                    <td>{r.metrics?.wordsPerMinute ?? <span style={{ color: "var(--text-3)" }}>N/A</span>}</td>
-                    <td>{r.metrics?.fillerWordCount ?? <span style={{ color: "var(--text-3)" }}>N/A</span>}</td>
+                    <td style={{ fontSize: 12, color: hasSpeech ? "var(--green)" : "var(--amber)", fontWeight: 600 }}>{hasSpeech ? "Answered" : "No response detected"}</td>
+                    <td>{hasSpeech && r.responseTime !== null ? `${r.responseTime.toFixed(1)}s` : <span style={{ color: "var(--text-3)" }}>N/A</span>}</td>
+                    <td>{hasSpeech && r.metrics ? `${r.metrics.speechDuration.toFixed(1)}s` : <span style={{ color: "var(--text-3)" }}>N/A</span>}</td>
+                    <td>{hasSpeech && r.metrics?.wordsPerMinute ? r.metrics.wordsPerMinute : <span style={{ color: "var(--text-3)" }}>N/A</span>}</td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -141,7 +191,7 @@ export default function InterviewReportPage({ params }: { params: Promise<{ id: 
 
         {/* Actions */}
         <div style={{ display: "flex", gap: 10 }}>
-          <Link href="/interview/setup" className="btn btn-primary">Practice Again</Link>
+          <Link href="/interview/setup" className="btn btn-primary">Try Interview Again</Link>
           <Link href="/progress" className="btn btn-outline">View Progress</Link>
           <Link href="/history" className="btn btn-outline">All Sessions</Link>
         </div>

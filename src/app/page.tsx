@@ -43,7 +43,7 @@ export default function LandingPage() {
               { icon: "📋", title: "Anxiety & Readiness Assessment", desc: "A structured questionnaire that calculates your real anxiety, confidence, and readiness scores — and generates a personalized practice plan." },
               { icon: "🎙️", title: "Practice with Real Recording", desc: "Record your answers to self-introduction, HR questions, and speaking exercises. Get actual audio metrics, not simulated scores." },
               { icon: "🎥", title: "Mock Interview Session", desc: "Full camera + microphone interview with real questions. Response time, speech rate, and filler words are actually measured." },
-              { icon: "📊", title: "Measurable Performance Report", desc: "After every session, see your real speaking confidence indicator, pause count, WPM, and answer structure — with rule-based feedback." },
+              { icon: "📊", title: "Measurable Performance Report", desc: "After every session, see your real speaking performance indicator, pause count, WPM, and answer structure — with rule-based feedback." },
               { icon: "📈", title: "Progress Tracking", desc: "Track anxiety, confidence, and readiness trends across sessions. Every data point comes from your actual practice history." },
               { icon: "📄", title: "Resume Analyzer", desc: "Upload your resume and get a structured checklist review of sections, keywords, and completeness — no invented ATS scores." },
             ].map(f => (

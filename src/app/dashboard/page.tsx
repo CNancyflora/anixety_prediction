@@ -3,8 +3,9 @@ import AppLayout from "@/components/AppLayout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/lib/firebase";
-import { getDashboardData, loadProfile } from "@/lib/storage";
+import { auth, db } from "@/lib/firebase";
+import { collection, query, orderBy, getDocs } from "firebase/firestore";
+import { loadProfile } from "@/lib/storage";
 import type { Assessment, InterviewSession, UserProfile } from "@/types";
 
 export default function DashboardPage() {
@@ -22,14 +23,26 @@ export default function DashboardPage() {
 
     const unsub = onAuthStateChanged(auth, async (user) => {
       if (!user) return;
-      const data = getDashboardData();
-      setLatest(data.latestAssessment);
-      setLastInterview(data.latestInterview);
-      setTotalInterviews(data.totalInterviews);
-      setTotalPractices(data.totalPractices);
-      const p = await loadProfile(user.uid);
-      setProfile(p);
-      setLoaded(true);
+      try {
+        const [aSnap, iSnap, pSnap] = await Promise.all([
+          getDocs(query(collection(db, "users", user.uid, "assessments"), orderBy("createdAt", "desc"))),
+          getDocs(query(collection(db, "users", user.uid, "interviews"), orderBy("createdAt", "desc"))),
+          getDocs(collection(db, "users", user.uid, "practices"))
+        ]);
+        
+        if (!aSnap.empty) setLatest(aSnap.docs[0].data() as Assessment);
+        if (!iSnap.empty) setLastInterview(iSnap.docs[0].data() as InterviewSession);
+        
+        setTotalInterviews(iSnap.size);
+        setTotalPractices(pSnap.size);
+        
+        const p = await loadProfile(user.uid);
+        setProfile(p);
+      } catch (e) {
+        console.error("Failed to load dashboard data", e);
+      } finally {
+        setLoaded(true);
+      }
     });
     return unsub;
   }, []);

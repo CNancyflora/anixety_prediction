@@ -28,6 +28,7 @@ export default function SelfIntroPracticePage() {
   const timerRef = useRef<any>(null);
   const recognizerRef = useRef<any>(null);
   const transcriptRef = useRef("");
+  const transcriptConfRef = useRef<number | null>(null);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, u => { if (u) setUid(u.uid); });
@@ -51,7 +52,9 @@ export default function SelfIntroPracticePage() {
       // AudioAnalyzer
       const analyzer = new AudioAnalyzer();
       await analyzer.connect(stream);
+      await analyzer.calibrate(1000);
       analyzerRef.current = analyzer;
+      analyzer.startRecording();
 
       // MediaRecorder
       const recorder = new MediaRecorder(stream);
@@ -64,8 +67,13 @@ export default function SelfIntroPracticePage() {
         if (rec) {
           rec.onresult = (e: any) => {
             let t = "";
-            for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript + " ";
+            let c = 0;
+            for (let i = 0; i < e.results.length; i++) {
+              t += e.results[i][0].transcript + " ";
+              c += e.results[i][0].confidence;
+            }
             transcriptRef.current = t.trim();
+            transcriptConfRef.current = e.results.length > 0 ? c / e.results.length : 0;
             setTranscript(t.trim());
           };
           rec.start();
@@ -95,15 +103,15 @@ export default function SelfIntroPracticePage() {
     clearInterval(timerRef.current);
     recognizerRef.current?.stop();
 
-    const { samples, duration } = analyzerRef.current?.stop() ?? { samples: [], duration: elapsed };
+    const { samples, duration, noiseFloor } = analyzerRef.current?.stop() ?? { samples: [], duration: elapsed, noiseFloor: 5 };
     streamRef.current?.getTracks().forEach(t => t.stop());
 
-    const audioMetrics = computeAudioMetrics(samples, duration || elapsed);
-    const txMetrics = transcriptRef.current
-      ? computeTranscriptMetrics(transcriptRef.current, audioMetrics.speechDuration ?? 0)
+    const audioM = computeAudioMetrics(samples, duration || elapsed, noiseFloor);
+    const txM = transcriptRef.current
+      ? computeTranscriptMetrics(transcriptRef.current, audioM.speechDuration ?? 0, transcriptConfRef.current)
       : null;
 
-    const merged = mergeMetrics(audioMetrics, txMetrics);
+    const merged = mergeMetrics(audioM, txM);
     setMetrics(merged);
 
     if (uid) {
@@ -241,6 +249,19 @@ export default function SelfIntroPracticePage() {
                 <p style={{ fontSize: 13.5, color: "var(--text-2)", marginBottom: 20, lineHeight: 1.6 }}>
                   The following metrics were calculated from your actual recording:
                 </p>
+
+                {metrics.speechDuration === 0 && (
+                  <div className="alert alert-danger" style={{ marginBottom: 16 }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>
+                    NO SPEECH DETECTED: We couldn't detect spoken responses during this practice session. Performance scores could not be generated.
+                  </div>
+                )}
+                {metrics.speechDuration > 0 && metrics.speechDuration < 3 && (
+                  <div className="alert alert-warning" style={{ marginBottom: 16 }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>
+                    INSUFFICIENT SPEECH: Please speak for at least a few seconds to get a reliable speaking analysis.
+                  </div>
+                )}
                 <div className="grid-2" style={{ gap: 16 }}>
                   <MetricRow label="Total Duration" value={`${metrics.totalDuration.toFixed(0)}s`} />
                   <MetricRow label="Speech Duration" value={`${metrics.speechDuration.toFixed(0)}s`} />
@@ -274,7 +295,7 @@ export default function SelfIntroPracticePage() {
               <button className="btn btn-outline" onClick={() => { setStage("setup"); setMetrics(null); setTranscript(""); setElapsed(0); }}>
                 Practice Again
               </button>
-              <Link href="/practice/speaking" className="btn btn-primary">Next: Speaking Confidence →</Link>
+              <Link href="/practice/speaking" className="btn btn-primary">Next: Speaking Performance →</Link>
             </div>
           </div>
         )}

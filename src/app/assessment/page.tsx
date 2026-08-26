@@ -10,11 +10,11 @@ import { saveAssessment, newId } from "@/lib/storage";
 import type { AssessmentResponse } from "@/types";
 
 const CATEGORIES = [
-  { key: "anxiety", label: "Interview Anxiety", desc: "Rate how much each statement applies to you. 1 = Very Low, 5 = Very High." },
-  { key: "confidence", label: "Self Confidence", desc: "How strongly do you agree with each statement? 1 = Strongly Disagree, 5 = Strongly Agree." },
-  { key: "readiness", label: "Preparation & Readiness", desc: "Rate your preparation level for each area. 1 = Very Low, 5 = Very High." },
-  { key: "experience", label: "Interview Experience", desc: "Rate your familiarity or exposure to each area. 1 = Very Low, 5 = Very High." },
-  { key: "communication", label: "Communication Comfort", desc: "How strongly do you agree with each statement? 1 = Strongly Disagree, 5 = Strongly Agree." },
+  { key: "readiness", label: "Preparation & Readiness", desc: "Rate your current preparation level for each area. 1 = Lowest level, 5 = Highest level." },
+  { key: "confidence", label: "Self Confidence", desc: "Rate your level of confidence for each area." },
+  { key: "anxiety", label: "Interview Anxiety", desc: "Select the option that best describes your feelings." },
+  { key: "experience", label: "Interview Experience", desc: "Rate your familiarity or exposure to each area." },
+  { key: "communication", label: "Communication Comfort", desc: "How strongly do you agree with each statement?" },
 ];
 
 export default function AssessmentPage() {
@@ -72,7 +72,7 @@ export default function AssessmentPage() {
         {/* Header */}
         <div style={{ marginBottom: 28 }}>
           <h1 className="page-title">Interview Readiness Assessment</h1>
-          <p className="page-subtitle">25 questions across 5 categories · ~5 minutes</p>
+          <p className="page-subtitle">{ASSESSMENT_QUESTIONS.length} questions across 5 categories · ~5 minutes</p>
         </div>
 
         {/* Progress */}
@@ -98,19 +98,22 @@ export default function AssessmentPage() {
                 <strong> Anxiety, Confidence, Readiness, Experience,</strong> and <strong>Communication.</strong>
               </p>
               <p style={{ fontSize: 14, color: "var(--text-2)", lineHeight: 1.7, marginBottom: 16 }}>
-                Each question uses a <strong>1–5 scale</strong> where 1 = Very Low / Strongly Disagree and 5 = Very High / Strongly Agree.
+                Each question uses a <strong>1–5 scale</strong>. Please read the specific labels below the options for context.
               </p>
               <div className="alert alert-info" style={{ marginBottom: 20 }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>
                 Answer honestly. Your scores are calculated directly from your responses — there are no right or wrong answers.
               </div>
               <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8, marginBottom: 24 }}>
-                {CATEGORIES.map((c, i) => (
-                  <li key={c.key} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14, color: "var(--text-2)" }}>
-                    <span style={{ width: 24, height: 24, borderRadius: "50%", background: "var(--blue-50)", color: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, flexShrink: 0 }}>{i + 1}</span>
-                    {c.label} — 5 questions
-                  </li>
-                ))}
+                {CATEGORIES.map((c, i) => {
+                  const qCount = ASSESSMENT_QUESTIONS.filter(q => q.category === c.key).length;
+                  return (
+                    <li key={c.key} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14, color: "var(--text-2)" }}>
+                      <span style={{ width: 24, height: 24, borderRadius: "50%", background: "var(--blue-50)", color: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, flexShrink: 0 }}>{i + 1}</span>
+                      {c.label} — {qCount} questions
+                    </li>
+                  );
+                })}
               </ul>
               <button className="btn btn-primary btn-lg btn-full" onClick={() => setStep(1)}>
                 Begin Assessment →
@@ -151,8 +154,8 @@ export default function AssessmentPage() {
                         ))}
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 5, fontSize: 11, color: "var(--text-3)" }}>
-                        <span>Very Low / Strongly Disagree</span>
-                        <span>Very High / Strongly Agree</span>
+                        <span>{q.minLabel || "Very Low / Strongly Disagree"}</span>
+                        <span>{q.maxLabel || "Very High / Strongly Agree"}</span>
                       </div>
                     </div>
                   );

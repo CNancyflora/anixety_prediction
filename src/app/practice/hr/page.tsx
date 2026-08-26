@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { HR_PRACTICE_QUESTIONS } from "@/lib/questions";
-import { AudioAnalyzer, computeAudioMetrics, computeTranscriptMetrics, mergeMetrics, computeSpeakingConfidence, createSpeechRecognizer, isSpeechRecognitionAvailable } from "@/lib/speechAnalysis";
+import { AudioAnalyzer, computeAudioMetrics, computeTranscriptMetrics, mergeMetrics, computeSpeakingConfidence, createSpeechRecognizer, isSpeechRecognitionAvailable, evaluateHRAnswer } from "@/lib/speechAnalysis";
 import { savePractice, newId } from "@/lib/storage";
 import type { SpeechMetrics } from "@/types";
 
@@ -27,6 +27,8 @@ export default function HRPracticePage() {
   const timerRef = useRef<any>(null);
   const recognizerRef = useRef<any>(null);
   const transcriptRef = useRef("");
+  const transcriptConfRef = useRef<number | null>(null);
+  const [showCalculation, setShowCalculation] = useState(false);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, u => { if (u) setUid(u.uid); });
@@ -44,11 +46,23 @@ export default function HRPracticePage() {
       streamRef.current = stream;
       const analyzer = new AudioAnalyzer();
       await analyzer.connect(stream);
+      await analyzer.calibrate(1000);
       analyzerRef.current = analyzer;
+      analyzer.startRecording();
       if (isSpeechRecognitionAvailable()) {
         const rec = createSpeechRecognizer();
         if (rec) {
-          rec.onresult = (e: any) => { let t = ""; for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript + " "; transcriptRef.current = t.trim(); setTranscript(t.trim()); };
+          rec.onresult = (e: any) => { 
+            let t = ""; 
+            let c = 0;
+            for (let i = 0; i < e.results.length; i++) {
+              t += e.results[i][0].transcript + " "; 
+              c += e.results[i][0].confidence;
+            }
+            transcriptRef.current = t.trim(); 
+            setTranscript(t.trim()); 
+            transcriptConfRef.current = e.results.length > 0 ? c / e.results.length : 0;
+          };
           rec.start(); recognizerRef.current = rec;
         }
       }
@@ -63,12 +77,13 @@ export default function HRPracticePage() {
   const stopRecording = async () => {
     clearInterval(timerRef.current);
     recognizerRef.current?.stop();
-    const { samples, duration } = analyzerRef.current?.stop() ?? { samples: [], duration: elapsed };
+    const { samples, duration, noiseFloor } = analyzerRef.current?.stop() ?? { samples: [], duration: elapsed, noiseFloor: 5 };
     streamRef.current?.getTracks().forEach(t => t.stop());
-    const audioM = computeAudioMetrics(samples, duration || elapsed);
-    const txM = transcriptRef.current ? computeTranscriptMetrics(transcriptRef.current, audioM.speechDuration ?? 0) : null;
+    const audioM = computeAudioMetrics(samples, duration || elapsed, noiseFloor);
+    const txM = transcriptRef.current ? computeTranscriptMetrics(transcriptRef.current, audioM.speechDuration ?? 0, transcriptConfRef.current) : null;
     const merged = mergeMetrics(audioM, txM);
     setSessionMetrics(prev => [...prev, { q: question, metrics: merged, elapsed }]);
+    setShowCalculation(false);
     setStage("reviewing");
   };
 
@@ -161,21 +176,100 @@ export default function HRPracticePage() {
 
         {/* Reviewing */}
         {stage === "reviewing" && lastM && (
-          <div className="card">
-            <div className="card-header"><span className="section-title">Answer Recorded ✓</span></div>
+          <div className="card" style={{ marginBottom: 20 }}>
+            <div className="card-header"><span className="section-title">HR Answer Performance</span></div>
             <div className="card-body">
-              <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: "var(--text-2)" }}>{lastM.q.text}</div>
-              <div className="grid-2" style={{ gap: 12, marginBottom: 20 }}>
-                <MetricRow label="Duration" value={`${lastM.elapsed}s`} />
-                <MetricRow label="Speech Time" value={`${lastM.metrics.speechDuration.toFixed(0)}s`} />
-                <MetricRow label="Pause Count" value={String(lastM.metrics.pauseCount)} />
-                <MetricRow label="Long Pauses" value={String(lastM.metrics.longPauseCount)} highlight={lastM.metrics.longPauseCount > 2 ? "warn" : "ok"} />
-                {lastM.metrics.wordsPerMinute !== null && <MetricRow label="Speaking Rate" value={`${lastM.metrics.wordsPerMinute} WPM`} highlight={lastM.metrics.wordsPerMinute >= 100 && lastM.metrics.wordsPerMinute <= 150 ? "ok" : "warn"} />}
-                {lastM.metrics.fillerWordCount !== null && <MetricRow label="Filler Words" value={String(lastM.metrics.fillerWordCount)} highlight={lastM.metrics.fillerWordCount > 4 ? "warn" : "ok"} />}
+              <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 12, color: "var(--text-2)", padding: "10px", background: "var(--bg)", borderRadius: 8 }}>
+                Question: {lastM.q.text}
               </div>
-              {lastM.metrics.transcript && <div style={{ background: "var(--bg)", borderRadius: 8, padding: 12, fontSize: 13, color: "var(--text-2)", lineHeight: 1.7, marginBottom: 16 }}>{lastM.metrics.transcript}</div>}
-              <button className="btn btn-primary btn-full" onClick={nextQuestion} disabled={saving}>
-                {saving ? <><span className="spinner" /> Saving…</> : isLast ? "Finish Session →" : `Next: Q${qIndex + 2} →`}
+              
+              {(() => {
+                const evalResult = evaluateHRAnswer(lastM.q, lastM.metrics);
+                
+                if (evalResult.status !== "valid" || !evalResult.scores) {
+                  return (
+                    <div style={{ padding: "20px", background: "var(--amber-bg)", borderRadius: 8, marginBottom: 20, textAlign: "center", border: "1px solid var(--amber-border)" }}>
+                      <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--amber)", marginBottom: 8 }}>{evalResult.statusMessage}</h3>
+                      <p style={{ fontSize: 14, color: "var(--text-2)" }}>Unable to calculate a reliable result because there isn't enough usable answer data.</p>
+                    </div>
+                  );
+                }
+
+                const s = evalResult.scores;
+                const f = evalResult.feedback!;
+                const m = lastM.metrics;
+                
+                return (
+                  <>
+                    <div style={{ textAlign: "center", marginBottom: 24, paddingBottom: 24, borderBottom: "1px solid var(--border)" }}>
+                      <div style={{ fontSize: 13, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: "0.05em", fontWeight: 700, marginBottom: 4 }}>Answer Quality</div>
+                      <div style={{ fontSize: 48, fontWeight: 800, color: (s.overall ?? 0) >= 70 ? "var(--green)" : (s.overall ?? 0) >= 50 ? "var(--amber)" : "var(--red)", lineHeight: 1 }}>
+                        {s.overall !== null ? s.overall : "--"}<span style={{ fontSize: 20, color: "var(--text-3)" }}>%</span>
+                      </div>
+                    </div>
+
+                    <div className="grid-2" style={{ gap: 24, marginBottom: 24 }}>
+                      <div>
+                        <div className="label-cap" style={{ marginBottom: 12 }}>Content</div>
+                        <MetricRow label="Relevance" value={s.relevance !== null ? `${s.relevance}%` : "N/A"} />
+                        <MetricRow label="Completeness" value={s.completeness !== null ? `${s.completeness}%` : "N/A"} />
+                        <MetricRow label="Content Quality" value={s.contentQuality !== null ? `${s.contentQuality}%` : "N/A"} />
+                        <MetricRow label="Structure" value={s.structure !== null ? `${s.structure}%` : "N/A"} />
+                        <MetricRow label="Specificity" value={s.specificity !== null ? `${s.specificity}%` : "N/A"} />
+                      </div>
+                      <div>
+                        <div className="label-cap" style={{ marginBottom: 12 }}>Speaking</div>
+                        <MetricRow label="Speaking Rate" value={m.wordsPerMinute ? `${m.wordsPerMinute} WPM` : "N/A"} />
+                        <MetricRow label="Filler Words" value={m.fillerWordCount !== null ? String(m.fillerWordCount) : "N/A"} />
+                        <MetricRow label="Long Pauses" value={String(m.longPauseCount)} />
+                        <MetricRow label="Speech Duration" value={fmt(Math.round(m.speechDuration))} />
+                      </div>
+                    </div>
+
+                    <div style={{ marginBottom: 24 }}>
+                      <div className="label-cap" style={{ color: "var(--green)", marginBottom: 8 }}>What You Did Well</div>
+                      <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, color: "var(--text-2)", lineHeight: 1.6 }}>
+                        {f.strengths.map((str, i) => <li key={i}>{str}</li>)}
+                      </ul>
+                    </div>
+
+                    <div style={{ marginBottom: 24 }}>
+                      <div className="label-cap" style={{ color: "var(--red)", marginBottom: 8 }}>What Needs Improvement</div>
+                      <ul style={{ margin: 0, paddingLeft: 20, fontSize: 14, color: "var(--text-2)", lineHeight: 1.6 }}>
+                        {f.weaknesses.map((w, i) => <li key={i}>{w}</li>)}
+                      </ul>
+                    </div>
+
+                    <div style={{ marginBottom: 24, padding: 16, background: "var(--bg)", borderRadius: 8 }}>
+                      <div className="label-cap" style={{ color: "var(--blue)", marginBottom: 6 }}>How to Improve</div>
+                      <div style={{ fontSize: 14, color: "var(--text-2)" }}>{f.actionable}</div>
+                    </div>
+
+                    <div style={{ marginBottom: 24 }}>
+                      <button className="btn btn-outline btn-sm" onClick={() => setShowCalculation(!showCalculation)} style={{ width: "100%", justifyContent: "space-between" }}>
+                        How was this score calculated? <span>{showCalculation ? "▲" : "▼"}</span>
+                      </button>
+                      
+                      {showCalculation && (
+                        <div style={{ marginTop: 12, background: "var(--bg)", borderRadius: 8, padding: 16, fontSize: 13, fontFamily: "monospace" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between" }}><span>Relevance</span><span>{s.relevance !== null ? `${s.relevance} × 25% = ${(s.relevance * 0.25).toFixed(1)}` : 'N/A'}</span></div>
+                          <div style={{ display: "flex", justifyContent: "space-between" }}><span>Completeness</span><span>{s.completeness !== null ? `${s.completeness} × 20% = ${(s.completeness * 0.20).toFixed(1)}` : 'N/A'}</span></div>
+                          <div style={{ display: "flex", justifyContent: "space-between" }}><span>Content</span><span>{s.contentQuality !== null ? `${s.contentQuality} × 20% = ${(s.contentQuality * 0.20).toFixed(1)}` : 'N/A'}</span></div>
+                          <div style={{ display: "flex", justifyContent: "space-between" }}><span>Structure</span><span>{s.structure !== null ? `${s.structure} × 15% = ${(s.structure * 0.15).toFixed(1)}` : 'N/A'}</span></div>
+                          <div style={{ display: "flex", justifyContent: "space-between" }}><span>Clarity</span><span>{s.clarity !== null ? `${s.clarity} × 10% = ${(s.clarity * 0.10).toFixed(1)}` : 'N/A'}</span></div>
+                          <div style={{ display: "flex", justifyContent: "space-between" }}><span>Specificity</span><span>{s.specificity !== null ? `${s.specificity} × 10% = ${(s.specificity * 0.10).toFixed(1)}` : 'N/A'}</span></div>
+                          <div style={{ borderTop: "1px dashed var(--border)", margin: "8px 0", paddingTop: 8, display: "flex", justifyContent: "space-between", fontWeight: "bold" }}>
+                            <span>Final Score</span><span>{s.overall !== null ? s.overall.toFixed(1) : 'N/A'}</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                );
+              })()}
+
+              <button className="btn btn-primary btn-full btn-lg" onClick={nextQuestion} disabled={saving}>
+                {saving ? <><span className="spinner" /> Saving…</> : isLast ? "Finish Session →" : `Next Question →`}
               </button>
             </div>
           </div>

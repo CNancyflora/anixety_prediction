@@ -49,7 +49,7 @@ export const SELF_INTRO_QUESTIONS = [
   { id: 'si3', text: 'Describe yourself in 2 minutes.' },
 ];
 
-// ── Speaking Confidence Practice Questions ───────────────
+// ── Speaking Performance Practice Questions ───────────────
 export const SPEAKING_QUESTIONS = [
   { id: 'sp1', text: 'What are your top three strengths and how have they helped you?' },
   { id: 'sp2', text: 'Describe your ideal work environment.' },

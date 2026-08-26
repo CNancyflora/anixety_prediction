@@ -20,9 +20,14 @@ export default function InterviewSetupPage() {
   const [difficulty, setDifficulty] = useState<Difficulty>("intermediate");
   const [numQ, setNumQ] = useState(5);
   const [stage, setStage] = useState<Stage>("setup");
-  const [camOk, setCamOk] = useState<boolean | null>(null);
-  const [micOk, setMicOk] = useState<boolean | null>(null);
+  const [camStatus, setCamStatus] = useState<"pending" | "requesting" | "ready" | "denied" | "not_found" | "in_use" | "black">("pending");
+  const [micStatus, setMicStatus] = useState<"pending" | "ready" | "denied" | "not_found">("pending");
   const [permError, setPermError] = useState("");
+  const [stream, setStream] = useState<MediaStream | null>(null);
+  
+  const [micTested, setMicTested] = useState(false);
+  const [testingMic, setTestingMic] = useState(false);
+  const [micTestResult, setMicTestResult] = useState<"none" | "detected" | "not_detected">("none");
 
   // Interview state
   const [questions, setQuestions] = useState<InterviewQuestion[]>([]);
@@ -58,30 +63,87 @@ export default function InterviewSetupPage() {
     streamRef.current?.getTracks().forEach(t => t.stop());
   }, []);
 
+  // Attach stream to video when it changes
+  useEffect(() => {
+    if (videoRef.current && stream) {
+      const video = videoRef.current;
+      video.srcObject = stream;
+      video.autoplay = true;
+      video.playsInline = true;
+      video.muted = true;
+      
+      video.onloadedmetadata = () => {
+        if (video.readyState >= 2 && video.videoWidth > 0 && video.videoHeight > 0) {
+          video.play().then(() => {
+            setCamStatus("ready");
+          }).catch(() => setCamStatus("black"));
+        } else {
+          setCamStatus("black");
+        }
+      };
+    }
+  }, [stream, stage]);
+
   const checkPermissions = async () => {
-    setPermError(""); setCamOk(null); setMicOk(null);
+    setPermError(""); setCamStatus("requesting"); setMicStatus("pending");
     setStage("permissions");
+    
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      streamRef.current = stream;
-      if (videoRef.current) { videoRef.current.srcObject = stream; videoRef.current.play().catch(() => {}); }
-      setCamOk(true); setMicOk(true);
+      const s = await navigator.mediaDevices.getUserMedia({ 
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          }, 
+          video: true 
+      });
+      streamRef.current = s;
+      setStream(s);
+      
+      const audioTracks = s.getAudioTracks();
+      if (audioTracks.length > 0 && audioTracks[0].enabled && audioTracks[0].readyState === "live") {
+        setMicStatus("ready");
+      } else {
+        setMicStatus("not_found");
+        setPermError("Microphone unavailable.");
+      }
     } catch (err: any) {
       if (err.name === "NotAllowedError") {
-        setPermError("Camera and microphone access are required for the mock interview. Please allow permissions and try again.");
-        setCamOk(false); setMicOk(false);
+        setPermError("Camera permission was denied. Please allow camera access in your browser settings and try again.");
+        setCamStatus("denied"); setMicStatus("denied");
+      } else if (err.name === "NotFoundError") {
+        setPermError("No camera was found. Please connect a camera and try again.");
+        setCamStatus("not_found"); setMicStatus("not_found");
+      } else if (err.name === "NotReadableError") {
+        setPermError("The camera could not be accessed. It may already be in use by another application or browser tab. Close other applications using the camera and try again.");
+        setCamStatus("in_use"); setMicStatus("in_use");
       } else {
-        // Try audio only
-        try {
-          await navigator.mediaDevices.getUserMedia({ audio: true });
-          setMicOk(true); setCamOk(false);
-          setPermError("Camera access was denied. The interview will proceed with audio only.");
-        } catch {
-          setMicOk(false); setCamOk(false);
-          setPermError("Microphone access is required for the mock interview.");
-        }
+        setPermError("Unable to start the camera. Please check your browser permissions.");
+        setCamStatus("denied"); setMicStatus("denied");
       }
     }
+  };
+
+  const runMicTest = async () => {
+    if (!streamRef.current) return;
+    setTestingMic(true);
+    setMicTestResult("none");
+    const analyzer = new AudioAnalyzer();
+    await analyzer.connect(streamRef.current);
+    await analyzer.calibrate(500);
+    analyzer.startRecording();
+    
+    setTimeout(() => {
+      const { samples, duration, noiseFloor } = analyzer.stop();
+      const metrics = computeAudioMetrics(samples, duration, noiseFloor);
+      if (metrics.speechDuration && metrics.speechDuration > 0) {
+        setMicTestResult("detected");
+        setMicTested(true);
+      } else {
+        setMicTestResult("not_detected");
+      }
+      setTestingMic(false);
+    }, 3000);
   };
 
   const startInterview = async () => {
@@ -98,7 +160,9 @@ export default function InterviewSetupPage() {
     if (streamRef.current) {
       const analyzer = new AudioAnalyzer();
       await analyzer.connect(streamRef.current);
+      await analyzer.calibrate(1000); // 1s ambient noise calibration
       analyzerRef.current = analyzer;
+      analyzer.startRecording();
     }
 
     // Speech recognition
@@ -132,9 +196,9 @@ export default function InterviewSetupPage() {
   const finishAnswer = async () => {
     const now = Date.now();
     const rt = speechStartTime ? (speechStartTime - qDisplayTime) / 1000 : null;
-    const { samples, duration } = analyzerRef.current?.stop() ?? { samples: [], duration: elapsed };
+    const { samples, duration, noiseFloor } = analyzerRef.current?.stop() ?? { samples: [], duration: elapsed, noiseFloor: 5 };
 
-    const audioM = computeAudioMetrics(samples, duration);
+    const audioM = computeAudioMetrics(samples, duration, noiseFloor);
     const txM = transcriptRef.current
       ? computeTranscriptMetrics(transcriptRef.current, audioM.speechDuration ?? 0)
       : null;
@@ -164,7 +228,9 @@ export default function InterviewSetupPage() {
       if (streamRef.current) {
         const a = new AudioAnalyzer();
         await a.connect(streamRef.current);
+        await a.calibrate(500); // quick recalibration
         analyzerRef.current = a;
+        a.startRecording();
       }
 
       // Restart recognition
@@ -271,30 +337,87 @@ export default function InterviewSetupPage() {
             <div className="card-body">
               <div className="checklist" style={{ marginBottom: 24 }}>
                 <div className="checklist-item">
-                  <div className={`check-icon ${camOk === true ? "check-ok" : camOk === false ? "check-err" : "check-pending"}`}>
-                    {camOk === true ? "✓" : camOk === false ? "✗" : "…"}
+                  <div className={`check-icon ${camStatus === "ready" ? "check-ok" : camStatus === "requesting" ? "check-pending" : "check-err"}`}>
+                    {camStatus === "ready" ? "✓" : camStatus === "requesting" ? "…" : "✗"}
                   </div>
-                  <span style={{ fontSize: 14 }}>Camera {camOk === true ? "detected" : camOk === false ? "not available" : "checking…"}</span>
+                  <span style={{ fontSize: 14 }}>
+                    {camStatus === "ready" ? "Camera ready" : 
+                     camStatus === "requesting" ? "Requesting camera access..." : 
+                     camStatus === "denied" ? "Camera access denied" :
+                     camStatus === "not_found" ? "No camera detected" :
+                     camStatus === "in_use" ? "Camera unavailable" :
+                     camStatus === "black" ? "Camera preview unavailable" :
+                     "Camera permission required"}
+                  </span>
                 </div>
                 <div className="checklist-item">
-                  <div className={`check-icon ${micOk === true ? "check-ok" : micOk === false ? "check-err" : "check-pending"}`}>
-                    {micOk === true ? "✓" : micOk === false ? "✗" : "…"}
+                  <div className={`check-icon ${micStatus === "ready" ? "check-ok" : micStatus === "pending" ? "check-pending" : "check-err"}`}>
+                    {micStatus === "ready" ? "✓" : micStatus === "pending" ? "…" : "✗"}
                   </div>
-                  <span style={{ fontSize: 14 }}>Microphone {micOk === true ? "detected" : micOk === false ? "not available" : "checking…"}</span>
+                  <span style={{ fontSize: 14 }}>
+                    {micStatus === "ready" ? "Microphone ready" : 
+                     micStatus === "pending" ? "Microphone permission required" : "Microphone access denied"}
+                  </span>
                 </div>
               </div>
-              {camOk && <div style={{ borderRadius: 10, overflow: "hidden", background: "#000", marginBottom: 20, height: 160 }}>
-                <video ref={videoRef} autoPlay muted playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              </div>}
+
+              <div style={{ borderRadius: 10, overflow: "hidden", background: "#000", marginBottom: 20, height: 240, position: "relative" }}>
+                <video ref={videoRef} autoPlay muted playsInline style={{ width: "100%", height: "100%", objectFit: "cover", display: camStatus === "ready" ? "block" : "none" }} />
+                
+                {camStatus !== "ready" && (
+                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", padding: 20, textAlign: "center", fontSize: 14 }}>
+                    {camStatus === "requesting" && "Requesting camera access..."}
+                    {camStatus === "denied" && "Camera access is required for the mock interview."}
+                    {camStatus === "not_found" && "No camera was detected on this device."}
+                    {camStatus === "in_use" && "The camera could not be accessed. It may already be in use."}
+                    {camStatus === "black" && "Camera preview is unavailable or completely black."}
+                  </div>
+                )}
+              </div>
+
               {permError && <div className="alert alert-warning" style={{ marginBottom: 16 }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
                 {permError}
               </div>}
+
+              {(!camStatus || camStatus !== "ready" || micStatus !== "ready") && camStatus !== "requesting" && (
+                <div style={{ fontSize: 13, color: "var(--amber)", marginBottom: 16, textAlign: "center", fontWeight: 600 }}>
+                  Camera and microphone access are required to start the interview.
+                </div>
+              )}
+
+              {camStatus === "ready" && micStatus === "ready" && (
+                <div style={{ marginBottom: 20, padding: 16, background: "var(--bg)", borderRadius: 8 }}>
+                  <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 8 }}>Microphone Test</div>
+                  <div style={{ fontSize: 13, color: "var(--text-2)", marginBottom: 12 }}>Please say a short sentence.</div>
+                  
+                  {micTestResult === "detected" && (
+                    <div style={{ color: "var(--green)", fontSize: 14, fontWeight: 600, marginBottom: 12 }}>✓ Speech detected. Your microphone is working.</div>
+                  )}
+                  {micTestResult === "not_detected" && (
+                    <div style={{ color: "var(--red)", fontSize: 14, fontWeight: 600, marginBottom: 12 }}>No speech detected. Please try again.</div>
+                  )}
+
+                  {!testingMic && micTestResult !== "detected" && (
+                    <button className="btn btn-outline btn-sm" onClick={runMicTest}>Start Test</button>
+                  )}
+                  {testingMic && (
+                     <div style={{ fontSize: 13, color: "var(--blue)" }}>Listening for 3 seconds...</div>
+                  )}
+                </div>
+              )}
+
               <div style={{ display: "flex", gap: 10 }}>
-                <button className="btn btn-outline" onClick={() => setStage("setup")}>← Back</button>
-                <button className="btn btn-primary btn-lg" style={{ flex: 1 }} onClick={startInterview} disabled={!micOk}>
-                  Start Interview →
-                </button>
+                <button className="btn btn-outline" onClick={() => { setStage("setup"); streamRef.current?.getTracks().forEach(t => t.stop()); setStream(null); }}>← Back</button>
+                {(camStatus !== "ready" || micStatus !== "ready") && camStatus !== "requesting" ? (
+                  <button className="btn btn-outline" style={{ flex: 1 }} onClick={checkPermissions}>
+                    Try Again
+                  </button>
+                ) : (
+                  <button className="btn btn-primary btn-lg" style={{ flex: 1 }} onClick={startInterview} disabled={camStatus !== "ready" || micStatus !== "ready" || !micTested}>
+                    Start Interview →
+                  </button>
+                )}
               </div>
             </div>
           </div>

@@ -3,6 +3,8 @@ export interface AssessmentQuestion {
   id: string;
   category: 'anxiety' | 'confidence' | 'readiness' | 'experience' | 'communication';
   text: string;
+  minLabel?: string;
+  maxLabel?: string;
   reversed?: boolean; // if true, high answer = less of that category
 }
 
@@ -51,7 +53,9 @@ export interface SpeechMetrics {
   longPauseCount: number;      // gaps > 2s
   speechToSilenceRatio: number; // 0–1
   avgVolume: number;           // 0–255 RMS average
+  volumeStability: number;     // 0-100
   transcript: string | null;
+  transcriptConfidence: number | null; // 0-100
   wordCount: number | null;
   wordsPerMinute: number | null;
   fillerWordCount: number | null;

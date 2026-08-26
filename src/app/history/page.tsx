@@ -2,7 +2,9 @@
 import AppLayout from "@/components/AppLayout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getInterviews } from "@/lib/storage";
+import { auth, db } from "@/lib/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import type { InterviewSession } from "@/types";
 
 export default function HistoryPage() {
@@ -10,8 +12,29 @@ export default function HistoryPage() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setInterviews(getInterviews());
-    setLoaded(true);
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const q = query(
+            collection(db, "users", user.uid, "interviews"),
+            orderBy("createdAt", "desc")
+          );
+          const snap = await getDocs(q);
+          const data = snap.docs.map(doc => doc.data() as InterviewSession);
+          setInterviews(data);
+        } catch (e) {
+          console.error("Failed to fetch interview history:", e);
+          setInterviews([]);
+        } finally {
+          setLoaded(true);
+        }
+      } else {
+        setInterviews([]);
+        setLoaded(true);
+      }
+    });
+
+    return () => unsub();
   }, []);
 
   if (!loaded) return <AppLayout><div className="page-wrap"><div style={{ display: "flex", justifyContent: "center", paddingTop: 60 }}><div className="spinner spinner-lg" /></div></div></AppLayout>;

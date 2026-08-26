@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { SPEAKING_QUESTIONS } from "@/lib/questions";
-import { AudioAnalyzer, computeAudioMetrics, computeTranscriptMetrics, mergeMetrics, computeSpeakingConfidence, createSpeechRecognizer, isSpeechRecognitionAvailable } from "@/lib/speechAnalysis";
+import { AudioAnalyzer, computeAudioMetrics, computeTranscriptMetrics, mergeMetrics, computeSpeakingConfidence, createSpeechRecognizer, isSpeechRecognitionAvailable, computePerformanceBreakdown } from "@/lib/speechAnalysis";
 import { savePractice, newId } from "@/lib/storage";
 import type { SpeechMetrics } from "@/types";
 
-type Stage = "setup" | "consent" | "recording" | "done" | "error";
+type Stage = "setup" | "consent" | "calibrating" | "recording" | "done" | "error";
 
 export default function SpeakingPracticePage() {
   const [uid, setUid] = useState<string | null>(null);
@@ -28,6 +28,7 @@ export default function SpeakingPracticePage() {
   const timerRef = useRef<any>(null);
   const recognizerRef = useRef<any>(null);
   const transcriptRef = useRef("");
+  const transcriptConfRef = useRef<number | null>(null);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, u => { if (u) setUid(u.uid); });
@@ -45,11 +46,25 @@ export default function SpeakingPracticePage() {
       streamRef.current = stream;
       const analyzer = new AudioAnalyzer();
       await analyzer.connect(stream);
+      setStage("calibrating");
+      await analyzer.calibrate(1000);
       analyzerRef.current = analyzer;
+      analyzer.startRecording();
+      
       if (isSpeechRecognitionAvailable()) {
         const rec = createSpeechRecognizer();
         if (rec) {
-          rec.onresult = (e: any) => { let t = ""; for (let i = 0; i < e.results.length; i++) t += e.results[i][0].transcript + " "; transcriptRef.current = t.trim(); setTranscript(t.trim()); };
+          rec.onresult = (e: any) => { 
+            let t = ""; 
+            let c = 0;
+            for (let i = 0; i < e.results.length; i++) {
+              t += e.results[i][0].transcript + " "; 
+              c += e.results[i][0].confidence;
+            }
+            transcriptRef.current = t.trim(); 
+            setTranscript(t.trim()); 
+            transcriptConfRef.current = e.results.length > 0 ? c / e.results.length : 0;
+          };
           rec.start(); recognizerRef.current = rec;
         }
       }
@@ -64,10 +79,10 @@ export default function SpeakingPracticePage() {
   const stopRecording = async () => {
     clearInterval(timerRef.current);
     recognizerRef.current?.stop();
-    const { samples, duration } = analyzerRef.current?.stop() ?? { samples: [], duration: elapsed };
+    const { samples, duration, noiseFloor } = analyzerRef.current?.stop() ?? { samples: [], duration: elapsed, noiseFloor: 5 };
     streamRef.current?.getTracks().forEach(t => t.stop());
-    const audioM = computeAudioMetrics(samples, duration || elapsed);
-    const txM = transcriptRef.current ? computeTranscriptMetrics(transcriptRef.current, audioM.speechDuration ?? 0) : null;
+    const audioM = computeAudioMetrics(samples, duration || elapsed, noiseFloor);
+    const txM = transcriptRef.current ? computeTranscriptMetrics(transcriptRef.current, audioM.speechDuration ?? 0, transcriptConfRef.current) : null;
     const merged = mergeMetrics(audioM, txM);
     const indicator = computeSpeakingConfidence(merged);
     setMetrics(merged);
@@ -87,13 +102,13 @@ export default function SpeakingPracticePage() {
       <div className="page-wrap" style={{ maxWidth: 640 }}>
         <div style={{ marginBottom: 24 }}>
           <Link href="/dashboard" style={{ fontSize: 13, color: "var(--text-3)" }}>← Dashboard</Link>
-          <h1 className="page-title" style={{ marginTop: 8 }}>Speaking Confidence Practice</h1>
-          <p className="page-subtitle">Record your answer and get an objective Speaking Confidence Indicator.</p>
+          <h1 className="page-title" style={{ marginTop: 8 }}>Speaking Performance Practice</h1>
+          <p className="page-subtitle">Record your answer and get an objective Speaking Performance Indicator.</p>
         </div>
 
         <div className="alert alert-info" style={{ marginBottom: 20 }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>
-          <span>The <strong>Speaking Confidence Indicator</strong> is calculated from measurable audio characteristics: speech-to-silence ratio, long pauses, filler word usage, and speaking rate. It does not claim to detect emotion or psychological state.</span>
+          <span>The <strong>Speaking Performance Indicator</strong> is calculated from measurable speech characteristics in your recording (speech-to-silence ratio, long pauses, speaking rate). This does not measure emotions or psychological confidence.</span>
         </div>
 
         {/* Setup */}
@@ -142,6 +157,17 @@ export default function SpeakingPracticePage() {
           </div>
         )}
 
+        {/* Calibrating */}
+        {stage === "calibrating" && (
+          <div className="card">
+            <div className="card-body" style={{ textAlign: "center", padding: "40px 20px" }}>
+              <div className="spinner" style={{ margin: "0 auto 16px", display: "block" }} />
+              <h2 style={{ fontSize: 17, fontWeight: 700, marginBottom: 8 }}>Calibrating Microphone...</h2>
+              <p style={{ fontSize: 14, color: "var(--text-2)" }}>Please stay quiet for a moment while we measure background noise.</p>
+            </div>
+          </div>
+        )}
+
         {/* Recording */}
         {stage === "recording" && (
           <div className="card">
@@ -185,39 +211,56 @@ export default function SpeakingPracticePage() {
           <div>
             <div className="card" style={{ marginBottom: 20 }}>
               <div className="card-header">
-                <span className="section-title">Speaking Confidence Indicator</span>
+                <span className="section-title">Speaking Performance Indicator</span>
                 {saving && <span className="spinner" />}
               </div>
               <div className="card-body">
                 {/* SCI score */}
-                {sci !== null && (
+                {sci !== null ? (
                   <div style={{ display: "flex", alignItems: "center", gap: 20, padding: "16px 0 20px", borderBottom: "1px solid var(--border)", marginBottom: 20 }}>
                     <div style={{ textAlign: "center", minWidth: 100 }}>
                       <div style={{ fontSize: 54, fontWeight: 800, color: sciColor(sci), lineHeight: 1 }}>{sci}<span style={{ fontSize: 22, color: "var(--text-3)" }}>%</span></div>
                       <div style={{ fontSize: 12, color: "var(--text-3)", marginTop: 4 }}>{sci >= 70 ? "Strong" : sci >= 45 ? "Developing" : "Needs Work"}</div>
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div className="label-cap" style={{ marginBottom: 6 }}>Speaking Confidence Indicator</div>
+                      <div className="label-cap" style={{ marginBottom: 6 }}>Speaking Performance Indicator</div>
                       <div className="progress-bar" style={{ height: 10, marginBottom: 12 }}>
                         <div className="progress-fill" style={{ width: `${sci}%`, background: sciColor(sci) }} />
                       </div>
                       <p style={{ fontSize: 13, color: "var(--text-2)", lineHeight: 1.6 }}>{sciExplain(sci, metrics)}</p>
                     </div>
                   </div>
+                ) : (
+                  <div style={{ padding: "20px", background: "var(--amber-bg)", borderRadius: 8, marginBottom: 20, textAlign: "center", border: "1px solid var(--amber-border)" }}>
+                    <h3 style={{ fontSize: 18, fontWeight: 700, color: "var(--amber)", marginBottom: 8 }}>NO SPEECH DETECTED</h3>
+                    <p style={{ fontSize: 14, color: "var(--text-2)", marginBottom: 12 }}>We couldn't detect enough spoken audio to calculate a reliable speaking analysis.</p>
+                    <div className="label-cap" style={{ color: "var(--text-3)" }}>Speaking Performance Indicator: Not Available</div>
+                    <button className="btn btn-outline" style={{ marginTop: 12 }} onClick={reset}>Record Again</button>
+                  </div>
                 )}
 
-                {/* Audio metrics */}
-                <div className="label-cap" style={{ marginBottom: 10 }}>Measured Audio Metrics</div>
+                {/* Breakdown metrics */}
+                {sci !== null && (
+                  <>
+                    <div className="label-cap" style={{ marginBottom: 10 }}>Performance Evidence</div>
+                    <div className="grid-2" style={{ gap: 12, marginBottom: 20 }}>
+                      <MetricRow label="🗣️ Speaking Rate" value={metrics.wordsPerMinute ? `${metrics.wordsPerMinute} WPM` : "N/A"} highlight={metrics.wordsPerMinute && metrics.wordsPerMinute >= 120 && metrics.wordsPerMinute <= 160 ? "ok" : "warn"} />
+                      <MetricRow label="🔊 Voice Clarity" value={metrics.transcriptConfidence ? `${Math.round(metrics.transcriptConfidence * 100)}%` : "N/A"} highlight={metrics.transcriptConfidence && metrics.transcriptConfidence > 0.8 ? "ok" : "warn"} />
+                      <MetricRow label="✨ Fluency" value={`${Math.round(Math.max(0, Math.min(100, 50 + (metrics.speechToSilenceRatio - 0.5) * 100)))}%`} highlight={metrics.speechToSilenceRatio > 0.6 ? "ok" : "warn"} />
+                      <MetricRow label="⏸️ Long Pauses" value={String(metrics.longPauseCount)} highlight={metrics.longPauseCount > 3 ? "warn" : "ok"} />
+                      <MetricRow label="💬 Filler Words" value={metrics.fillerWordCount !== null ? String(metrics.fillerWordCount) : "N/A"} highlight={metrics.fillerWordCount !== null && metrics.fillerWordCount > 5 ? "warn" : "ok"} />
+                      <MetricRow label="📢 Volume Stability" value={`${metrics.volumeStability}%`} highlight={metrics.volumeStability > 80 ? "ok" : "warn"} />
+                    </div>
+                  </>
+                )}
+
+                {/* Audio measurements */}
+                <div className="label-cap" style={{ marginBottom: 10 }}>Measured Audio Timing</div>
                 <div className="grid-2" style={{ gap: 12 }}>
                   <MetricRow label="Total Duration" value={`${metrics.totalDuration.toFixed(0)}s`} />
                   <MetricRow label="Speech Duration" value={`${metrics.speechDuration.toFixed(0)}s`} />
                   <MetricRow label="Silence Duration" value={`${metrics.silenceDuration.toFixed(0)}s`} />
                   <MetricRow label="Speech / Total Ratio" value={`${(metrics.speechToSilenceRatio * 100).toFixed(0)}%`} highlight={metrics.speechToSilenceRatio >= 0.65 ? "ok" : "warn"} />
-                  <MetricRow label="Pause Count" value={String(metrics.pauseCount)} />
-                  <MetricRow label="Long Pauses (>2s)" value={String(metrics.longPauseCount)} highlight={metrics.longPauseCount > 3 ? "warn" : "ok"} />
-                  {metrics.wordsPerMinute !== null && <MetricRow label="Speaking Rate" value={`${metrics.wordsPerMinute} WPM`} highlight={metrics.wordsPerMinute >= 100 && metrics.wordsPerMinute <= 150 ? "ok" : "warn"} note="Target: 80–150 WPM" />}
-                  {metrics.wordCount !== null && <MetricRow label="Word Count" value={String(metrics.wordCount)} />}
-                  {metrics.fillerWordCount !== null && <MetricRow label="Filler Words" value={String(metrics.fillerWordCount)} highlight={metrics.fillerWordCount > 5 ? "warn" : "ok"} />}
                 </div>
 
                 {/* Filler breakdown */}
@@ -241,7 +284,7 @@ export default function SpeakingPracticePage() {
                 {!metrics.wordsPerMinute && !metrics.transcript && (
                   <div className="alert alert-warning" style={{ marginTop: 16 }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /></svg>
-                    Transcript analysis is not available in this browser. The Speaking Confidence Indicator is based on audio timing metrics only.
+                    Transcript analysis is not available in this browser. The Speaking Performance Indicator is based on audio timing metrics only.
                   </div>
                 )}
               </div>
@@ -261,21 +304,26 @@ export default function SpeakingPracticePage() {
 function sciColor(s: number) { return s >= 70 ? "var(--green)" : s >= 45 ? "var(--amber)" : "var(--red)"; }
 
 function sciExplain(sci: number, m: SpeechMetrics): string {
+  const bd = computePerformanceBreakdown(m);
+  if (!bd) return "Not enough usable speech data.";
+
   const parts: string[] = [];
-  if (m.speechToSilenceRatio >= 0.65) parts.push("strong speech-to-silence ratio");
-  else parts.push("low speech-to-silence ratio");
-  if (m.longPauseCount === 0) parts.push("no long pauses");
-  else if (m.longPauseCount > 3) parts.push(`${m.longPauseCount} long pauses detected`);
-  if (m.fillerWordCount !== null) {
-    if (m.fillerWordCount <= 3) parts.push("low filler word usage");
-    else if (m.fillerWordCount > 8) parts.push("high filler word usage");
-  }
-  if (m.wordsPerMinute) {
-    if (m.wordsPerMinute >= 100 && m.wordsPerMinute <= 150) parts.push("speaking rate in target range");
-    else if (m.wordsPerMinute > 170) parts.push("speaking rate above recommended range");
-    else if (m.wordsPerMinute < 80) parts.push("speaking rate below recommended range");
-  }
-  return `Indicator score of ${sci}% based on: ${parts.join(", ")}.`;
+  if (bd.speakingRateScore >= 80) parts.push("speaking pace was comfortable");
+  else if (m.wordsPerMinute && m.wordsPerMinute > 160) parts.push("speaking pace was very fast");
+  else if (m.wordsPerMinute && m.wordsPerMinute < 120) parts.push("speaking pace was slow");
+
+  if (bd.voiceClarityScore > 80) parts.push("voice was clear");
+  else parts.push("voice clarity could be improved");
+
+  if (m.longPauseCount === 0) parts.push("no noticeable long pauses");
+  else parts.push(`had ${m.longPauseCount} noticeable pauses`);
+
+  if (bd.fillerControlScore < 70) parts.push("some hesitation with filler words");
+  
+  if (parts.length === 0) return "Your speaking performance was evaluated from the audio measurements.";
+  
+  // Format nicely
+  return `Your ${parts[0]} and your ${parts[1] ?? "speech was recorded"}. You ${parts[2] ?? "maintained continuity"}${parts[3] ? ` and ${parts[3]}` : ""}.`;
 }
 
 function MetricRow({ label, value, highlight, note }: { label: string; value: string; highlight?: "ok" | "warn"; note?: string }) {

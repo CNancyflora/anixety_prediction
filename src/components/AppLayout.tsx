@@ -17,7 +17,7 @@ const NAV = [
     section: "Practice",
     items: [
       { label: "Self Introduction", href: "/practice/self-intro", icon: IconMic },
-      { label: "Speaking Confidence", href: "/practice/speaking", icon: IconVol },
+      { label: "Speaking Performance", href: "/practice/speaking", icon: IconVol },
       { label: "HR Questions", href: "/practice/hr", icon: IconMsg },
     ],
   },
