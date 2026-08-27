@@ -459,7 +459,7 @@ export function evaluateHRAnswer(
 
   // 6. Specificity (10%)
   // Look for numbers or specific metrics
-  const hasNumbers = /\b\d+\b/.test(metrics.transcript) || /\b(one|two|three|four|five|six|seven|eight|nine|ten|months|years|percent|teams)\b/.test(metrics.transcript.toLowerCase());
+  const hasNumbers = /\b\d+\b/.test(metrics.transcript!) || /\b(one|two|three|four|five|six|seven|eight|nine|ten|months|years|percent|teams)\b/.test(metrics.transcript!.toLowerCase());
   const specificityScore = hasNumbers ? Math.min(100, 70 + (actionVerbCount * 10)) : 50;
 
   // Final Overall Score

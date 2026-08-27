@@ -308,17 +308,17 @@ function sciExplain(sci: number, m: SpeechMetrics): string {
   if (!bd) return "Not enough usable speech data.";
 
   const parts: string[] = [];
-  if (bd.speakingRateScore >= 80) parts.push("speaking pace was comfortable");
+  if (bd.speakingRateScore !== null && bd.speakingRateScore >= 80) parts.push("speaking pace was comfortable");
   else if (m.wordsPerMinute && m.wordsPerMinute > 160) parts.push("speaking pace was very fast");
   else if (m.wordsPerMinute && m.wordsPerMinute < 120) parts.push("speaking pace was slow");
 
-  if (bd.voiceClarityScore > 80) parts.push("voice was clear");
+  if (bd.voiceClarityScore !== null && bd.voiceClarityScore > 80) parts.push("voice was clear");
   else parts.push("voice clarity could be improved");
 
   if (m.longPauseCount === 0) parts.push("no noticeable long pauses");
   else parts.push(`had ${m.longPauseCount} noticeable pauses`);
 
-  if (bd.fillerControlScore < 70) parts.push("some hesitation with filler words");
+  if (bd.fillerControlScore !== null && bd.fillerControlScore < 70) parts.push("some hesitation with filler words");
   
   if (parts.length === 0) return "Your speaking performance was evaluated from the audio measurements.";
   

@@ -21,7 +21,7 @@ export default function InterviewSetupPage() {
   const [numQ, setNumQ] = useState(5);
   const [stage, setStage] = useState<Stage>("setup");
   const [camStatus, setCamStatus] = useState<"pending" | "requesting" | "ready" | "denied" | "not_found" | "in_use" | "black">("pending");
-  const [micStatus, setMicStatus] = useState<"pending" | "ready" | "denied" | "not_found">("pending");
+  const [micStatus, setMicStatus] = useState<"pending" | "ready" | "denied" | "not_found" | "in_use">("pending");
   const [permError, setPermError] = useState("");
   const [stream, setStream] = useState<MediaStream | null>(null);
   
