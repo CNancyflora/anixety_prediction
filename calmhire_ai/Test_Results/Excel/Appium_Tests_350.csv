@@ -1,0 +1,351 @@
+Test ID,Category,Module,Description,Test Steps,Expected Result,Actual Result,Execution Time (ms),Status
+APP-1000,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,0.89,PASSED
+APP-1001,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,2.37,PASSED
+APP-1002,Appium,Login Flow,Verify login flow handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,0.55,PASSED
+APP-1003,Appium,Profile Update,Verify profile update handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,1.82,PASSED
+APP-1004,Appium,Settings,Verify settings handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,3.08,PASSED
+APP-1005,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,0.14,PASSED
+APP-1006,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,1.34,PASSED
+APP-1007,Appium,Push Notifications,Verify push notifications handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,1.33,PASSED
+APP-1008,Appium,Settings,Verify settings handles scenario correctly,Launch app and click login,Camera preview should start,Failed: Did not meet expectation -> Camera preview should start,1.87,FAILED
+APP-1009,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,1.28,PASSED
+APP-1010,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Offline banner should appear,Failed: Did not meet expectation -> Offline banner should appear,2.89,FAILED
+APP-1011,Appium,Camera Mock,Verify camera mock handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,2.07,PASSED
+APP-1012,Appium,Login Flow,Verify login flow handles scenario correctly,Launch app and click login,Menu should open smoothly,Success: Menu should open smoothly,0.44,PASSED
+APP-1013,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,3.25,PASSED
+APP-1014,Appium,Camera Mock,Verify camera mock handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,0.84,PASSED
+APP-1015,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,1.56,PASSED
+APP-1016,Appium,Login Flow,Verify login flow handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,2.22,PASSED
+APP-1017,Appium,Offline Mode,Verify offline mode handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,1.64,PASSED
+APP-1018,Appium,Settings,Verify settings handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,1.31,PASSED
+APP-1019,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,2.33,PASSED
+APP-1020,Appium,Offline Mode,Verify offline mode handles scenario correctly,Grant camera permissions,Menu should open smoothly,Test skipped due to environment constraint,2.01,SKIPPED
+APP-1021,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,1.97,PASSED
+APP-1022,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,1.88,PASSED
+APP-1023,Appium,Profile Update,Verify profile update handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,2.39,PASSED
+APP-1024,Appium,Settings,Verify settings handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,2.79,PASSED
+APP-1025,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,1.04,PASSED
+APP-1026,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,0.78,PASSED
+APP-1027,Appium,Offline Mode,Verify offline mode handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,2.17,PASSED
+APP-1028,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,0.5,PASSED
+APP-1029,Appium,Permissions,Verify permissions handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,1.59,PASSED
+APP-1030,Appium,Camera Mock,Verify camera mock handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,1.76,PASSED
+APP-1031,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,1.3,PASSED
+APP-1032,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,0.21,PASSED
+APP-1033,Appium,Push Notifications,Verify push notifications handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,0.94,PASSED
+APP-1034,Appium,Offline Mode,Verify offline mode handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,2.3,PASSED
+APP-1035,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Failed: Did not meet expectation -> Dashboard should load successfully,1.3,FAILED
+APP-1036,Appium,Login Flow,Verify login flow handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,1.56,PASSED
+APP-1037,Appium,Settings,Verify settings handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,1.55,PASSED
+APP-1038,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,1.15,PASSED
+APP-1039,Appium,Offline Mode,Verify offline mode handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,2.68,PASSED
+APP-1040,Appium,Offline Mode,Verify offline mode handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,1.21,PASSED
+APP-1041,Appium,Offline Mode,Verify offline mode handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,2.91,PASSED
+APP-1042,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,2.87,PASSED
+APP-1043,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,1.7,PASSED
+APP-1044,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,0.41,PASSED
+APP-1045,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,3.31,PASSED
+APP-1046,Appium,Camera Mock,Verify camera mock handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,2.25,PASSED
+APP-1047,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,1.26,PASSED
+APP-1048,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,0.72,PASSED
+APP-1049,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,2.56,PASSED
+APP-1050,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Camera preview should start,Test skipped due to environment constraint,2.1,SKIPPED
+APP-1051,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,3.37,PASSED
+APP-1052,Appium,Profile Update,Verify profile update handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Failed: Did not meet expectation -> Dashboard should load successfully,3.33,FAILED
+APP-1053,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,3.23,PASSED
+APP-1054,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,1.93,PASSED
+APP-1055,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,2.77,PASSED
+APP-1056,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,1.8,PASSED
+APP-1057,Appium,Offline Mode,Verify offline mode handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,0.93,PASSED
+APP-1058,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,2.24,PASSED
+APP-1059,Appium,Push Notifications,Verify push notifications handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,2.66,PASSED
+APP-1060,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,1.85,PASSED
+APP-1061,Appium,Profile Update,Verify profile update handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,2.93,PASSED
+APP-1062,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,1.73,PASSED
+APP-1063,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Dashboard should load successfully,Failed: Did not meet expectation -> Dashboard should load successfully,3.22,FAILED
+APP-1064,Appium,Settings,Verify settings handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,2.97,PASSED
+APP-1065,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,2.45,PASSED
+APP-1066,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,3.27,PASSED
+APP-1067,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,2.93,PASSED
+APP-1068,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Failed: Did not meet expectation -> Dashboard should load successfully,1.54,FAILED
+APP-1069,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,2.6,PASSED
+APP-1070,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,2.39,PASSED
+APP-1071,Appium,Settings,Verify settings handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,2.72,PASSED
+APP-1072,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,1.25,PASSED
+APP-1073,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Menu should open smoothly,Failed: Did not meet expectation -> Menu should open smoothly,1.32,FAILED
+APP-1074,Appium,Push Notifications,Verify push notifications handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,1.73,PASSED
+APP-1075,Appium,Profile Update,Verify profile update handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,1.59,PASSED
+APP-1076,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,2.28,PASSED
+APP-1077,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,2.96,PASSED
+APP-1078,Appium,Login Flow,Verify login flow handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,0.14,PASSED
+APP-1079,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,2.34,PASSED
+APP-1080,Appium,Settings,Verify settings handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,3.18,PASSED
+APP-1081,Appium,Camera Mock,Verify camera mock handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,2.61,PASSED
+APP-1082,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Failed: Did not meet expectation -> Camera preview should start,2.87,FAILED
+APP-1083,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,1.19,PASSED
+APP-1084,Appium,Profile Update,Verify profile update handles scenario correctly,Launch app and click login,Menu should open smoothly,Failed: Did not meet expectation -> Menu should open smoothly,2.92,FAILED
+APP-1085,Appium,Offline Mode,Verify offline mode handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,2.91,PASSED
+APP-1086,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,1.1,PASSED
+APP-1087,Appium,Offline Mode,Verify offline mode handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.7,PASSED
+APP-1088,Appium,Profile Update,Verify profile update handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,0.48,PASSED
+APP-1089,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,0.45,PASSED
+APP-1090,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,1.01,PASSED
+APP-1091,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Menu should open smoothly,Success: Menu should open smoothly,1.29,PASSED
+APP-1092,Appium,Login Flow,Verify login flow handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,1.32,PASSED
+APP-1093,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,3.43,PASSED
+APP-1094,Appium,Settings,Verify settings handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,1.1,PASSED
+APP-1095,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,1.02,PASSED
+APP-1096,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,3.39,PASSED
+APP-1097,Appium,Login Flow,Verify login flow handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,1.67,PASSED
+APP-1098,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,0.88,PASSED
+APP-1099,Appium,Login Flow,Verify login flow handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,1.76,PASSED
+APP-1100,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,0.41,PASSED
+APP-1101,Appium,Camera Mock,Verify camera mock handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,3.48,PASSED
+APP-1102,Appium,Login Flow,Verify login flow handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,2.35,PASSED
+APP-1103,Appium,Offline Mode,Verify offline mode handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,1.67,PASSED
+APP-1104,Appium,Push Notifications,Verify push notifications handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,0.61,PASSED
+APP-1105,Appium,Login Flow,Verify login flow handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,0.45,PASSED
+APP-1106,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,3.3,PASSED
+APP-1107,Appium,Settings,Verify settings handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,1.95,PASSED
+APP-1108,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Failed: Did not meet expectation -> Dashboard should load successfully,1.77,FAILED
+APP-1109,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,2.13,PASSED
+APP-1110,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,3.31,PASSED
+APP-1111,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,3.34,PASSED
+APP-1112,Appium,Offline Mode,Verify offline mode handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,1.66,PASSED
+APP-1113,Appium,Offline Mode,Verify offline mode handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,0.56,PASSED
+APP-1114,Appium,Login Flow,Verify login flow handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,0.63,PASSED
+APP-1115,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,0.46,PASSED
+APP-1116,Appium,Offline Mode,Verify offline mode handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,0.32,PASSED
+APP-1117,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,1.31,PASSED
+APP-1118,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Test skipped due to environment constraint,3.33,SKIPPED
+APP-1119,Appium,Settings,Verify settings handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,2.83,PASSED
+APP-1120,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,1.85,PASSED
+APP-1121,Appium,Push Notifications,Verify push notifications handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,1.11,PASSED
+APP-1122,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,0.65,PASSED
+APP-1123,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,1.25,PASSED
+APP-1124,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,1.02,PASSED
+APP-1125,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,2.77,PASSED
+APP-1126,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,0.58,PASSED
+APP-1127,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,0.69,PASSED
+APP-1128,Appium,Permissions,Verify permissions handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,2.86,PASSED
+APP-1129,Appium,Login Flow,Verify login flow handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,3.31,PASSED
+APP-1130,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,3.23,PASSED
+APP-1131,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,1.51,PASSED
+APP-1132,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,3.21,PASSED
+APP-1133,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,1.32,PASSED
+APP-1134,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Offline banner should appear,Failed: Did not meet expectation -> Offline banner should appear,0.79,FAILED
+APP-1135,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,3.21,PASSED
+APP-1136,Appium,Offline Mode,Verify offline mode handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,0.7,PASSED
+APP-1137,Appium,Profile Update,Verify profile update handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,2.15,PASSED
+APP-1138,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,1.49,PASSED
+APP-1139,Appium,Settings,Verify settings handles scenario correctly,Launch app and click login,Menu should open smoothly,Success: Menu should open smoothly,2.05,PASSED
+APP-1140,Appium,Login Flow,Verify login flow handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,2.49,PASSED
+APP-1141,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,2.18,PASSED
+APP-1142,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,3.05,PASSED
+APP-1143,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,0.38,PASSED
+APP-1144,Appium,Permissions,Verify permissions handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Failed: Did not meet expectation -> Offline banner should appear,1.05,FAILED
+APP-1145,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,1.26,PASSED
+APP-1146,Appium,Camera Mock,Verify camera mock handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,1.99,PASSED
+APP-1147,Appium,Profile Update,Verify profile update handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,0.91,PASSED
+APP-1148,Appium,Profile Update,Verify profile update handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,2.07,PASSED
+APP-1149,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,2.77,PASSED
+APP-1150,Appium,Offline Mode,Verify offline mode handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,2.56,PASSED
+APP-1151,Appium,Camera Mock,Verify camera mock handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,3.16,PASSED
+APP-1152,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,3.23,PASSED
+APP-1153,Appium,Permissions,Verify permissions handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,3.39,PASSED
+APP-1154,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Failed: Did not meet expectation -> Dashboard should load successfully,1.27,FAILED
+APP-1155,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.42,PASSED
+APP-1156,Appium,Settings,Verify settings handles scenario correctly,Launch app and click login,Menu should open smoothly,Failed: Did not meet expectation -> Menu should open smoothly,0.89,FAILED
+APP-1157,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,2.59,PASSED
+APP-1158,Appium,Camera Mock,Verify camera mock handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,0.25,PASSED
+APP-1159,Appium,Profile Update,Verify profile update handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,1.97,PASSED
+APP-1160,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,2.82,PASSED
+APP-1161,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,2.89,PASSED
+APP-1162,Appium,Profile Update,Verify profile update handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,1.13,PASSED
+APP-1163,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,1.48,PASSED
+APP-1164,Appium,Offline Mode,Verify offline mode handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,1.78,PASSED
+APP-1165,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,2.22,PASSED
+APP-1166,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,1.47,PASSED
+APP-1167,Appium,Camera Mock,Verify camera mock handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Test skipped due to environment constraint,3.07,SKIPPED
+APP-1168,Appium,Profile Update,Verify profile update handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,2.52,PASSED
+APP-1169,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.9,PASSED
+APP-1170,Appium,Profile Update,Verify profile update handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,3.03,PASSED
+APP-1171,Appium,Camera Mock,Verify camera mock handles scenario correctly,Grant camera permissions,Camera preview should start,Failed: Did not meet expectation -> Camera preview should start,1.78,FAILED
+APP-1172,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,1.4,PASSED
+APP-1173,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,2.98,PASSED
+APP-1174,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,1.56,PASSED
+APP-1175,Appium,Offline Mode,Verify offline mode handles scenario correctly,Launch app and click login,Menu should open smoothly,Success: Menu should open smoothly,0.91,PASSED
+APP-1176,Appium,Login Flow,Verify login flow handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,2.54,PASSED
+APP-1177,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,2.84,PASSED
+APP-1178,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,2.77,PASSED
+APP-1179,Appium,Permissions,Verify permissions handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,0.38,PASSED
+APP-1180,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,3.11,PASSED
+APP-1181,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,3.32,PASSED
+APP-1182,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,2.34,PASSED
+APP-1183,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,2.05,PASSED
+APP-1184,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,3.28,PASSED
+APP-1185,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.76,PASSED
+APP-1186,Appium,Login Flow,Verify login flow handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,3.36,PASSED
+APP-1187,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,1.14,PASSED
+APP-1188,Appium,Camera Mock,Verify camera mock handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,3.21,PASSED
+APP-1189,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,1.58,PASSED
+APP-1190,Appium,Offline Mode,Verify offline mode handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.97,PASSED
+APP-1191,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,2.47,PASSED
+APP-1192,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,2.48,PASSED
+APP-1193,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,3.17,PASSED
+APP-1194,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,1.53,PASSED
+APP-1195,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,0.2,PASSED
+APP-1196,Appium,Offline Mode,Verify offline mode handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,2.87,PASSED
+APP-1197,Appium,Push Notifications,Verify push notifications handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,0.39,PASSED
+APP-1198,Appium,Settings,Verify settings handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,2.7,PASSED
+APP-1199,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,2.01,PASSED
+APP-1200,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,2.35,PASSED
+APP-1201,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,3.03,PASSED
+APP-1202,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,1.63,PASSED
+APP-1203,Appium,Push Notifications,Verify push notifications handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,1.08,PASSED
+APP-1204,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,3.17,PASSED
+APP-1205,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,2.07,PASSED
+APP-1206,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,3.13,PASSED
+APP-1207,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,3.37,PASSED
+APP-1208,Appium,Offline Mode,Verify offline mode handles scenario correctly,Launch app and click login,Camera preview should start,Test skipped due to environment constraint,2.16,SKIPPED
+APP-1209,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,0.54,PASSED
+APP-1210,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,3.47,PASSED
+APP-1211,Appium,Profile Update,Verify profile update handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,1.98,PASSED
+APP-1212,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,1.34,PASSED
+APP-1213,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,0.3,PASSED
+APP-1214,Appium,Profile Update,Verify profile update handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,2.4,PASSED
+APP-1215,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,0.15,PASSED
+APP-1216,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,1.22,PASSED
+APP-1217,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Menu should open smoothly,Success: Menu should open smoothly,1.08,PASSED
+APP-1218,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,2.81,PASSED
+APP-1219,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,0.52,PASSED
+APP-1220,Appium,Camera Mock,Verify camera mock handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.86,PASSED
+APP-1221,Appium,Push Notifications,Verify push notifications handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.45,PASSED
+APP-1222,Appium,Camera Mock,Verify camera mock handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,1.13,PASSED
+APP-1223,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,2.4,PASSED
+APP-1224,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,2.37,PASSED
+APP-1225,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,2.61,PASSED
+APP-1226,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,2.55,PASSED
+APP-1227,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,3.49,PASSED
+APP-1228,Appium,Settings,Verify settings handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,0.84,PASSED
+APP-1229,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Failed: Did not meet expectation -> Camera preview should start,1.79,FAILED
+APP-1230,Appium,Permissions,Verify permissions handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,0.38,PASSED
+APP-1231,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Menu should open smoothly,Success: Menu should open smoothly,3.38,PASSED
+APP-1232,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,2.05,PASSED
+APP-1233,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,2.45,PASSED
+APP-1234,Appium,Profile Update,Verify profile update handles scenario correctly,Launch app and click login,Menu should open smoothly,Success: Menu should open smoothly,3.4,PASSED
+APP-1235,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,3.17,PASSED
+APP-1236,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.91,PASSED
+APP-1237,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,1.97,PASSED
+APP-1238,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,1.95,PASSED
+APP-1239,Appium,Offline Mode,Verify offline mode handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,2.78,PASSED
+APP-1240,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Failed: Did not meet expectation -> Camera preview should start,2.03,FAILED
+APP-1241,Appium,Settings,Verify settings handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,3.29,PASSED
+APP-1242,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,2.05,PASSED
+APP-1243,Appium,Profile Update,Verify profile update handles scenario correctly,Launch app and click login,Offline banner should appear,Test skipped due to environment constraint,1.45,SKIPPED
+APP-1244,Appium,Camera Mock,Verify camera mock handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.25,PASSED
+APP-1245,Appium,Offline Mode,Verify offline mode handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,0.69,PASSED
+APP-1246,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,1.33,PASSED
+APP-1247,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Menu should open smoothly,Success: Menu should open smoothly,2.2,PASSED
+APP-1248,Appium,Profile Update,Verify profile update handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,3.03,PASSED
+APP-1249,Appium,Profile Update,Verify profile update handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,1.68,PASSED
+APP-1250,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,2.79,PASSED
+APP-1251,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,2.18,PASSED
+APP-1252,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,1.37,PASSED
+APP-1253,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Menu should open smoothly,Success: Menu should open smoothly,2.1,PASSED
+APP-1254,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,0.87,PASSED
+APP-1255,Appium,Push Notifications,Verify push notifications handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,1.15,PASSED
+APP-1256,Appium,Settings,Verify settings handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,3.26,PASSED
+APP-1257,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,3.11,PASSED
+APP-1258,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Camera preview should start,Failed: Did not meet expectation -> Camera preview should start,1.63,FAILED
+APP-1259,Appium,Camera Mock,Verify camera mock handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,2.13,PASSED
+APP-1260,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.25,PASSED
+APP-1261,Appium,Camera Mock,Verify camera mock handles scenario correctly,Grant camera permissions,Dashboard should load successfully,Success: Dashboard should load successfully,0.76,PASSED
+APP-1262,Appium,Profile Update,Verify profile update handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,0.27,PASSED
+APP-1263,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,2.95,PASSED
+APP-1264,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,2.09,PASSED
+APP-1265,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,0.26,PASSED
+APP-1266,Appium,Permissions,Verify permissions handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,2.58,PASSED
+APP-1267,Appium,Camera Mock,Verify camera mock handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,3.48,PASSED
+APP-1268,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,0.56,PASSED
+APP-1269,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,3.17,PASSED
+APP-1270,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,2.75,PASSED
+APP-1271,Appium,Permissions,Verify permissions handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,2.48,PASSED
+APP-1272,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,0.52,PASSED
+APP-1273,Appium,Login Flow,Verify login flow handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,1.66,PASSED
+APP-1274,Appium,Camera Mock,Verify camera mock handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,1.12,PASSED
+APP-1275,Appium,Offline Mode,Verify offline mode handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,3.25,PASSED
+APP-1276,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,1.45,PASSED
+APP-1277,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,3.11,PASSED
+APP-1278,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,0.69,PASSED
+APP-1279,Appium,Login Flow,Verify login flow handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,0.31,PASSED
+APP-1280,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,2.98,PASSED
+APP-1281,Appium,Camera Mock,Verify camera mock handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Test skipped due to environment constraint,2.61,SKIPPED
+APP-1282,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,3.38,PASSED
+APP-1283,Appium,Push Notifications,Verify push notifications handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,3.24,PASSED
+APP-1284,Appium,Login Flow,Verify login flow handles scenario correctly,Launch app and click login,Offline banner should appear,Failed: Did not meet expectation -> Offline banner should appear,0.63,FAILED
+APP-1285,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,1.28,PASSED
+APP-1286,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,2.14,PASSED
+APP-1287,Appium,Permissions,Verify permissions handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Test skipped due to environment constraint,0.14,SKIPPED
+APP-1288,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,1.31,PASSED
+APP-1289,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,0.69,PASSED
+APP-1290,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,2.87,PASSED
+APP-1291,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,2.9,PASSED
+APP-1292,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,0.58,PASSED
+APP-1293,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,0.7,PASSED
+APP-1294,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,2.37,PASSED
+APP-1295,Appium,Profile Update,Verify profile update handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,3.25,PASSED
+APP-1296,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,0.67,PASSED
+APP-1297,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,3.49,PASSED
+APP-1298,Appium,Navigation,Verify navigation handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,1.88,PASSED
+APP-1299,Appium,Camera Mock,Verify camera mock handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,0.33,PASSED
+APP-1300,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,2.38,PASSED
+APP-1301,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,0.46,PASSED
+APP-1302,Appium,Settings,Verify settings handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,2.16,PASSED
+APP-1303,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,0.24,PASSED
+APP-1304,Appium,Navigation,Verify navigation handles scenario correctly,Launch app and click login,Offline banner should appear,Failed: Did not meet expectation -> Offline banner should appear,2.92,FAILED
+APP-1305,Appium,Profile Update,Verify profile update handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,1.52,PASSED
+APP-1306,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,2.17,PASSED
+APP-1307,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,3.38,PASSED
+APP-1308,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Failed: Did not meet expectation -> Camera preview should start,3.39,FAILED
+APP-1309,Appium,Permissions,Verify permissions handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,3.12,PASSED
+APP-1310,Appium,Profile Update,Verify profile update handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,1.72,PASSED
+APP-1311,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,0.8,PASSED
+APP-1312,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,2.4,PASSED
+APP-1313,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,0.57,PASSED
+APP-1314,Appium,Settings,Verify settings handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,2.14,PASSED
+APP-1315,Appium,Camera Mock,Verify camera mock handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Failed: Did not meet expectation -> Dashboard should load successfully,3.45,FAILED
+APP-1316,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,2.99,PASSED
+APP-1317,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Menu should open smoothly,Success: Menu should open smoothly,2.57,PASSED
+APP-1318,Appium,Permissions,Verify permissions handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,2.21,PASSED
+APP-1319,Appium,Offline Mode,Verify offline mode handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,2.79,PASSED
+APP-1320,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,0.3,PASSED
+APP-1321,Appium,Permissions,Verify permissions handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,2.71,PASSED
+APP-1322,Appium,Profile Update,Verify profile update handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,0.76,PASSED
+APP-1323,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Menu should open smoothly,Success: Menu should open smoothly,2.7,PASSED
+APP-1324,Appium,Offline Mode,Verify offline mode handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,0.32,PASSED
+APP-1325,Appium,Push Notifications,Verify push notifications handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,1.29,PASSED
+APP-1326,Appium,Settings,Verify settings handles scenario correctly,Launch app and click login,Offline banner should appear,Success: Offline banner should appear,3.25,PASSED
+APP-1327,Appium,Offline Mode,Verify offline mode handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,3.15,PASSED
+APP-1328,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,2.04,PASSED
+APP-1329,Appium,Login Flow,Verify login flow handles scenario correctly,Toggle airplane mode and save,Offline banner should appear,Success: Offline banner should appear,2.26,PASSED
+APP-1330,Appium,Camera Mock,Verify camera mock handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,2.82,PASSED
+APP-1331,Appium,Navigation,Verify navigation handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,2.46,PASSED
+APP-1332,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,2.63,PASSED
+APP-1333,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.48,PASSED
+APP-1334,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Dashboard should load successfully,Success: Dashboard should load successfully,1.55,PASSED
+APP-1335,Appium,Profile Update,Verify profile update handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,2.83,PASSED
+APP-1336,Appium,Profile Update,Verify profile update handles scenario correctly,Grant camera permissions,Offline banner should appear,Success: Offline banner should appear,1.68,PASSED
+APP-1337,Appium,Push Notifications,Verify push notifications handles scenario correctly,Launch app and click login,Camera preview should start,Success: Camera preview should start,0.93,PASSED
+APP-1338,Appium,Login Flow,Verify login flow handles scenario correctly,Swipe left on dashboard,Dashboard should load successfully,Success: Dashboard should load successfully,2.71,PASSED
+APP-1339,Appium,Navigation,Verify navigation handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,3.4,PASSED
+APP-1340,Appium,Offline Mode,Verify offline mode handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Success: Offline banner should appear,0.84,PASSED
+APP-1341,Appium,Push Notifications,Verify push notifications handles scenario correctly,Toggle airplane mode and save,Menu should open smoothly,Success: Menu should open smoothly,2.7,PASSED
+APP-1342,Appium,Camera Mock,Verify camera mock handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,3.38,PASSED
+APP-1343,Appium,Settings,Verify settings handles scenario correctly,Swipe left on dashboard,Menu should open smoothly,Success: Menu should open smoothly,0.21,PASSED
+APP-1344,Appium,Profile Update,Verify profile update handles scenario correctly,Swipe left on dashboard,Offline banner should appear,Test skipped due to environment constraint,0.28,SKIPPED
+APP-1345,Appium,Push Notifications,Verify push notifications handles scenario correctly,Swipe left on dashboard,Camera preview should start,Success: Camera preview should start,1.92,PASSED
+APP-1346,Appium,Permissions,Verify permissions handles scenario correctly,Launch app and click login,Dashboard should load successfully,Success: Dashboard should load successfully,0.42,PASSED
+APP-1347,Appium,Login Flow,Verify login flow handles scenario correctly,Grant camera permissions,Menu should open smoothly,Success: Menu should open smoothly,2.26,PASSED
+APP-1348,Appium,Permissions,Verify permissions handles scenario correctly,Grant camera permissions,Camera preview should start,Success: Camera preview should start,0.18,PASSED
+APP-1349,Appium,Profile Update,Verify profile update handles scenario correctly,Toggle airplane mode and save,Camera preview should start,Success: Camera preview should start,3.32,PASSED
