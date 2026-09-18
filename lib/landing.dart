@@ -65,9 +65,8 @@ class LandingScreen extends StatelessWidget {
                 text: const TextSpan(
                   style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold, color: Colors.white, height: 1.1),
                   children: [
-                    TextSpan(text: 'Master Your Interviews with\n'),
-                    TextSpan(text: 'CalmHire ', style: TextStyle(color: Color(0xFF3B82F6))),
-                    TextSpan(text: 'AI', style: TextStyle(color: Color(0xFFF59E0B))),
+                    TextSpan(text: 'Prepare Better.\n'),
+                    TextSpan(text: 'Speak Confidently.'),
                   ],
                 ),
               ),
@@ -75,7 +74,7 @@ class LandingScreen extends StatelessWidget {
               
               // Subtitle
               const Text(
-                "Real-time anxiety prediction and behavioral analytics. Build confidence, perfect your delivery, and land your dream job with AI-driven coaching.",
+                "Objective, deterministic mock interview and resume analysis to help you land your dream job without the guesswork.",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey, fontSize: 16, height: 1.5),
               ),
@@ -110,11 +109,11 @@ class LandingScreen extends StatelessWidget {
               const SizedBox(height: 60),
               
               // Feature Cards (Stacked for mobile)
-              _buildFeatureCard(Icons.psychology, "Emotion Recognition", "Advanced facial analysis tracks real-time stress and micro-expressions."),
+              _buildFeatureCard(Icons.mic, "Speaking Practice", "Record answers and track objective audio metrics like speaking pace and filler words."),
               const SizedBox(height: 16),
-              _buildFeatureCard(Icons.mic, "Voice Confidence", "AI-powered voice tone and speech pattern analysis for perfect delivery."),
+              _buildFeatureCard(Icons.video_camera_front, "Mock Interviews", "Simulate real interview pressure with timed questions and structured feedback."),
               const SizedBox(height: 16),
-              _buildFeatureCard(Icons.camera_alt, "Posture Analysis", "Maintain a professional stance with real-time body language feedback."),
+              _buildFeatureCard(Icons.document_scanner, "Resume Analyzer", "Check ATS compatibility and keyword density with our deterministic parsing engine."),
             ],
           ),
         ),

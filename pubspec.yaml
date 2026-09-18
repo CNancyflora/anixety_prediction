@@ -1,4 +1,4 @@
-name: calmhire_ai
+name: calmhire
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -53,6 +53,8 @@ dependencies:
   google_sign_in: ^6.2.1
   camera: ^0.12.0+2
   permission_handler: ^12.0.3
+  record: ^6.2.1
+  speech_to_text: ^7.4.0
 
 dev_dependencies:
   flutter_test:

@@ -61,16 +61,15 @@ class DashboardScreen extends StatelessWidget {
                 final hasHistory = docs.isNotEmpty;
 
                 String overallScore = "0";
-                String anxietyLevel = "-";
+                String speakingConfidence = "-";
                 String totalSessions = docs.length.toString();
-                String stressScore = "0";
+                String atsScore = "0";
 
                 if (hasHistory) {
                   final latest = docs.first.data() as Map<String, dynamic>;
-                  final level = latest['anxietyLevel'] ?? 'low';
-                  anxietyLevel = level == 'low' ? 'Low' : level == 'medium' ? 'Medium' : 'High';
-                  overallScore = level == 'low' ? '88/100' : level == 'medium' ? '62/100' : '35/100';
-                  stressScore = (latest['stressScore'] ?? 0).toString();
+                  overallScore = (latest['overallScore'] ?? 88).toString() + "/100";
+                  speakingConfidence = (latest['speakingConfidence'] ?? 75).toString() + "%";
+                  atsScore = (latest['atsScore'] ?? 85).toString() + "%";
                 }
 
                 return SingleChildScrollView(
@@ -109,12 +108,12 @@ class DashboardScreen extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const AssessmentScreen()),
+                              MaterialPageRoute(builder: (context) => const MockInterviewScreen()),
                             );
                           },
                           icon: const Icon(Icons.video_call, color: Colors.white),
                           label: const Text(
-                            'Start Assessment',
+                            'Start Mock Interview',
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
@@ -139,10 +138,10 @@ class DashboardScreen extends StatelessWidget {
                             mainAxisSpacing: 16,
                             childAspectRatio: 1.2,
                             children: [
-                              _buildStatCard("Overall Score", overallScore, Icons.bolt, Colors.blue),
-                              _buildStatCard("Anxiety Level", anxietyLevel, Icons.shield, Colors.green),
-                              _buildStatCard("Sessions", totalSessions, Icons.videocam, Colors.indigo),
-                              _buildStatCard("Stress Score", stressScore, Icons.access_time, Colors.amber),
+                              _buildStatCard("Overall Score", overallScore, Icons.star, Colors.blue),
+                              _buildStatCard("Speaking Confidence", speakingConfidence, Icons.mic, Colors.green),
+                              _buildStatCard("Total Sessions", totalSessions, Icons.videocam, Colors.indigo),
+                              _buildStatCard("Avg ATS Match", atsScore, Icons.document_scanner, Colors.amber),
                             ],
                           );
                         },

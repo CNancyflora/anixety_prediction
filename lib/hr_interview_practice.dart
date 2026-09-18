@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:record/record.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'speech_analysis.dart';
 
 class HrInterviewPracticeScreen extends StatefulWidget {
   final VoidCallback onCompleted;
@@ -30,11 +33,25 @@ class _HrInterviewPracticeScreenState extends State<HrInterviewPracticeScreen> {
   bool _hasMicPermission = false;
   bool _showRecordDot = false;
   Timer? _dotTimer;
+  
+  // Audio & Speech analysis
+  final _audioRecorder = AudioRecorder();
+  final stt.SpeechToText _speechToText = stt.SpeechToText();
+  AudioAnalyzer? _analyzer;
+  bool _isCalibrating = false;
+  
+  List<Map<String, dynamic>> _sessionResults = [];
+  int _questionStartTime = 0;
+  String _currentTranscript = "";
+  StreamSubscription? _audioSub;
 
   @override
   void dispose() {
     _timer?.cancel();
+    _timer?.cancel();
     _dotTimer?.cancel();
+    _audioSub?.cancel();
+    _audioRecorder.dispose();
     _cameraController?.dispose();
     super.dispose();
   }
@@ -61,14 +78,69 @@ class _HrInterviewPracticeScreenState extends State<HrInterviewPracticeScreen> {
         debugPrint('Camera init error: $e');
       }
     }
+    await _speechToText.initialize();
+  }
+
+  Future<void> _startRecordingLogic() async {
+    _analyzer = AudioAnalyzer();
+    _currentTranscript = "";
+    
+    // Start mic stream
+    final stream = await _audioRecorder.startStream(const RecordConfig(encoder: AudioEncoder.pcm16bits));
+    
+    setState(() => _isCalibrating = true);
+    await _analyzer!.calibrate(stream, durationMs: 1000);
+    setState(() => _isCalibrating = false);
+    
+    _audioSub = stream.listen((data) {
+      _analyzer!.processStreamData(data);
+    });
+    
+    _questionStartTime = DateTime.now().millisecondsSinceEpoch;
+    
+    if (_hasMicPermission) {
+      _speechToText.listen(onResult: (result) {
+        _currentTranscript = result.recognizedWords;
+      });
+    }
+  }
+
+  Future<void> _stopRecordingLogic() async {
+    _audioSub?.cancel();
+    await _audioRecorder.stop();
+    _speechToText.stop();
+    
+    if (_analyzer != null) {
+      final elapsedSecs = (DateTime.now().millisecondsSinceEpoch - _questionStartTime) / 1000.0;
+      final metrics = _analyzer!.computeMetrics(elapsedSecs);
+      
+      final words = _currentTranscript.split(' ').where((w) => w.trim().isNotEmpty).length;
+      final wpm = metrics.speechDuration > 0 ? (words / (metrics.speechDuration / 60)).round() : 0;
+      
+      _sessionResults.add({
+        "question": _questions[_currentIndex],
+        "speechDuration": metrics.speechDuration,
+        "totalDuration": metrics.totalDuration,
+        "wpm": wpm,
+        "transcript": _currentTranscript,
+      });
+    }
   }
 
   void _startPractice() async {
     await _initMedia();
+    
+    if (!_hasCameraPermission || _cameraController == null || !_cameraController!.value.isInitialized) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Camera hardware is required to proceed.")));
+      return; // hardware validation gate
+    }
+    
     setState(() {
       _isPracticing = true;
       _timeSpent = 0;
     });
+    
+    await _startRecordingLogic();
     
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() => _timeSpent++);
@@ -79,12 +151,15 @@ class _HrInterviewPracticeScreenState extends State<HrInterviewPracticeScreen> {
     });
   }
 
-  void _next() {
+  void _next() async {
+    await _stopRecordingLogic();
+    
     if (_currentIndex < _questions.length - 1) {
       setState(() {
         _currentIndex++;
-        _timeSpent = 0; // Reset timer for each question
+        _timeSpent = 0;
       });
+      await _startRecordingLogic();
     } else {
       _timer?.cancel();
       _dotTimer?.cancel();
@@ -171,9 +246,9 @@ class _HrInterviewPracticeScreenState extends State<HrInterviewPracticeScreen> {
                   decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(20)),
                   child: Row(
                     children: [
-                      Icon(Icons.circle, color: _showRecordDot ? Colors.red : Colors.transparent, size: 12),
+                      Icon(Icons.circle, color: _showRecordDot && !_isCalibrating ? Colors.red : Colors.transparent, size: 12),
                       const SizedBox(width: 8),
-                      const Text('REC', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      Text(_isCalibrating ? 'CALIBRATING...' : 'REC', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                       const SizedBox(width: 12),
                       Text(_formattedTime, style: const TextStyle(color: Colors.white)),
                     ],
@@ -266,6 +341,22 @@ class _HrInterviewPracticeScreenState extends State<HrInterviewPracticeScreen> {
   }
 
   Widget _buildCompletionScreen() {
+    int validAnswers = _sessionResults.where((r) => r['speechDuration'] >= 1.5).length;
+    bool hasEnoughData = validAnswers > 0;
+    
+    double totalScore = 0.0;
+    if (hasEnoughData) {
+      for (var r in _sessionResults) {
+        if (r['speechDuration'] < 1.5) continue;
+        double s = 50.0;
+        if (r['wpm'] >= 100 && r['wpm'] <= 150) s += 30;
+        else if (r['wpm'] > 0) s += 10;
+        s += (r['speechDuration'] / r['totalDuration']) * 20; // speech ratio
+        totalScore += s;
+      }
+      totalScore = (totalScore / validAnswers).clamp(0, 100);
+    }
+    
     return Scaffold(
       backgroundColor: const Color(0xFF020617),
       appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
@@ -275,34 +366,75 @@ class _HrInterviewPracticeScreenState extends State<HrInterviewPracticeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.check_circle, color: Colors.green, size: 80),
-              const SizedBox(height: 24),
+              const Icon(Icons.check_circle, color: Colors.green, size: 64),
+              const SizedBox(height: 16),
               const Text('Interview Completed', style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 32),
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), borderRadius: BorderRadius.circular(16)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Session Results:', style: TextStyle(color: Colors.grey, fontSize: 14)),
-                    const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Responses completed', style: TextStyle(color: Colors.white, fontSize: 16)),
-                        Text('${_questions.length}/${_questions.length}', style: const TextStyle(color: Colors.blue, fontSize: 16, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                  ],
+              const SizedBox(height: 24),
+              
+              if (!hasEnoughData)
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(color: Colors.orange.withOpacity(0.1), border: Border.all(color: Colors.orange), borderRadius: BorderRadius.circular(16)),
+                  child: const Column(
+                    children: [
+                      Text('NO SPEECH DETECTED', style: TextStyle(color: Colors.orange, fontSize: 16, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 8),
+                      Text("We couldn't detect spoken responses during this interview, so a reliable performance score could not be calculated.", textAlign: TextAlign.center, style: TextStyle(color: Colors.white70, fontSize: 14)),
+                    ],
+                  ),
+                )
+              else
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), borderRadius: BorderRadius.circular(16)),
+                  child: Column(
+                    children: [
+                      const Text('Overall Performance', style: TextStyle(color: Colors.grey, fontSize: 14)),
+                      const SizedBox(height: 8),
+                      Text('${totalScore.round()}%', style: TextStyle(color: totalScore >= 70 ? Colors.green : Colors.amber, fontSize: 48, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Valid Responses Detected', style: TextStyle(color: Colors.white, fontSize: 14)),
+                          Text('$validAnswers/${_questions.length}', style: const TextStyle(color: Colors.blue, fontSize: 14, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                
+              const SizedBox(height: 24),
+              const Text('Question Breakdown', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 12),
+              
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _sessionResults.length,
+                  itemBuilder: (context, i) {
+                    final r = _sessionResults[i];
+                    bool valid = r['speechDuration'] >= 1.5;
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), borderRadius: BorderRadius.circular(8)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(child: Text('Q${i+1}: ${r["question"]}', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white, fontSize: 12))),
+                          const SizedBox(width: 8),
+                          if (valid)
+                            Text('${r["speechDuration"].toStringAsFixed(1)}s speech | ${r["wpm"]} WPM', style: const TextStyle(color: Colors.green, fontSize: 12))
+                          else
+                            const Text('No response detected', style: TextStyle(color: Colors.orange, fontSize: 12)),
+                        ],
+                      )
+                    );
+                  }
                 ),
               ),
-              const SizedBox(height: 24),
-              const Text('AI Coach Suggestions', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 12),
-              _suggestionRow('Structure your response using the STAR method.'),
-              _suggestionRow('Maintain a clear and professional tone.'),
-              const Spacer(),
+              
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   widget.onCompleted();
@@ -313,7 +445,7 @@ class _HrInterviewPracticeScreenState extends State<HrInterviewPracticeScreen> {
                   minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: const Text('Done', style: TextStyle(color: Colors.white, fontSize: 16)),
+                child: const Text('Return to Dashboard', style: TextStyle(color: Colors.white, fontSize: 16)),
               )
             ],
           ),
